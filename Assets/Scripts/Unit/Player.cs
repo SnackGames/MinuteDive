@@ -1,19 +1,40 @@
-using Unity.Collections;
 using UnityEngine;
 
 namespace Unit
 {
-  public enum PlayerState
-  {
-    Idle,
-    Falling
-  }
-
+  [RequireComponent(typeof(Rigidbody2D))]
   public class Player : MonoBehaviour
   {
-    [ReadOnly]
-    public PlayerState playerState;
+    [Header("Movement")]
+    public float moveSpeed = 5.0f;
+    [ReadOnly] public Vector2 moveInput;
+    [ReadOnly] public Vector2 velocity;
 
-    protected Rigidbody2D Body;
+    protected Rigidbody2D body;
+
+    private void Awake()
+    {
+      body = GetComponent<Rigidbody2D>();
+      body.isKinematic = true;
+    }
+
+    protected virtual void Update()
+    {
+      ComputeVelocity();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+      velocity = moveInput * moveSpeed;
+      body.position += velocity * Time.deltaTime;
+    }
+
+    private void ComputeVelocity()
+    {
+      float move = Input.GetAxisRaw("Horizontal");
+      if (move > 0) moveInput = Vector2.right;
+      else if (move < 0) moveInput = Vector2.left;
+      else moveInput = Vector2.zero;
+    }
   }
 }
