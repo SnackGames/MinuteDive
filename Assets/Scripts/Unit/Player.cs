@@ -20,7 +20,7 @@ namespace Unit
 
     protected virtual void Update()
     {
-      ComputeVelocity();
+      ComputeInput();
     }
 
     protected virtual void FixedUpdate()
@@ -29,12 +29,9 @@ namespace Unit
       body.position += velocity * Time.deltaTime;
     }
 
-    private void ComputeVelocity()
+    private void ComputeInput()
     {
-      float move = Input.GetAxisRaw("Horizontal");
-      if (move > 0) moveInput = Vector2.right;
-      else if (move < 0) moveInput = Vector2.left;
-      else moveInput = Vector2.zero;
+      moveInput = Input.GetAxisRaw("Horizontal") * Vector2.right;
     }
   }
 }
