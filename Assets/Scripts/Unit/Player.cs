@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace Unit
@@ -18,11 +19,13 @@ namespace Unit
   {
     [Header("Movement")]
     public float moveSpeed = 5.0f;
-    [ReadOnly] public Vector2 moveInput;
+    public float gravityScale = 1.0f;
+    [ReadOnly] public float moveInput = 0.0f;
+    [ReadOnly] public Vector2 velocity = Vector2.zero;
+    [ReadOnly] public bool isOnGround = false;
 
     protected Rigidbody2D body;
     protected ContactFilter2D contactFilter;
-    protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
 
     private void Awake()
     {
@@ -56,29 +59,65 @@ namespace Unit
 
     private void ComputeInput()
     {
-      moveInput = Vector2.zero;
+      moveInput = 0.0f;
 
       // 터치 입력
-      if (buttonInputs.ContainsKey(ButtonInputType.Left) && buttonInputs[ButtonInputType.Left]) moveInput = Vector2.left;
-      else if (buttonInputs.ContainsKey(ButtonInputType.Right) && buttonInputs[ButtonInputType.Right]) moveInput = Vector2.right;
+      if (buttonInputs.ContainsKey(ButtonInputType.Left) && buttonInputs[ButtonInputType.Left]) moveInput = -1.0f;
+      else if (buttonInputs.ContainsKey(ButtonInputType.Right) && buttonInputs[ButtonInputType.Right]) moveInput = 1.0f;
       // 기타 입력
-      else moveInput = Input.GetAxisRaw("Horizontal") * Vector2.right;
+      else moveInput = Input.GetAxisRaw("Horizontal");
     }
     #endregion
 
     protected virtual void FixedUpdate()
     {
-      Vector2 velocity = moveInput * moveSpeed;
+      const float epsilon = 0.01f;
+      const float groundAngle = 0.85f;
+
+      isOnGround = false;
+
+      // 속도 설정
+      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+      velocity.x = moveInput * moveSpeed;
+
       float distance = velocity.magnitude * Time.deltaTime;
 
-      int count = body.Cast(velocity, contactFilter, hitBuffer, distance);
-      for (int i = 0; i < count; ++i)
+      // 부딫히면 그 자리에서 즉시 멈추도록 작업
+      if (distance > 0.0)
       {
-        distance = Math.Min(distance, hitBuffer[i].distance);
+        RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
+        int count = body.Cast(velocity, contactFilter, hitBuffer, distance + epsilon);
+        for (int i = 0; i < count; ++i)
+        {
+          Vector2 hitNormal = hitBuffer[i].normal;
+          if (hitNormal.y > groundAngle)
+          {
+            isOnGround = true;
+          }
+
+          distance = Math.Min(distance, hitBuffer[i].distance - epsilon);
+        }
+
+        body.position += velocity.normalized * distance;
       }
 
-      // Time.deltaTime이 epsilon이다
-      body.position += velocity.normalized * (distance - Time.deltaTime);
+      // 땅일 시, 좌/우로 움직이도록 추가 작업
+      if (isOnGround)
+      {
+        velocity.y = 0.0f;
+        float newDistance = velocity.magnitude * Time.deltaTime;
+
+        RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
+        int count = body.Cast(velocity, contactFilter, hitBuffer, newDistance + epsilon);
+        for (int i = 0; i < count; ++i)
+        {
+          Vector2 hitNormal = hitBuffer[i].normal;
+          if (hitNormal.y <= groundAngle)
+            newDistance = Math.Min(newDistance, hitBuffer[i].distance - epsilon);
+        }
+
+        body.position += velocity.normalized * newDistance;
+      }
     }
   }
 }
