@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
 
 namespace Unit
@@ -14,7 +12,7 @@ namespace Unit
     Attack
   }
 
-  [RequireComponent(typeof(Rigidbody2D))]
+  [RequireComponent(typeof(Rigidbody2D),typeof(Animator),typeof(SpriteRenderer))]
   public class Player : MonoBehaviour
   {
     [Header("Movement")]
@@ -25,12 +23,20 @@ namespace Unit
     [ReadOnly] public bool isOnGround = false;
 
     protected Rigidbody2D body;
+    protected Animator anim;
+    protected SpriteRenderer sprite;
     protected ContactFilter2D contactFilter;
+
+    private bool isLookingRight = true;
 
     private void Awake()
     {
       body = GetComponent<Rigidbody2D>();
       body.isKinematic = true;
+
+      anim = GetComponent<Animator>();
+
+      sprite = GetComponent<SpriteRenderer>();
 
       contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
       contactFilter.useLayerMask = true;
@@ -40,6 +46,7 @@ namespace Unit
     protected virtual void Update()
     {
       ComputeInput();
+      ComputeAnimation();
     }
 
     #region Input
@@ -68,6 +75,16 @@ namespace Unit
       else moveInput = Input.GetAxisRaw("Horizontal");
     }
     #endregion
+
+    void ComputeAnimation()
+    {
+      anim.SetBool("isRunning", Math.Abs(velocity.x) > 0.0f);
+
+      // 캐릭터가 바라보는 방향
+      if (isLookingRight) isLookingRight = velocity.x >= 0.0f;
+      else isLookingRight = velocity.x > 0.0f;
+      sprite.flipX = !isLookingRight;
+    }
 
     protected virtual void FixedUpdate()
     {
