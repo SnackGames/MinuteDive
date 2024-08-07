@@ -1152,7 +1152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_49
+      name: player_attack_2_1
       rect:
         serializedVersion: 2
         x: 0
@@ -1173,7 +1173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_50
+      name: player_attack_2_2
       rect:
         serializedVersion: 2
         x: 50
@@ -1194,7 +1194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_51
+      name: player_attack_2_3
       rect:
         serializedVersion: 2
         x: 100
@@ -1215,7 +1215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_52
+      name: player_attack_2_4
       rect:
         serializedVersion: 2
         x: 150
@@ -2463,11 +2463,7 @@ TextureImporter:
       adventurer-v1.5-Sheet_46: 1977374045
       adventurer-v1.5-Sheet_47: 297912630
       adventurer-v1.5-Sheet_48: 1201545033
-      adventurer-v1.5-Sheet_49: -691968509
       adventurer-v1.5-Sheet_5: 273216837
-      adventurer-v1.5-Sheet_50: 579675353
-      adventurer-v1.5-Sheet_51: 49474958
-      adventurer-v1.5-Sheet_52: 716332641
       adventurer-v1.5-Sheet_53: -829064808
       adventurer-v1.5-Sheet_54: -1175138280
       adventurer-v1.5-Sheet_55: -370622087
@@ -2517,6 +2513,10 @@ TextureImporter:
       adventurer-v1.5-Sheet_97: 1679835177
       adventurer-v1.5-Sheet_98: -297646990
       adventurer-v1.5-Sheet_99: 375118203
+      player_attack_2_1: -691968509
+      player_attack_2_2: 579675353
+      player_attack_2_3: 49474958
+      player_attack_2_4: 716332641
       player_idle_1: 1179926845
       player_idle_2: -1280620428
       player_idle_3: -1370249018

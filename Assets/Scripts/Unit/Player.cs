@@ -12,6 +12,13 @@ namespace Unit
     Attack
   }
 
+  [Serializable]
+  public enum PlayerState
+  {
+    Move,
+    Attack_1
+  }
+
   [RequireComponent(typeof(Rigidbody2D),typeof(Animator),typeof(SpriteRenderer))]
   public class Player : MonoBehaviour
   {
@@ -21,6 +28,9 @@ namespace Unit
     [ReadOnly] public float moveInput = 0.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
     [ReadOnly] public bool isOnGround = false;
+
+    [Header("State")]
+    [ReadOnly] public PlayerState playerState = PlayerState.Move;
 
     protected Rigidbody2D body;
     protected Animator anim;
@@ -66,25 +76,50 @@ namespace Unit
 
     private void ComputeInput()
     {
-      moveInput = 0.0f;
+      // 공격
+      {
+        // 임시로 ground 위에 있을때만 입력을 받음
+        if (isOnGround && playerState == PlayerState.Move)
+        {
+          // 임시로 공격 1밖에 진행하지 않음
+          if (buttonInputs.ContainsKey(ButtonInputType.Attack) && buttonInputs[ButtonInputType.Attack]) playerState = PlayerState.Attack_1;
+          else if (Input.GetKeyDown("z") || Input.GetMouseButtonDown(0)) playerState = PlayerState.Attack_1;
+        }
+      }
 
-      // 터치 입력
-      if (buttonInputs.ContainsKey(ButtonInputType.Left) && buttonInputs[ButtonInputType.Left]) moveInput = -1.0f;
-      else if (buttonInputs.ContainsKey(ButtonInputType.Right) && buttonInputs[ButtonInputType.Right]) moveInput = 1.0f;
-      // 기타 입력
-      else moveInput = Input.GetAxisRaw("Horizontal");
+      // 이동
+      {
+        moveInput = 0.0f;
+
+        if (playerState == PlayerState.Move)
+        {
+          // 터치 입력
+          if (buttonInputs.ContainsKey(ButtonInputType.Left) && buttonInputs[ButtonInputType.Left]) moveInput = -1.0f;
+          else if (buttonInputs.ContainsKey(ButtonInputType.Right) && buttonInputs[ButtonInputType.Right]) moveInput = 1.0f;
+          // 기타 입력
+          else moveInput = Input.GetAxisRaw("Horizontal");
+        }
+      }
     }
     #endregion
 
+    #region Animation
     void ComputeAnimation()
     {
       anim.SetBool("isRunning", Math.Abs(velocity.x) > 0.0f);
+      anim.SetBool("isAttacking", playerState == PlayerState.Attack_1);
 
       // 캐릭터가 바라보는 방향
       if (isLookingRight) isLookingRight = velocity.x >= 0.0f;
       else isLookingRight = velocity.x > 0.0f;
       sprite.flipX = !isLookingRight;
     }
+
+    private void OnAnimationFinished()
+    {
+      playerState = PlayerState.Move;
+    }
+    #endregion
 
     protected virtual void FixedUpdate()
     {
