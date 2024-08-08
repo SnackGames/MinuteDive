@@ -83,7 +83,7 @@ namespace Unit
         {
           // 임시로 공격 1밖에 진행하지 않음
           if (buttonInputs.ContainsKey(ButtonInputType.Attack) && buttonInputs[ButtonInputType.Attack]) playerState = PlayerState.Attack_1;
-          else if (Input.GetKeyDown("z") || Input.GetMouseButtonDown(0)) playerState = PlayerState.Attack_1;
+          else if (Input.GetKeyDown("z") || Input.GetKeyDown("space")) playerState = PlayerState.Attack_1;
         }
       }
 
