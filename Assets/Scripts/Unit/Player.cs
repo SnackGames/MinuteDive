@@ -25,6 +25,7 @@ namespace Unit
     [Header("Movement")]
     public float moveSpeed = 5.0f;
     public float aerialMoveSpeed = 1.0f;
+    public float moveAcceleration = 50.0f;
     public float gravityScale = 1.0f;
     [ReadOnly] public float moveInput = 0.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
@@ -146,7 +147,7 @@ namespace Unit
     protected void ProcessMovement()
     {
       const float epsilon = 0.1f;
-      const int maxMovementIteration = 2;
+      const int maxMovementIteration = 5;
 
       Vector2 move = velocity * Time.deltaTime;
       for (int i = 0; i < maxMovementIteration; ++i)
@@ -180,22 +181,33 @@ namespace Unit
 
     protected virtual void FixedUpdate()
     {
-      // 속도 설정
-      if (isOnGround)
+      // 중력
+      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+
+      // 좌/우 이동
       {
-        velocity.x = moveInput * moveSpeed;
-      }
-      else
-      {
-        velocity.x = moveInput * aerialMoveSpeed;
-        // 중력
-        velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+        float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
+
+        // 가속
+        if (Math.Abs(moveInput) > 0.0f)
+        {
+          float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
+
+          velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
+        }
+        // 감속
+        else
+        {
+          velocity.x = velocity.x > 0.0f ? 
+            Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
+            Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+        }
       }
 
       ProcessMovement();
 
       // 땅 위인지 여부
-      isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.01f) != null;
+      isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
     }
   }
 }
