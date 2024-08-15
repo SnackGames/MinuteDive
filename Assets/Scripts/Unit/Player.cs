@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Unit
@@ -25,6 +24,7 @@ namespace Unit
   {
     [Header("Movement")]
     public float moveSpeed = 5.0f;
+    public float aerialMoveSpeed = 1.0f;
     public float gravityScale = 1.0f;
     [ReadOnly] public float moveInput = 0.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
@@ -109,6 +109,7 @@ namespace Unit
     void ComputeAnimation()
     {
       anim.SetBool("isRunning", Math.Abs(velocity.x) > 0.0f);
+      anim.SetBool("isFalling", !isOnGround);
       anim.SetBool("isAttacking", playerState == PlayerState.Attack_1);
 
       // 캐릭터가 바라보는 방향
@@ -180,9 +181,16 @@ namespace Unit
     protected virtual void FixedUpdate()
     {
       // 속도 설정
-      velocity.x = moveInput * moveSpeed;
-      if (!isOnGround) 
+      if (isOnGround)
+      {
+        velocity.x = moveInput * moveSpeed;
+      }
+      else
+      {
+        velocity.x = moveInput * aerialMoveSpeed;
+        // 중력
         velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+      }
 
       ProcessMovement();
 

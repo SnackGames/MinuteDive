@@ -585,7 +585,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_22
+      name: player_falling_1
       rect:
         serializedVersion: 2
         x: 50
@@ -606,7 +606,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_23
+      name: player_falling_2
       rect:
         serializedVersion: 2
         x: 100
@@ -2439,8 +2439,6 @@ TextureImporter:
       adventurer-v1.5-Sheet_19: -766556646
       adventurer-v1.5-Sheet_20: -283831827
       adventurer-v1.5-Sheet_21: 1086272386
-      adventurer-v1.5-Sheet_22: -491419628
-      adventurer-v1.5-Sheet_23: -1278487798
       adventurer-v1.5-Sheet_24: -2070212865
       adventurer-v1.5-Sheet_25: -541123695
       adventurer-v1.5-Sheet_26: -1623789964
@@ -2517,6 +2515,8 @@ TextureImporter:
       player_attack_2_2: 579675353
       player_attack_2_3: 49474958
       player_attack_2_4: 716332641
+      player_falling_1: -491419628
+      player_falling_2: -1278487798
       player_idle_1: 1179926845
       player_idle_2: -1280620428
       player_idle_3: -1370249018
