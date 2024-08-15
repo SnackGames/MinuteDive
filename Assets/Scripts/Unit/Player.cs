@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Unit
@@ -33,14 +34,12 @@ namespace Unit
     private bool isLookingRight = true;
     private ContactFilter2D contactFilter;
 
-
     [Header("State")]
     [ReadOnly] public PlayerState playerState = PlayerState.Move;
 
     protected Rigidbody2D body;
     protected Animator anim;
     protected SpriteRenderer sprite;
-
 
     private void Awake()
     {
@@ -58,26 +57,73 @@ namespace Unit
 
     protected virtual void Update()
     {
-      ComputeInput();
-      ComputeAnimation();
+      ProcessInput();
+      ProcessPlayerState();
+      ProcessAnimation();
     }
 
     #region Input
-    private Dictionary<ButtonInputType, bool> buttonInputs = new Dictionary<ButtonInputType, bool>();
+    private bool[] holdingInputs = new bool[Enum.GetNames(typeof(ButtonInputType)).Length];
+    private List<ButtonInputType> pressedInputs = new List<ButtonInputType>();
+    private float previousAxisInput = 0.0f;
 
     [VisibleEnum(typeof(ButtonInputType))]
     public void OnButtonDown(int buttonInputType)
     {
-      buttonInputs[(ButtonInputType)buttonInputType] = true;
+      if (buttonInputType < 0 || buttonInputType >= holdingInputs.Length)
+      {
+        Debug.LogError($"버튼 누르기 실패: {buttonInputType}");
+        return;
+      }
+
+      holdingInputs[buttonInputType] = true;
+      pressedInputs.Add((ButtonInputType)buttonInputType);
     }
 
     [VisibleEnum(typeof(ButtonInputType))]
     public void OnButtonUp(int buttonInputType)
     {
-      buttonInputs[(ButtonInputType)buttonInputType] = false;
+      if (buttonInputType < 0 || buttonInputType >= holdingInputs.Length)
+      {
+        Debug.LogError($"버튼 떼기 실패: {buttonInputType}");
+        return;
+      }
+
+      holdingInputs[buttonInputType] = false;
     }
 
-    private void ComputeInput()
+    protected bool IsHoldingInput(ButtonInputType buttonInputType)
+    {
+      switch (buttonInputType)
+      {
+        case ButtonInputType.Left:   return holdingInputs[(int)buttonInputType] || Input.GetAxisRaw("Horizontal") < 0.0f;
+        case ButtonInputType.Right:  return holdingInputs[(int)buttonInputType] || Input.GetAxisRaw("Horizontal") > 0.0f;
+        case ButtonInputType.Attack: return holdingInputs[(int)buttonInputType] || Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Space);
+      }
+
+      return holdingInputs[(int)buttonInputType];
+    }
+
+    protected void ProcessInput()
+    {
+      // 공격 키보드 입력
+      if(Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Space))
+        pressedInputs.Add(ButtonInputType.Attack);
+
+      // 이동 키보드 입력
+      float currentAxisInput = Input.GetAxisRaw("Horizontal");
+      if (previousAxisInput != currentAxisInput)
+      {
+        if (previousAxisInput <= 0.0f && currentAxisInput > 0.0f)
+          pressedInputs.Add(ButtonInputType.Right);
+        else if (previousAxisInput >= 0.0f && currentAxisInput < 0.0f)
+          pressedInputs.Add(ButtonInputType.Left);
+      }
+      previousAxisInput = currentAxisInput;
+    }
+    #endregion
+
+    protected void ProcessPlayerState()
     {
       // 공격
       {
@@ -85,8 +131,7 @@ namespace Unit
         if (isOnGround && playerState == PlayerState.Move)
         {
           // 임시로 공격 1밖에 진행하지 않음
-          if (buttonInputs.ContainsKey(ButtonInputType.Attack) && buttonInputs[ButtonInputType.Attack]) playerState = PlayerState.Attack_1;
-          else if (Input.GetKeyDown("z") || Input.GetKeyDown("space")) playerState = PlayerState.Attack_1;
+          if (IsHoldingInput(ButtonInputType.Attack)) playerState = PlayerState.Attack_1;
         }
       }
 
@@ -97,17 +142,14 @@ namespace Unit
         if (playerState == PlayerState.Move)
         {
           // 터치 입력
-          if (buttonInputs.ContainsKey(ButtonInputType.Left) && buttonInputs[ButtonInputType.Left]) moveInput = -1.0f;
-          else if (buttonInputs.ContainsKey(ButtonInputType.Right) && buttonInputs[ButtonInputType.Right]) moveInput = 1.0f;
-          // 기타 입력
-          else moveInput = Input.GetAxisRaw("Horizontal");
+          if (IsHoldingInput(ButtonInputType.Left)) moveInput = -1.0f;
+          else if (IsHoldingInput(ButtonInputType.Right)) moveInput = 1.0f;
         }
       }
     }
-    #endregion
 
     #region Animation
-    void ComputeAnimation()
+    void ProcessAnimation()
     {
       anim.SetBool("isRunning", Math.Abs(velocity.x) > 0.0f);
       anim.SetBool("isFalling", !isOnGround);
@@ -119,7 +161,13 @@ namespace Unit
       sprite.flipX = !isLookingRight;
     }
 
-    private void OnAnimationFinished()
+    private void AnimTrigger_Vibrate()
+    {
+      // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
+      Handheld.Vibrate();
+    }
+
+    private void AnimTrigger_AnimFinished()
     {
       playerState = PlayerState.Move;
     }
@@ -142,8 +190,32 @@ namespace Unit
       return hitBuffer[closestIndex];
     }
 
-    // position에서 move만큼 이동한다
-    // 충돌 여부를 반환한다
+    protected void ProcessVelocity()
+    {
+      // 중력
+      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+
+      // 좌/우 이동
+      {
+        float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
+
+        // 가속
+        if (Math.Abs(moveInput) > 0.0f)
+        {
+          float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
+
+          velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
+        }
+        // 감속
+        else
+        {
+          velocity.x = velocity.x > 0.0f ?
+            Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
+            Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+        }
+      }
+    }
+
     protected void ProcessMovement()
     {
       const float epsilon = 0.1f;
@@ -181,29 +253,7 @@ namespace Unit
 
     protected virtual void FixedUpdate()
     {
-      // 중력
-      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
-
-      // 좌/우 이동
-      {
-        float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
-
-        // 가속
-        if (Math.Abs(moveInput) > 0.0f)
-        {
-          float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
-
-          velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
-        }
-        // 감속
-        else
-        {
-          velocity.x = velocity.x > 0.0f ? 
-            Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
-            Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
-        }
-      }
-
+      ProcessVelocity();
       ProcessMovement();
 
       // 땅 위인지 여부

@@ -19,6 +19,9 @@ namespace UI
 
     private void Awake()
     {
+      // #TODO 프레임 제어를 다른 곳에서 총괄하도록 하자
+      Application.targetFrameRate = 60;
+
       text = GetComponent<TextMeshProUGUI>();
     }
 
