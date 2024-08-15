@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Unit
@@ -28,6 +29,9 @@ namespace Unit
     [ReadOnly] public float moveInput = 0.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
     [ReadOnly] public bool isOnGround = false;
+    private bool isLookingRight = true;
+    private ContactFilter2D contactFilter;
+
 
     [Header("State")]
     [ReadOnly] public PlayerState playerState = PlayerState.Move;
@@ -35,9 +39,7 @@ namespace Unit
     protected Rigidbody2D body;
     protected Animator anim;
     protected SpriteRenderer sprite;
-    protected ContactFilter2D contactFilter;
 
-    private bool isLookingRight = true;
 
     private void Awake()
     {
@@ -121,55 +123,71 @@ namespace Unit
     }
     #endregion
 
+    #region Movement
+    // 플레이어가 move 만큼 이동 시 부딫히는 충돌 정보
+    protected RaycastHit2D? CheckMoveCollision(Vector2 position, Vector2 move)
+    {
+      RaycastHit2D[] hitBuffer = new RaycastHit2D[4];
+      int count = body.Cast(move.normalized, contactFilter, hitBuffer, move.magnitude);
+      if (count <= 0) return null;
+
+      int closestIndex = 0;
+      // 가장 가까운 충돌점 검색
+      for (int i = 0; i < count; ++i)
+        if (hitBuffer[i].distance < hitBuffer[closestIndex].distance)
+          closestIndex = i;
+
+      return hitBuffer[closestIndex];
+    }
+
+    // position에서 move만큼 이동한다
+    // 충돌 여부를 반환한다
+    protected void ProcessMovement()
+    {
+      const float epsilon = 0.1f;
+      const int maxMovementIteration = 2;
+
+      Vector2 move = velocity * Time.deltaTime;
+      for (int i = 0; i < maxMovementIteration; ++i)
+      {
+        if (move.magnitude <= 0.0f || Time.deltaTime <= 0.0f) break;
+
+        RaycastHit2D? hit = CheckMoveCollision(body.position, move);
+        if (hit == null)
+        {
+          body.position += move;
+          break;
+        }
+
+        // #TODO_MOVEMENT
+        // 현재 epsilon때문에 경사있는 면에서는 이동이 불가능하다 (또는 낙하 코너에서)
+        // 따라서, 내적으로 경사면의 Tangent에 따라 epsilon의 강도가 바뀌도록 수정할 것 (또는 surfaceNormal 기준으로 살짝 띄우거나)
+        float newDistance = Math.Max(0.0f, hit.Value.distance - epsilon);
+
+        // 충돌하기 직전만큼 이동
+        body.position += move.normalized * newDistance;
+
+        // velocity 갱신
+        Vector3 surfaceTangent = hit.Value.normal.Perpendicular1();
+        velocity = Vector3.Project(velocity, surfaceTangent);
+
+        // move 갱신
+        move = Vector3.Project(move.normalized * (move.magnitude - newDistance), surfaceTangent);
+      }
+    }
+    #endregion
+
     protected virtual void FixedUpdate()
     {
-      const float epsilon = 0.01f;
-      const float groundAngle = 0.85f;
-
-      isOnGround = false;
-
       // 속도 설정
-      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
       velocity.x = moveInput * moveSpeed;
+      if (!isOnGround) 
+        velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
 
-      float distance = velocity.magnitude * Time.deltaTime;
+      ProcessMovement();
 
-      // 부딫히면 그 자리에서 즉시 멈추도록 작업
-      if (distance > 0.0)
-      {
-        RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
-        int count = body.Cast(velocity, contactFilter, hitBuffer, distance + epsilon);
-        for (int i = 0; i < count; ++i)
-        {
-          Vector2 hitNormal = hitBuffer[i].normal;
-          if (hitNormal.y > groundAngle)
-          {
-            isOnGround = true;
-          }
-
-          distance = Math.Min(distance, hitBuffer[i].distance - epsilon);
-        }
-
-        body.position += velocity.normalized * distance;
-      }
-
-      // 땅일 시, 좌/우로 움직이도록 추가 작업
-      if (isOnGround)
-      {
-        velocity.y = 0.0f;
-        float newDistance = velocity.magnitude * Time.deltaTime;
-
-        RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
-        int count = body.Cast(velocity, contactFilter, hitBuffer, newDistance + epsilon);
-        for (int i = 0; i < count; ++i)
-        {
-          Vector2 hitNormal = hitBuffer[i].normal;
-          if (hitNormal.y <= groundAngle)
-            newDistance = Math.Min(newDistance, hitBuffer[i].distance - epsilon);
-        }
-
-        body.position += velocity.normalized * newDistance;
-      }
+      // 땅 위인지 여부
+      isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.01f) != null;
     }
   }
 }
