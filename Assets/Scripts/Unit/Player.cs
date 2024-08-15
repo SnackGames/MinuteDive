@@ -168,7 +168,7 @@ namespace Unit
         body.position += move.normalized * newDistance;
 
         // velocity 갱신
-        Vector3 surfaceTangent = hit.Value.normal.Perpendicular1();
+        Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);
         velocity = Vector3.Project(velocity, surfaceTangent);
 
         // move 갱신
