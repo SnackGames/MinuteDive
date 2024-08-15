@@ -22,19 +22,22 @@ namespace Unit
   [RequireComponent(typeof(Rigidbody2D),typeof(Animator),typeof(SpriteRenderer))]
   public class Player : MonoBehaviour
   {
+    [Header("Input")]
+    public float reservePressedInputDuration = 0.3f;
+    [ReadOnly] public float moveInput = 0.0f;
+    private bool isLookingRight = true;
+
+    [Header("State")]
+    [ReadOnly] public PlayerState playerState = PlayerState.Move;
+
     [Header("Movement")]
     public float moveSpeed = 5.0f;
     public float aerialMoveSpeed = 1.0f;
     public float moveAcceleration = 50.0f;
     public float gravityScale = 1.0f;
-    [ReadOnly] public float moveInput = 0.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
     [ReadOnly] public bool isOnGround = false;
-    private bool isLookingRight = true;
     private ContactFilter2D contactFilter;
-
-    [Header("State")]
-    [ReadOnly] public PlayerState playerState = PlayerState.Move;
 
     protected Rigidbody2D body;
     protected Animator anim;
@@ -63,7 +66,7 @@ namespace Unit
 
     #region Input
     private bool[] holdingInputs = new bool[Enum.GetNames(typeof(ButtonInputType)).Length];
-    private Queue<ButtonInputType> pressedInputs = new Queue<ButtonInputType>();
+    private Queue<(ButtonInputType,float)> pressedInputs = new Queue<(ButtonInputType, float)>();
     private float previousAxisInput = 0.0f;
 
     [VisibleEnum(typeof(ButtonInputType))]
@@ -96,7 +99,7 @@ namespace Unit
       const int maxPressedInputStack = 10;
 
       if (pressedInputs.Count < maxPressedInputStack)
-        pressedInputs.Enqueue(buttonInputType);
+        pressedInputs.Enqueue((buttonInputType, Time.time));
     }
 
     protected bool IsHoldingInput(ButtonInputType buttonInputType)
@@ -113,6 +116,14 @@ namespace Unit
 
     protected void ProcessInput()
     {
+      // 오래된 선입력 제거
+      while (pressedInputs.Count > 0)
+      {
+        float pressedInputTime = pressedInputs.Peek().Item2;
+        if (pressedInputTime >= Time.time - reservePressedInputDuration) break;
+        pressedInputs.Dequeue();
+      }
+
       // 공격 키마 입력
       if(Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Space))
         PressInput(ButtonInputType.Attack);
@@ -147,7 +158,7 @@ namespace Unit
 
       while (pressedInputs.Count > 0)
       {
-        ButtonInputType pressedInput = pressedInputs.Peek();
+        ButtonInputType pressedInput = pressedInputs.Peek().Item1;
 
         // 이동 키는 무시한다
         if (pressedInput == ButtonInputType.Left || pressedInput == ButtonInputType.Right)
