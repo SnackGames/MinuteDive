@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Unit
@@ -64,7 +63,7 @@ namespace Unit
 
     #region Input
     private bool[] holdingInputs = new bool[Enum.GetNames(typeof(ButtonInputType)).Length];
-    private List<ButtonInputType> pressedInputs = new List<ButtonInputType>();
+    private Queue<ButtonInputType> pressedInputs = new Queue<ButtonInputType>();
     private float previousAxisInput = 0.0f;
 
     [VisibleEnum(typeof(ButtonInputType))]
@@ -77,7 +76,7 @@ namespace Unit
       }
 
       holdingInputs[buttonInputType] = true;
-      pressedInputs.Add((ButtonInputType)buttonInputType);
+      PressInput((ButtonInputType)buttonInputType);
     }
 
     [VisibleEnum(typeof(ButtonInputType))]
@@ -90,6 +89,14 @@ namespace Unit
       }
 
       holdingInputs[buttonInputType] = false;
+    }
+
+    protected void PressInput(ButtonInputType buttonInputType)
+    {
+      const int maxPressedInputStack = 10;
+
+      if (pressedInputs.Count < maxPressedInputStack)
+        pressedInputs.Enqueue(buttonInputType);
     }
 
     protected bool IsHoldingInput(ButtonInputType buttonInputType)
@@ -106,47 +113,73 @@ namespace Unit
 
     protected void ProcessInput()
     {
-      // 공격 키보드 입력
+      // 공격 키마 입력
       if(Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Space))
-        pressedInputs.Add(ButtonInputType.Attack);
+        PressInput(ButtonInputType.Attack);
 
       // 이동 키보드 입력
       float currentAxisInput = Input.GetAxisRaw("Horizontal");
       if (previousAxisInput != currentAxisInput)
       {
         if (previousAxisInput <= 0.0f && currentAxisInput > 0.0f)
-          pressedInputs.Add(ButtonInputType.Right);
+          PressInput(ButtonInputType.Right);
         else if (previousAxisInput >= 0.0f && currentAxisInput < 0.0f)
-          pressedInputs.Add(ButtonInputType.Left);
+          PressInput(ButtonInputType.Left);
       }
       previousAxisInput = currentAxisInput;
     }
     #endregion
 
+    #region PlayerState
     protected void ProcessPlayerState()
     {
-      // 공격
+      moveInput = 0.0f;
+
+      switch (playerState)
       {
-        // 임시로 ground 위에 있을때만 입력을 받음
-        if (isOnGround && playerState == PlayerState.Move)
+        case PlayerState.Move: ProcessPlayerState_Move(); break;
+      }
+    }
+
+    protected void ProcessPlayerState_Move()
+    {
+      PlayerState nextPlayerState = PlayerState.Move;
+
+      while (pressedInputs.Count > 0)
+      {
+        ButtonInputType pressedInput = pressedInputs.Peek();
+
+        // 이동 키는 무시한다
+        if (pressedInput == ButtonInputType.Left || pressedInput == ButtonInputType.Right)
         {
-          // 임시로 공격 1밖에 진행하지 않음
-          if (IsHoldingInput(ButtonInputType.Attack)) playerState = PlayerState.Attack_1;
+          pressedInputs.Dequeue();
+          continue;
         }
+
+        // 공격
+        if(pressedInput == ButtonInputType.Attack)
+        {
+          // 임시로 땅 위에 있을때만 발동
+          if(isOnGround)
+          {
+            pressedInputs.Dequeue();
+            nextPlayerState = PlayerState.Attack_1;
+          }
+        }
+
+        break;
       }
 
       // 이동
+      if (nextPlayerState == PlayerState.Move)
       {
-        moveInput = 0.0f;
-
-        if (playerState == PlayerState.Move)
-        {
-          // 터치 입력
-          if (IsHoldingInput(ButtonInputType.Left)) moveInput = -1.0f;
-          else if (IsHoldingInput(ButtonInputType.Right)) moveInput = 1.0f;
-        }
+        if (IsHoldingInput(ButtonInputType.Left)) moveInput = -1.0f;
+        else if (IsHoldingInput(ButtonInputType.Right)) moveInput = 1.0f;
       }
+
+      playerState = nextPlayerState;
     }
+    #endregion
 
     #region Animation
     void ProcessAnimation()
