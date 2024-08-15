@@ -16,7 +16,9 @@ namespace Unit
   public enum PlayerState
   {
     Move,
-    Attack_1
+    Attack_1,
+    Attack_2,
+    Attack_3
   }
 
   [RequireComponent(typeof(Rigidbody2D),typeof(Animator),typeof(SpriteRenderer))]
@@ -142,19 +144,56 @@ namespace Unit
     #endregion
 
     #region PlayerState
+    private bool endAttackTriggered = false;
+
+    static private int GetAttackIndexByPlayerState(PlayerState state)
+    {
+      switch (state)
+      {
+        case PlayerState.Attack_1: return 1;
+        case PlayerState.Attack_2: return 2;
+        case PlayerState.Attack_3: return 3;
+      }
+
+      return 0;
+    }
+
+    static private PlayerState GetPlayerStateByAttackIndex(int index)
+    {
+      switch (index)
+      {
+        case 1: return PlayerState.Attack_1;
+        case 2: return PlayerState.Attack_2;
+        case 3: return PlayerState.Attack_3;
+      }
+
+      return PlayerState.Move;
+    }
+
+    static private int GetNextAttackIndex(int index)
+    {
+      return index % 3 + 1;
+    }
+
     protected void ProcessPlayerState()
     {
       moveInput = 0.0f;
 
       switch (playerState)
       {
-        case PlayerState.Move: ProcessPlayerState_Move(); break;
+        case PlayerState.Move:
+          ProcessPlayerState_Move(); break;
+        case PlayerState.Attack_1:
+        case PlayerState.Attack_2:
+        case PlayerState.Attack_3:
+          ProcessPlayerState_Attack(playerState); break;
       }
     }
 
     protected void ProcessPlayerState_Move()
     {
       PlayerState nextPlayerState = PlayerState.Move;
+      endAttackTriggered = false;
 
       while (pressedInputs.Count > 0)
       {
@@ -190,6 +229,45 @@ namespace Unit
 
       playerState = nextPlayerState;
     }
+
+    protected void ProcessPlayerState_Attack(PlayerState state)
+    {
+      PlayerState nextPlayerState = state;
+
+      // 공격이 끝났을 시에만 입력 처리
+      if (endAttackTriggered)
+      {
+        endAttackTriggered = false;
+        nextPlayerState = PlayerState.Move;
+
+        while (pressedInputs.Count > 0)
+        {
+          ButtonInputType pressedInput = pressedInputs.Peek().Item1;
+
+          // 이동 키는 무시한다
+          // 추후 대시 추가예정
+          if (pressedInput == ButtonInputType.Left || pressedInput == ButtonInputType.Right)
+          {
+            pressedInputs.Dequeue();
+            continue;
+          }
+
+          // 공격 (다음 공격 진행)
+          if (pressedInput == ButtonInputType.Attack)
+          {
+            // 임시로 땅 위에 있을때만 발동
+            if (isOnGround)
+            {
+              pressedInputs.Dequeue();
+              nextPlayerState = GetPlayerStateByAttackIndex(GetNextAttackIndex(GetAttackIndexByPlayerState(state)));
+            }
+          }
+          break;
+        }
+      }
+
+      playerState = nextPlayerState;
+    }
     #endregion
 
     #region Animation
@@ -197,7 +275,7 @@ namespace Unit
     {
       anim.SetBool("isRunning", Math.Abs(velocity.x) > 0.0f);
       anim.SetBool("isFalling", !isOnGround);
-      anim.SetBool("isAttacking", playerState == PlayerState.Attack_1);
+      anim.SetInteger("attackIndex", GetAttackIndexByPlayerState(playerState));
 
       // 캐릭터가 바라보는 방향
       if (isLookingRight) isLookingRight = velocity.x >= 0.0f;
@@ -213,7 +291,7 @@ namespace Unit
 
     private void AnimTrigger_AnimFinished()
     {
-      playerState = PlayerState.Move;
+      endAttackTriggered = true;
     }
     #endregion
 
