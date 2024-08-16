@@ -2286,7 +2286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_103
+      name: player_fallAttack_1
       rect:
         serializedVersion: 2
         x: 250
@@ -2307,7 +2307,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_104
+      name: player_fallAttack_2
       rect:
         serializedVersion: 2
         x: 300
@@ -2328,7 +2328,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_105
+      name: player_fallAttack_3
       rect:
         serializedVersion: 2
         x: 0
@@ -2349,7 +2349,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_106
+      name: player_fallAttack_4
       rect:
         serializedVersion: 2
         x: 50
@@ -2370,7 +2370,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_107
+      name: player_fallAttack_5
       rect:
         serializedVersion: 2
         x: 100
@@ -2425,11 +2425,6 @@ TextureImporter:
       adventurer-v1.5-Sheet_100: -2134849459
       adventurer-v1.5-Sheet_101: -979641754
       adventurer-v1.5-Sheet_102: 1256447501
-      adventurer-v1.5-Sheet_103: -1489252865
-      adventurer-v1.5-Sheet_104: -839181798
-      adventurer-v1.5-Sheet_105: 1239531051
-      adventurer-v1.5-Sheet_106: 247626098
-      adventurer-v1.5-Sheet_107: -950519874
       adventurer-v1.5-Sheet_108: 988390039
       adventurer-v1.5-Sheet_14: -378089441
       adventurer-v1.5-Sheet_15: 158762013
@@ -2515,6 +2510,11 @@ TextureImporter:
       player_dash_3: -1623789964
       player_dash_4: 1151377490
       player_dash_5: -2066587741
+      player_fallAttack_1: -1489252865
+      player_fallAttack_2: -839181798
+      player_fallAttack_3: 1239531051
+      player_fallAttack_4: 247626098
+      player_fallAttack_5: -950519874
       player_falling_1: -491419628
       player_falling_2: -1278487798
       player_idle_1: 1179926845

@@ -25,13 +25,9 @@ namespace PlayerState
           // 공격
           case ButtonInputType.Attack:
             {
-              // 임시로 땅 위에 있을때만 발동
-              if (player.isOnGround)
-              {
-                player.DequePressedInput();
-                return PlayerStateType.Attack;
-              }
-            } break;
+              player.DequePressedInput();
+              return player.isOnGround ? PlayerStateType.Attack : PlayerStateType.FallAttack;
+            }
         }
         break;
       }

@@ -18,6 +18,7 @@ namespace Unit
   {
     Move,
     Attack,
+    FallAttack,
     Dash
   }
 
@@ -37,6 +38,7 @@ namespace Unit
     public float moveSpeed = 5.0f;
     public float aerialMoveSpeed = 1.0f;
     public float attackMoveSpeed = 1.5f;
+    public float fallAttackSpeed = 3.0f;
     public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
     public float gravityScale = 1.0f;
@@ -153,19 +155,6 @@ namespace Unit
     }
     #endregion
 
-    #region PlayerState
-    static private int GetNextAttackIndex(int index)
-    {
-      return index % 3 + 1;
-    }
-
-    protected void ProcessPlayerState_Dash()
-    {
-      if (anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle"))
-        playerState = PlayerStateType.Move;
-    }
-    #endregion
-
     #region Animation
     [ReadOnly] public bool isReservedDashDirectionRight = false;
 
@@ -238,6 +227,11 @@ namespace Unit
             velocity.x = velocity.x > 0.0f ?
                 Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+          } break;
+
+        case PlayerStateType.FallAttack:
+          {
+            velocity = new Vector2(0.0f, -fallAttackSpeed);
           } break;
 
         case PlayerStateType.Dash:
