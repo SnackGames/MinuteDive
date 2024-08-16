@@ -2392,7 +2392,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reservePressedInputDuration: 0.2
   moveInput: 0
+  isLookingRight: 1
   playerState: 0
+  playerStateBehaviour: {fileID: 0}
   moveSpeed: 10
   aerialMoveSpeed: 2
   moveAcceleration: 80

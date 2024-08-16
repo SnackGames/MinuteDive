@@ -1,7 +1,6 @@
 using Unit;
 using System;
 using UnityEngine;
-using UnityEngine.U2D;
 
 namespace PlayerState
 {
@@ -10,24 +9,28 @@ namespace PlayerState
   {
     protected Player player;
 
+    public virtual PlayerStateType GetPlayerStateType() => PlayerStateType.Move;
+
     sealed override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       player = animator.GetComponent<Player>();
+      player.playerState = GetPlayerStateType();
+      player.playerStateBehaviour = this;
 
-      OnStateEnter();
+      OnPlayerStateEnter();
     }
 
-    virtual protected void OnStateEnter() {}
+    virtual protected void OnPlayerStateEnter() { }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      Unit.PlayerState? nextState = ProcessStateChange();
+      PlayerStateType? nextState = ProcessStateChange(animator);
       if(nextState != null)
       {
         TriggerStateChange(animator, nextState.Value);
       }
 
-      animator.SetBool("isRunning", (Math.Abs(player.velocity.x) > 0.0f) && (Math.Abs(player.moveInput) > 0.0f));
+      animator.SetBool("isRunning", Math.Abs(player.velocity.x) > 0.0f);
       animator.SetBool("isFalling", !player.isOnGround);
 
       // 캐릭터가 바라보는 방향
@@ -36,17 +39,19 @@ namespace PlayerState
       player.SetLookingDirection(player.isLookingRight);
     }
 
-    virtual protected Unit.PlayerState? ProcessStateChange() => null;
+    virtual protected PlayerStateType? ProcessStateChange(Animator animator) => null;
 
-    protected void TriggerStateChange(Animator animator, Unit.PlayerState state)
+    protected void TriggerStateChange(Animator animator, PlayerStateType state)
     {
-      player.playerState = state;
-
       switch(state)
       {
-        case Unit.PlayerState.Move: animator.SetTrigger("changeToMove"); break;
+        case PlayerStateType.Move: animator.SetTrigger("move"); break;
+        case PlayerStateType.Attack: animator.SetTrigger("attack"); break;
         default: Debug.LogError($"등록되지 않은 PlayerState: {state}"); break;
       }
     }
+
+    public virtual void AnimTrigger_EnableMoveInput() { }
+    public virtual void AnimTrigger_EnableAttackInput() { }
   }
 }

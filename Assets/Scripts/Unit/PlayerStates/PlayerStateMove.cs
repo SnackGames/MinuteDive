@@ -5,17 +5,9 @@ namespace PlayerState
 {
   public class PlayerStateMove : PlayerStateBase
   {
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-      player.moveInput = 0.0f;
-      // ÀÌµ¿
-      if (player.IsHoldingInput(ButtonInputType.Left)) player.moveInput = -1.0f;
-      else if (player.IsHoldingInput(ButtonInputType.Right)) player.moveInput = 1.0f;
+    public override PlayerStateType GetPlayerStateType() => PlayerStateType.Move;
 
-      base.OnStateUpdate(animator, stateInfo, layerIndex);
-    }
-
-    override protected Unit.PlayerState? ProcessStateChange()
+    override protected PlayerStateType? ProcessStateChange(Animator animator)
     {
       while (player.HasPressedInput())
       {
@@ -37,7 +29,7 @@ namespace PlayerState
               if (player.isOnGround)
               {
                 player.DequePressedInput();
-                return Unit.PlayerState.Attack_1;
+                return PlayerStateType.Attack;
               }
             } break;
         }

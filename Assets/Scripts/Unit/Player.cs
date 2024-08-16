@@ -1,3 +1,4 @@
+using PlayerState;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,10 @@ namespace Unit
   }
 
   [Serializable]
-  public enum PlayerState
+  public enum PlayerStateType
   {
     Move,
-    Attack_1,
-    Attack_2,
-    Attack_3,
+    Attack,
     Dash
   }
 
@@ -31,7 +30,8 @@ namespace Unit
     [ReadOnly] public bool isLookingRight = true;
 
     [Header("State")]
-    [ReadOnly] public PlayerState playerState = PlayerState.Move;
+    [ReadOnly] public PlayerStateType playerState = PlayerStateType.Move;
+    [ReadOnly] public PlayerStateBase playerStateBehaviour;
 
     [Header("Movement")]
     public float moveSpeed = 5.0f;
@@ -63,8 +63,6 @@ namespace Unit
     protected virtual void Update()
     {
       ProcessInput();
-      // ProcessPlayerState();
-      ProcessAnimation();
     }
 
     #region Input
@@ -145,144 +143,24 @@ namespace Unit
           PressInput(ButtonInputType.Left);
       }
       previousAxisInput = currentAxisInput;
+
+      // 이동
+      moveInput = 0.0f;
+      if (IsHoldingInput(ButtonInputType.Left)) moveInput = -1.0f;
+      else if (IsHoldingInput(ButtonInputType.Right)) moveInput = 1.0f;
     }
     #endregion
 
     #region PlayerState
-    private bool endAttackTriggered = false;
-
-    static private int GetAttackIndexByPlayerState(PlayerState state)
-    {
-      switch (state)
-      {
-        case PlayerState.Attack_1: return 1;
-        case PlayerState.Attack_2: return 2;
-        case PlayerState.Attack_3: return 3;
-      }
-
-      return 0;
-    }
-
-    static private PlayerState GetPlayerStateByAttackIndex(int index)
-    {
-      switch (index)
-      {
-        case 1: return PlayerState.Attack_1;
-        case 2: return PlayerState.Attack_2;
-        case 3: return PlayerState.Attack_3;
-      }
-
-      return PlayerState.Move;
-    }
-
     static private int GetNextAttackIndex(int index)
     {
       return index % 3 + 1;
     }
 
-    protected void ProcessPlayerState()
-    {
-      switch (playerState)
-      {
-        case PlayerState.Move:
-          ProcessPlayerState_Move(); break;
-        case PlayerState.Attack_1:
-        case PlayerState.Attack_2:
-        case PlayerState.Attack_3:
-          ProcessPlayerState_Attack(playerState); break;
-        case PlayerState.Dash:
-          ProcessPlayerState_Dash(); break;
-      }
-    }
-
-    protected void ProcessPlayerState_Move()
-    {
-      PlayerState nextPlayerState = PlayerState.Move;
-      endAttackTriggered = false;
-
-      while (pressedInputs.Count > 0)
-      {
-        ButtonInputType pressedInput = pressedInputs.Peek().Item1;
-
-        // 이동 키는 무시한다
-        if (pressedInput == ButtonInputType.Left || pressedInput == ButtonInputType.Right)
-        {
-          pressedInputs.Dequeue();
-          continue;
-        }
-
-        // 공격
-        if(pressedInput == ButtonInputType.Attack)
-        {
-          // 임시로 땅 위에 있을때만 발동
-          if(isOnGround)
-          {
-            pressedInputs.Dequeue();
-            nextPlayerState = PlayerState.Attack_1;
-          }
-        }
-
-        break;
-      }
-
-      playerState = nextPlayerState;
-    }
-
-    protected void ProcessPlayerState_Attack(PlayerState state)
-    {
-      PlayerState nextPlayerState = state;
-
-      // 공격이 끝났을 시에만 입력 처리
-      if (endAttackTriggered)
-      {
-        endAttackTriggered = false;
-        nextPlayerState = PlayerState.Move;
-
-        while (pressedInputs.Count > 0)
-        {
-          ButtonInputType pressedInput = pressedInputs.Peek().Item1;
-          bool processedInput = false;
-
-          switch (pressedInput)
-          {
-            // 임시 대시 처리
-            case ButtonInputType.Left:
-            case ButtonInputType.Right:
-              {
-                processedInput = true;
-                pressedInputs.Dequeue();
-                nextPlayerState = PlayerState.Dash;
-
-                anim.SetTrigger("triggerDash");
-              }
-              break;
-
-            // 공격 (다음 공격 진행)
-            case ButtonInputType.Attack:
-              {
-                processedInput = true;
-
-                // 임시로 땅 위에 있을때만 발동
-                if (isOnGround)
-                {
-                  pressedInputs.Dequeue();
-                  nextPlayerState = GetPlayerStateByAttackIndex(GetNextAttackIndex(GetAttackIndexByPlayerState(state)));
-                }
-              }
-              break;
-          }
-
-          if (processedInput) break;
-        }
-      }
-
-      playerState = nextPlayerState;
-    }
-
     protected void ProcessPlayerState_Dash()
     {
       if (anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle"))
-        playerState = PlayerState.Move;
+        playerState = PlayerStateType.Move;
     }
     #endregion
 
@@ -292,20 +170,13 @@ namespace Unit
       sprite.flipX = !right;
     }
 
-    private void ProcessAnimation()
-    {
-      anim.SetInteger("attackIndex", GetAttackIndexByPlayerState(playerState));
-    }
+    private void AnimTrigger_EnableMoveInput() => playerStateBehaviour.AnimTrigger_EnableMoveInput();
+    private void AnimTrigger_EnableAttackInput() => playerStateBehaviour.AnimTrigger_EnableAttackInput();
 
     private void AnimTrigger_Vibrate()
     {
       // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
       Handheld.Vibrate();
-    }
-
-    private void AnimTrigger_AnimFinished()
-    {
-      endAttackTriggered = true;
     }
     #endregion
 
@@ -332,28 +203,36 @@ namespace Unit
       velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
 
       // 좌/우 이동
+      float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
+      switch (playerState)
       {
-        float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
-
-        // 대시
-        if(playerState == PlayerState.Dash)
-        {
-          velocity.x = maxSpeed * 2 * (isLookingRight ? 1 : -1);
-        }
-        // 가속
-        else if (Math.Abs(moveInput) > 0.0f)
-        {
-          float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
-
-          velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
-        }
-        // 감속
-        else
-        {
-          velocity.x = velocity.x > 0.0f ?
-            Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
-            Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
-        }
+        case PlayerStateType.Dash:
+          {
+            velocity.x = maxSpeed * 2 * (isLookingRight ? 1 : -1);
+          } break;
+        case PlayerStateType.Move:
+          {
+            // 가속
+            if (Math.Abs(moveInput) > 0.0f)
+            {
+              float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
+              velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
+            }
+            // 감속
+            else
+            {
+              velocity.x = velocity.x > 0.0f ?
+                Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
+                Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+            }
+          } break;
+        case PlayerStateType.Attack:
+          {
+            // 감속
+            velocity.x = velocity.x > 0.0f ?
+                Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
+                Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+          } break;
       }
     }
 
