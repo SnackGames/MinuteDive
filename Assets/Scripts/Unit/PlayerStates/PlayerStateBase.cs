@@ -47,6 +47,7 @@ namespace PlayerState
       {
         case PlayerStateType.Move: animator.SetTrigger("move"); break;
         case PlayerStateType.Attack: animator.SetTrigger("attack"); break;
+        case PlayerStateType.Dash: animator.SetTrigger("dash"); break;
         default: Debug.LogError($"등록되지 않은 PlayerState: {state}"); break;
       }
     }

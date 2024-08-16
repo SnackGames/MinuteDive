@@ -36,6 +36,7 @@ namespace Unit
     [Header("Movement")]
     public float moveSpeed = 5.0f;
     public float aerialMoveSpeed = 1.0f;
+    public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
     public float gravityScale = 1.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
@@ -206,10 +207,6 @@ namespace Unit
       float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
       switch (playerState)
       {
-        case PlayerStateType.Dash:
-          {
-            velocity.x = maxSpeed * 2 * (isLookingRight ? 1 : -1);
-          } break;
         case PlayerStateType.Move:
           {
             // 가속
@@ -226,7 +223,9 @@ namespace Unit
                 Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
             }
           } break;
+
         case PlayerStateType.Attack:
+        case PlayerStateType.Dash:
           {
             // 감속
             velocity.x = velocity.x > 0.0f ?
