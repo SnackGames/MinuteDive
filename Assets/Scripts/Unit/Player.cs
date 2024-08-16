@@ -18,7 +18,8 @@ namespace Unit
     Move,
     Attack_1,
     Attack_2,
-    Attack_3
+    Attack_3,
+    Dash
   }
 
   [RequireComponent(typeof(Rigidbody2D),typeof(Animator),typeof(SpriteRenderer))]
@@ -27,7 +28,7 @@ namespace Unit
     [Header("Input")]
     public float reservePressedInputDuration = 0.3f;
     [ReadOnly] public float moveInput = 0.0f;
-    private bool isLookingRight = true;
+    [ReadOnly] public bool isLookingRight = true;
 
     [Header("State")]
     [ReadOnly] public PlayerState playerState = PlayerState.Move;
@@ -62,7 +63,7 @@ namespace Unit
     protected virtual void Update()
     {
       ProcessInput();
-      ProcessPlayerState();
+      // ProcessPlayerState();
       ProcessAnimation();
     }
 
@@ -96,24 +97,28 @@ namespace Unit
       holdingInputs[buttonInputType] = false;
     }
 
+    public bool HasPressedInput() => pressedInputs.Count > 0;
+    public ButtonInputType PeekPressedInput() => pressedInputs.Peek().Item1;
+    public void DequePressedInput() => pressedInputs.Dequeue();
+
+    public bool IsHoldingInput(ButtonInputType buttonInputType)
+    {
+      switch (buttonInputType)
+      {
+        case ButtonInputType.Left: return holdingInputs[(int)buttonInputType] || Input.GetAxisRaw("Horizontal") < 0.0f;
+        case ButtonInputType.Right: return holdingInputs[(int)buttonInputType] || Input.GetAxisRaw("Horizontal") > 0.0f;
+        case ButtonInputType.Attack: return holdingInputs[(int)buttonInputType] || Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Space);
+      }
+
+      return holdingInputs[(int)buttonInputType];
+    }
+
     protected void PressInput(ButtonInputType buttonInputType)
     {
       const int maxPressedInputStack = 10;
 
       if (pressedInputs.Count < maxPressedInputStack)
         pressedInputs.Enqueue((buttonInputType, Time.time));
-    }
-
-    protected bool IsHoldingInput(ButtonInputType buttonInputType)
-    {
-      switch (buttonInputType)
-      {
-        case ButtonInputType.Left:   return holdingInputs[(int)buttonInputType] || Input.GetAxisRaw("Horizontal") < 0.0f;
-        case ButtonInputType.Right:  return holdingInputs[(int)buttonInputType] || Input.GetAxisRaw("Horizontal") > 0.0f;
-        case ButtonInputType.Attack: return holdingInputs[(int)buttonInputType] || Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Space);
-      }
-
-      return holdingInputs[(int)buttonInputType];
     }
 
     protected void ProcessInput()
@@ -177,8 +182,6 @@ namespace Unit
 
     protected void ProcessPlayerState()
     {
-      moveInput = 0.0f;
-
       switch (playerState)
       {
         case PlayerState.Move:
@@ -187,6 +190,8 @@ namespace Unit
         case PlayerState.Attack_2:
         case PlayerState.Attack_3:
           ProcessPlayerState_Attack(playerState); break;
+        case PlayerState.Dash:
+          ProcessPlayerState_Dash(); break;
       }
     }
 
@@ -220,13 +225,6 @@ namespace Unit
         break;
       }
 
-      // 이동
-      if (nextPlayerState == PlayerState.Move)
-      {
-        if (IsHoldingInput(ButtonInputType.Left)) moveInput = -1.0f;
-        else if (IsHoldingInput(ButtonInputType.Right)) moveInput = 1.0f;
-      }
-
       playerState = nextPlayerState;
     }
 
@@ -243,44 +241,60 @@ namespace Unit
         while (pressedInputs.Count > 0)
         {
           ButtonInputType pressedInput = pressedInputs.Peek().Item1;
+          bool processedInput = false;
 
-          // 이동 키는 무시한다
-          // 추후 대시 추가예정
-          if (pressedInput == ButtonInputType.Left || pressedInput == ButtonInputType.Right)
+          switch (pressedInput)
           {
-            pressedInputs.Dequeue();
-            continue;
+            // 임시 대시 처리
+            case ButtonInputType.Left:
+            case ButtonInputType.Right:
+              {
+                processedInput = true;
+                pressedInputs.Dequeue();
+                nextPlayerState = PlayerState.Dash;
+
+                anim.SetTrigger("triggerDash");
+              }
+              break;
+
+            // 공격 (다음 공격 진행)
+            case ButtonInputType.Attack:
+              {
+                processedInput = true;
+
+                // 임시로 땅 위에 있을때만 발동
+                if (isOnGround)
+                {
+                  pressedInputs.Dequeue();
+                  nextPlayerState = GetPlayerStateByAttackIndex(GetNextAttackIndex(GetAttackIndexByPlayerState(state)));
+                }
+              }
+              break;
           }
 
-          // 공격 (다음 공격 진행)
-          if (pressedInput == ButtonInputType.Attack)
-          {
-            // 임시로 땅 위에 있을때만 발동
-            if (isOnGround)
-            {
-              pressedInputs.Dequeue();
-              nextPlayerState = GetPlayerStateByAttackIndex(GetNextAttackIndex(GetAttackIndexByPlayerState(state)));
-            }
-          }
-          break;
+          if (processedInput) break;
         }
       }
 
       playerState = nextPlayerState;
     }
+
+    protected void ProcessPlayerState_Dash()
+    {
+      if (anim.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle"))
+        playerState = PlayerState.Move;
+    }
     #endregion
 
     #region Animation
-    void ProcessAnimation()
+    public void SetLookingDirection(bool right)
     {
-      anim.SetBool("isRunning", Math.Abs(velocity.x) > 0.0f);
-      anim.SetBool("isFalling", !isOnGround);
-      anim.SetInteger("attackIndex", GetAttackIndexByPlayerState(playerState));
+      sprite.flipX = !right;
+    }
 
-      // 캐릭터가 바라보는 방향
-      if (isLookingRight) isLookingRight = velocity.x >= 0.0f;
-      else isLookingRight = velocity.x > 0.0f;
-      sprite.flipX = !isLookingRight;
+    private void ProcessAnimation()
+    {
+      anim.SetInteger("attackIndex", GetAttackIndexByPlayerState(playerState));
     }
 
     private void AnimTrigger_Vibrate()
@@ -321,8 +335,13 @@ namespace Unit
       {
         float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
 
+        // 대시
+        if(playerState == PlayerState.Dash)
+        {
+          velocity.x = maxSpeed * 2 * (isLookingRight ? 1 : -1);
+        }
         // 가속
-        if (Math.Abs(moveInput) > 0.0f)
+        else if (Math.Abs(moveInput) > 0.0f)
         {
           float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
 

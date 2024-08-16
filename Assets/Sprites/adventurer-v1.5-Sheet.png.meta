@@ -627,7 +627,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_24
+      name: player_dash_1
       rect:
         serializedVersion: 2
         x: 150
@@ -648,7 +648,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_25
+      name: player_dash_2
       rect:
         serializedVersion: 2
         x: 200
@@ -669,7 +669,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_26
+      name: player_dash_3
       rect:
         serializedVersion: 2
         x: 250
@@ -690,7 +690,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_27
+      name: player_dash_4
       rect:
         serializedVersion: 2
         x: 300
@@ -711,7 +711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_28
+      name: player_dash_5
       rect:
         serializedVersion: 2
         x: 0
@@ -2439,11 +2439,6 @@ TextureImporter:
       adventurer-v1.5-Sheet_19: -766556646
       adventurer-v1.5-Sheet_20: -283831827
       adventurer-v1.5-Sheet_21: 1086272386
-      adventurer-v1.5-Sheet_24: -2070212865
-      adventurer-v1.5-Sheet_25: -541123695
-      adventurer-v1.5-Sheet_26: -1623789964
-      adventurer-v1.5-Sheet_27: 1151377490
-      adventurer-v1.5-Sheet_28: -2066587741
       adventurer-v1.5-Sheet_29: -363143852
       adventurer-v1.5-Sheet_30: 944193686
       adventurer-v1.5-Sheet_31: 346065779
@@ -2515,6 +2510,11 @@ TextureImporter:
       player_attack_4_2: 1679835177
       player_attack_4_3: -297646990
       player_attack_4_4: 375118203
+      player_dash_1: -2070212865
+      player_dash_2: -541123695
+      player_dash_3: -1623789964
+      player_dash_4: 1151377490
+      player_dash_5: -2066587741
       player_falling_1: -491419628
       player_falling_2: -1278487798
       player_idle_1: 1179926845
