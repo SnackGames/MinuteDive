@@ -36,6 +36,7 @@ namespace Unit
     [Header("Movement")]
     public float moveSpeed = 5.0f;
     public float aerialMoveSpeed = 1.0f;
+    public float attackMoveSpeed = 1.5f;
     public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
     public float gravityScale = 1.0f;
@@ -68,7 +69,7 @@ namespace Unit
 
     #region Input
     private bool[] holdingInputs = new bool[Enum.GetNames(typeof(ButtonInputType)).Length];
-    private Queue<(ButtonInputType,float)> pressedInputs = new Queue<(ButtonInputType, float)>();
+    private Queue<(ButtonInputType, float)> pressedInputs = new Queue<(ButtonInputType, float)>();
     private float previousAxisInput = 0.0f;
 
     [VisibleEnum(typeof(ButtonInputType))]
@@ -166,15 +167,18 @@ namespace Unit
     #endregion
 
     #region Animation
+    [ReadOnly] public bool isReservedDashDirectionRight = false;
+
     public void SetLookingDirection(bool right)
     {
       sprite.flipX = !right;
+      isLookingRight = right;
     }
 
-    private void AnimTrigger_EnableMoveInput() => playerStateBehaviour.AnimTrigger_EnableMoveInput();
-    private void AnimTrigger_EnableAttackInput() => playerStateBehaviour.AnimTrigger_EnableAttackInput();
+    public void AnimTrigger_EnableMoveInput(int enable) => playerStateBehaviour.AnimTrigger_EnableMoveInput(enable > 0);
+    public void AnimTrigger_EnableAttackInput(int enable) => playerStateBehaviour.AnimTrigger_EnableAttackInput(enable > 0);
 
-    private void AnimTrigger_Vibrate()
+    public void AnimTrigger_Vibrate()
     {
       // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
       Handheld.Vibrate();
@@ -212,7 +216,11 @@ namespace Unit
             // 가속
             if (Math.Abs(moveInput) > 0.0f)
             {
-              float newSpeed = velocity.x + moveInput * moveAcceleration * Time.deltaTime;
+              float acceleration = moveAcceleration;
+              // 방향전환은 가속도를 쎄게 준다
+              if (moveInput * velocity.x < 0.0f) acceleration *= 3.0f;
+
+              float newSpeed = velocity.x + moveInput * acceleration * Time.deltaTime;
               velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
             }
             // 감속
@@ -225,12 +233,19 @@ namespace Unit
           } break;
 
         case PlayerStateType.Attack:
-        case PlayerStateType.Dash:
           {
             // 감속
             velocity.x = velocity.x > 0.0f ?
                 Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+          } break;
+
+        case PlayerStateType.Dash:
+          {
+            // 속도 3배로 감속
+            velocity.x = velocity.x > 0.0f ?
+                Math.Max(0.0f, velocity.x - 3.0f * moveAcceleration * Time.deltaTime) :
+                Math.Min(0.0f, velocity.x + 3.0f * moveAcceleration * Time.deltaTime);
           } break;
       }
     }

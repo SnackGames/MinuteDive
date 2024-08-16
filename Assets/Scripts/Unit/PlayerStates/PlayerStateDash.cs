@@ -1,5 +1,4 @@
 using Unit;
-using UnityEngine;
 
 namespace PlayerState
 {
@@ -10,7 +9,8 @@ namespace PlayerState
     override protected void OnPlayerStateEnter() 
     {
       base.OnPlayerStateEnter();
-      player.velocity.x = player.dashSpeed * (player.isLookingRight ? 1.0f : -1.0f);
+      player.SetLookingDirection(player.isReservedDashDirectionRight);
+      player.velocity.x = player.dashSpeed * (player.isReservedDashDirectionRight ? 1.0f : -1.0f);
     }
   }
 }

@@ -87,10 +87,17 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 1
     messageOptions: 0
   - time: 0.16666667
     functionName: AnimTrigger_EnableAttackInput
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.18333334
+    functionName: AnimTrigger_EnableMoveInput
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

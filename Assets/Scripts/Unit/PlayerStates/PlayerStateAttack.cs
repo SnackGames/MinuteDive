@@ -14,6 +14,8 @@ namespace PlayerState
     {
       isMoveInputEnabled = false;
       isAttackInputEnabled = false;
+
+      player.velocity.x = player.attackMoveSpeed * (player.isLookingRight ? 1.0f : -1.0f);
     }
 
     override protected void OnPlayerStateEnter()
@@ -35,6 +37,7 @@ namespace PlayerState
               if (isMoveInputEnabled && player.isOnGround)
               {
                 player.DequePressedInput();
+                player.isReservedDashDirectionRight = pressedInput == ButtonInputType.Right;
                 return PlayerStateType.Dash;
               }
             }
@@ -57,14 +60,14 @@ namespace PlayerState
       return null;
     }
 
-    public override void AnimTrigger_EnableMoveInput()
+    public override void AnimTrigger_EnableMoveInput(bool enable)
     {
-      isMoveInputEnabled = true;
+      isMoveInputEnabled = enable;
     }
 
-    public override void AnimTrigger_EnableAttackInput()
+    public override void AnimTrigger_EnableAttackInput(bool enable)
     {
-      isAttackInputEnabled = true;
+      isAttackInputEnabled = enable;
     }
   }
 }

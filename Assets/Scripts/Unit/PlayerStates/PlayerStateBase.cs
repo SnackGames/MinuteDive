@@ -34,9 +34,10 @@ namespace PlayerState
       animator.SetBool("isFalling", !player.isOnGround);
 
       // 캐릭터가 바라보는 방향
-      if (player.isLookingRight) player.isLookingRight = player.velocity.x >= 0.0f;
-      else player.isLookingRight = player.velocity.x > 0.0f;
-      player.SetLookingDirection(player.isLookingRight);
+      bool isRight = false;
+      if (player.isLookingRight) isRight = player.velocity.x >= 0.0f;
+      else isRight = player.velocity.x > 0.0f;
+      player.SetLookingDirection(isRight);
     }
 
     virtual protected PlayerStateType? ProcessStateChange(Animator animator) => null;
@@ -52,7 +53,7 @@ namespace PlayerState
       }
     }
 
-    public virtual void AnimTrigger_EnableMoveInput() { }
-    public virtual void AnimTrigger_EnableAttackInput() { }
+    public virtual void AnimTrigger_EnableMoveInput(bool enable) { }
+    public virtual void AnimTrigger_EnableAttackInput(bool enable) { }
   }
 }
