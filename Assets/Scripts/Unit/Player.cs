@@ -245,17 +245,14 @@ namespace Unit
       {
         if (move.magnitude <= 0.0f || Time.deltaTime <= 0.0f) break;
 
-        RaycastHit2D? hit = CheckMoveCollision(body.position, move);
+        RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * epsilon);
         if (hit == null)
         {
           body.position += move;
           break;
         }
 
-        // #TODO_MOVEMENT
-        // 현재 epsilon때문에 경사있는 면에서는 이동이 불가능하다 (또는 낙하 코너에서)
-        // 따라서, 내적으로 경사면의 Tangent에 따라 epsilon의 강도가 바뀌도록 수정할 것 (또는 surfaceNormal 기준으로 살짝 띄우거나)
-        float newDistance = Math.Max(0.0f, hit.Value.distance - epsilon);
+        float newDistance = hit.Value.distance - epsilon;
 
         // 충돌하기 직전만큼 이동
         body.position += move.normalized * newDistance;
