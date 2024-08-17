@@ -20,6 +20,7 @@ namespace PlayerState
       player.playerState = GetPlayerStateType();
       player.playerStateBehaviour = this;
       player.isAttacking = false;
+      player.isFallAttacking = false;
 
       OnPlayerStateEnter();
     }

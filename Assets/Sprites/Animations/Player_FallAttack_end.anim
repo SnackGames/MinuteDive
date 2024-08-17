@@ -93,6 +93,20 @@ AnimationClip:
     floatParameter: 0.5
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: AnimTrigger_FallAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.05
+    functionName: AnimTrigger_EnableAttackInput
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.06666667
     functionName: AnimTrigger_EnableMoveInput
     data: 

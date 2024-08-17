@@ -48,11 +48,13 @@ namespace Unit
 
     [Header("Attack")]
     [ReadOnly] public bool isAttacking = false;
+    [ReadOnly] public bool isFallAttacking = false;
     private ContactFilter2D attackFilter;
 
     [Header("Component Links")]
     public PlayerCamera playerCamera;
     public Rigidbody2D attackRigidbody;
+    public Rigidbody2D fallAttackRigidbody;
 
     protected Rigidbody2D body;
     protected Animator anim;
@@ -194,6 +196,7 @@ namespace Unit
     public void AnimTrigger_EnableAttackInput(int enable) => playerStateBehaviour.AnimTrigger_EnableAttackInput(enable > 0);
 
     public void AnimTrigger_Attack(int enable) => isAttacking = enable > 0;
+    public void AnimTrigger_FallAttack(int enable) => isFallAttacking = enable > 0;
 
     public void AnimTrigger_Vibrate()
     {
@@ -308,13 +311,24 @@ namespace Unit
 
     protected void ProcessAttack()
     {
-      if (!isAttacking) return;
-
-      Collider2D[] hitColliders = new Collider2D[4];
-      int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
-      for (int i = 0; i < count; ++i)
+      if (isAttacking)
       {
-        Destroy(hitColliders[i].gameObject);
+        Collider2D[] hitColliders = new Collider2D[4];
+        int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
+        for (int i = 0; i < count; ++i)
+        {
+          Destroy(hitColliders[i].gameObject);
+        }
+      }
+
+      if (isFallAttacking)
+      {
+        Collider2D[] hitColliders = new Collider2D[4];
+        int count = fallAttackRigidbody.OverlapCollider(attackFilter, hitColliders);
+        for (int i = 0; i < count; ++i)
+        {
+          Destroy(hitColliders[i].gameObject);
+        }
       }
     }
   }
