@@ -46,6 +46,9 @@ namespace Unit
     [ReadOnly] public bool isOnGround = false;
     private ContactFilter2D contactFilter;
 
+    [Header("Component Links")]
+    public PlayerCamera playerCamera;
+
     protected Rigidbody2D body;
     protected Animator anim;
     protected SpriteRenderer sprite;
@@ -67,6 +70,15 @@ namespace Unit
     protected virtual void Update()
     {
       ProcessInput();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+      ProcessVelocity();
+      ProcessMovement();
+
+      // 땅 위인지 여부
+      isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
     }
 
     #region Input
@@ -156,7 +168,7 @@ namespace Unit
     #endregion
 
     #region Animation
-    [ReadOnly] public bool isReservedDashDirectionRight = false;
+    [HideInInspector] public bool isReservedDashDirectionRight = false;
 
     public void SetLookingDirection(bool right)
     {
@@ -172,6 +184,8 @@ namespace Unit
       // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
       Handheld.Vibrate();
     }
+
+    public void AnimTrigger_CameraShake(float strength = 1.0f) => playerCamera.ShakeCamera(strength);
     #endregion
 
     #region Movement
@@ -275,14 +289,5 @@ namespace Unit
       }
     }
     #endregion
-
-    protected virtual void FixedUpdate()
-    {
-      ProcessVelocity();
-      ProcessMovement();
-
-      // 땅 위인지 여부
-      isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
-    }
   }
 }

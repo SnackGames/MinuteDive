@@ -2391,7 +2391,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: adventurer-v1.5-Sheet_108
+      name: player_fallAttack_6
       rect:
         serializedVersion: 2
         x: 150
@@ -2425,7 +2425,6 @@ TextureImporter:
       adventurer-v1.5-Sheet_100: -2134849459
       adventurer-v1.5-Sheet_101: -979641754
       adventurer-v1.5-Sheet_102: 1256447501
-      adventurer-v1.5-Sheet_108: 988390039
       adventurer-v1.5-Sheet_14: -378089441
       adventurer-v1.5-Sheet_15: 158762013
       adventurer-v1.5-Sheet_16: -1939951945
@@ -2515,6 +2514,7 @@ TextureImporter:
       player_fallAttack_3: 1239531051
       player_fallAttack_4: 247626098
       player_fallAttack_5: -950519874
+      player_fallAttack_6: 988390039
       player_falling_1: -491419628
       player_falling_2: -1278487798
       player_idle_1: 1179926845
