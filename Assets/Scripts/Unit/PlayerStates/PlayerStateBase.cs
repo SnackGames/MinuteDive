@@ -19,6 +19,7 @@ namespace PlayerState
       player = animator.GetComponent<Player>();
       player.playerState = GetPlayerStateType();
       player.playerStateBehaviour = this;
+      player.isAttacking = false;
 
       OnPlayerStateEnter();
     }

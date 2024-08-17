@@ -46,8 +46,13 @@ namespace Unit
     [ReadOnly] public bool isOnGround = false;
     private ContactFilter2D contactFilter;
 
+    [Header("Attack")]
+    [ReadOnly] public bool isAttacking = false;
+    private ContactFilter2D attackFilter;
+
     [Header("Component Links")]
     public PlayerCamera playerCamera;
+    public Rigidbody2D attackRigidbody;
 
     protected Rigidbody2D body;
     protected Animator anim;
@@ -65,11 +70,16 @@ namespace Unit
       contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
       contactFilter.useLayerMask = true;
       contactFilter.useTriggers = false;
+
+      attackFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(attackRigidbody.gameObject.layer));
+      attackFilter.useLayerMask = true;
+      attackFilter.useTriggers = false;
     }
 
     protected virtual void Update()
     {
       ProcessInput();
+      ProcessAttack();
     }
 
     protected virtual void FixedUpdate()
@@ -174,10 +184,16 @@ namespace Unit
     {
       sprite.flipX = !right;
       isLookingRight = right;
+
+      Vector3 newPosition = attackRigidbody.transform.localPosition;
+      newPosition.x *= (newPosition.x > 0.0f) == right ? 1.0f : -1.0f;
+      attackRigidbody.transform.localPosition = newPosition;
     }
 
     public void AnimTrigger_EnableMoveInput(int enable) => playerStateBehaviour.AnimTrigger_EnableMoveInput(enable > 0);
     public void AnimTrigger_EnableAttackInput(int enable) => playerStateBehaviour.AnimTrigger_EnableAttackInput(enable > 0);
+
+    public void AnimTrigger_Attack(int enable) => isAttacking = enable > 0;
 
     public void AnimTrigger_Vibrate()
     {
@@ -289,5 +305,17 @@ namespace Unit
       }
     }
     #endregion
+
+    protected void ProcessAttack()
+    {
+      if (!isAttacking) return;
+
+      Collider2D[] hitColliders = new Collider2D[4];
+      int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
+      for (int i = 0; i < count; ++i)
+      {
+        Destroy(hitColliders[i].gameObject);
+      }
+    }
   }
 }
