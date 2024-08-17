@@ -8,11 +8,14 @@ namespace PlayerState
   public class PlayerStateBase : StateMachineBehaviour
   {
     protected Player player;
+    private bool isStateChangeTriggered = false;
 
     public virtual PlayerStateType GetPlayerStateType() => PlayerStateType.Move;
 
     sealed override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+      isStateChangeTriggered = false;
+
       player = animator.GetComponent<Player>();
       player.playerState = GetPlayerStateType();
       player.playerStateBehaviour = this;
@@ -24,10 +27,14 @@ namespace PlayerState
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      PlayerStateType? nextState = ProcessStateChange(animator);
-      if(nextState != null)
+      if(!isStateChangeTriggered)
       {
-        TriggerStateChange(animator, nextState.Value);
+        PlayerStateType? nextState = ProcessStateChange(animator);
+        if (nextState != null)
+        {
+          isStateChangeTriggered = true;
+          TriggerStateChange(animator, nextState.Value);
+        }
       }
 
       animator.SetBool("isRunning", Math.Abs(player.velocity.x) > 0.0f);

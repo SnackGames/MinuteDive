@@ -5,7 +5,22 @@ namespace PlayerState
 {
   public class PlayerStateFallAttack : PlayerStateBase
   {
+    private bool isMoveInputEnabled = false;
+    private bool isAttackInputEnabled = false;
+
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.FallAttack;
+
+    private void RefreshPlayerState()
+    {
+      isMoveInputEnabled = false;
+      isAttackInputEnabled = false;
+    }
+
+    override protected void OnPlayerStateEnter()
+    {
+      base.OnPlayerStateEnter();
+      RefreshPlayerState();
+    }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator)
     {
@@ -17,7 +32,7 @@ namespace PlayerState
           case ButtonInputType.Left:
           case ButtonInputType.Right:
             {
-              if (player.isOnGround)
+              if (isMoveInputEnabled && player.isOnGround)
               {
                 player.DequePressedInput();
                 player.isReservedDashDirectionRight = pressedInput == ButtonInputType.Right;
@@ -28,7 +43,7 @@ namespace PlayerState
 
           case ButtonInputType.Attack:
             {
-              if (player.isOnGround)
+              if (isAttackInputEnabled && player.isOnGround)
               {
                 player.DequePressedInput();
                 return PlayerStateType.Attack;
@@ -40,6 +55,16 @@ namespace PlayerState
       }
 
       return null;
+    }
+
+    public override void AnimTrigger_EnableMoveInput(bool enable)
+    {
+      isMoveInputEnabled = enable;
+    }
+
+    public override void AnimTrigger_EnableAttackInput(bool enable)
+    {
+      isAttackInputEnabled = enable;
     }
   }
 }
