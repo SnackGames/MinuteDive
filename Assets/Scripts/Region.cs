@@ -23,6 +23,8 @@ public class Region : MonoBehaviour
     body.isKinematic = true;
     regionCollider = GetComponent<Collider2D>();
     regionCollider.isTrigger = true;
+
+    gameObject.layer = LayerMask.NameToLayer("Region");
   }
 
   private void OnTriggerEnter2D(Collider2D collision)

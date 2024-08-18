@@ -321,13 +321,17 @@ namespace Unit
 
     protected void ProcessAttack()
     {
+      // 임시 피격 처리
+      // 추후 제대로된 체력 시스템 구현이 필요하다
       if (isAttacking)
       {
         Collider2D[] hitColliders = new Collider2D[4];
         int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
         for (int i = 0; i < count; ++i)
         {
-          Destroy(hitColliders[i].gameObject);
+          Monster monster = hitColliders[i].gameObject.GetComponent<Monster>();
+          if (monster != null)
+            monster.OnHit();
         }
       }
 
@@ -337,7 +341,9 @@ namespace Unit
         int count = fallAttackRigidbody.OverlapCollider(attackFilter, hitColliders);
         for (int i = 0; i < count; ++i)
         {
-          Destroy(hitColliders[i].gameObject);
+          Monster monster = hitColliders[i].gameObject.GetComponent<Monster>();
+          if (monster != null)
+            monster.OnHit();
         }
       }
     }
