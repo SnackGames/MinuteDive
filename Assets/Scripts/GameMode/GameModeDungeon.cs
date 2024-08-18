@@ -40,6 +40,8 @@ public class GameModeDungeon : GameModeBase
     return RemainTime;
   }
 
+  public float GetRemainTime() => RemainTime;
+
   private void OnRemainTimeExpired()
   {
     if (RemainTime > 0f)
