@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using AYellowpaper.SerializedCollections;
+
 namespace Unit
 {
   [Serializable]
@@ -22,7 +24,10 @@ namespace Unit
     Dash
   }
 
-  [RequireComponent(typeof(Rigidbody2D),typeof(Animator),typeof(SpriteRenderer))]
+  [RequireComponent(typeof(Rigidbody2D))]
+  [RequireComponent(typeof(Animator))]
+  [RequireComponent(typeof(SpriteRenderer))]
+  [RequireComponent(typeof(AudioSource))]
   public class Player : MonoBehaviour
   {
     [Header("Input")]
@@ -51,6 +56,10 @@ namespace Unit
     [ReadOnly] public bool isFallAttacking = false;
     private ContactFilter2D attackFilter;
 
+    [Header("Sound")]
+    [SerializedDictionary("Sound Name", "AudioClip")]
+    public SerializedDictionary<string, AudioClip> playerSounds;
+
     [Header("Component Links")]
     public PlayerCamera playerCamera;
     public Rigidbody2D attackRigidbody;
@@ -59,15 +68,15 @@ namespace Unit
     protected Rigidbody2D body;
     protected Animator anim;
     protected SpriteRenderer sprite;
+    protected AudioSource sound;
 
     private void Awake()
     {
       body = GetComponent<Rigidbody2D>();
       body.isKinematic = true;
-
       anim = GetComponent<Animator>();
-
       sprite = GetComponent<SpriteRenderer>();
+      sound = GetComponent<AudioSource>();
 
       contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
       contactFilter.useLayerMask = true;
@@ -201,10 +210,11 @@ namespace Unit
     public void AnimTrigger_Vibrate()
     {
       // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
-      Handheld.Vibrate();
+      UnityEngine.Handheld.Vibrate();
     }
 
     public void AnimTrigger_CameraShake(float strength = 1.0f) => playerCamera.ShakeCamera(strength);
+    public void AnimTrigger_PlaySound(string soundName) => sound.PlayOneShot(playerSounds[soundName]);
     #endregion
 
     #region Movement
