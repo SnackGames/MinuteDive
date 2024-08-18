@@ -6,7 +6,6 @@ using UnityEngine.U2D;
 namespace UI
 {
   [DisallowMultipleComponent]
-  [ExecuteAlways]
   [RequireComponent(typeof(TextMeshProUGUI))]
   [AddComponentMenu("UI/FPS Text")]
   public class UI_FPSText : MonoBehaviour
