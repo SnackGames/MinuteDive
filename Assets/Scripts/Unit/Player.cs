@@ -64,6 +64,7 @@ namespace Unit
     public PlayerCamera playerCamera;
     public Rigidbody2D attackRigidbody;
     public Rigidbody2D fallAttackRigidbody;
+    public ParticleSystem dashEffect;
 
     protected Rigidbody2D body;
     protected Animator anim;

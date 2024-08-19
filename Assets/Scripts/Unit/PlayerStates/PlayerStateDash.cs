@@ -12,6 +12,13 @@ namespace PlayerState
       base.OnPlayerStateEnter();
       player.SetLookingDirection(player.isReservedDashDirectionRight);
       player.velocity.x = player.dashSpeed * (player.isReservedDashDirectionRight ? 1.0f : -1.0f);
+      player.dashEffect.Play();
+    }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+      player.dashEffect.Stop();
+      base.OnStateExit(animator, stateInfo, layerIndex);
     }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator)
