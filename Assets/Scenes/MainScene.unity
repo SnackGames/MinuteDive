@@ -2015,21 +2015,33 @@ MonoBehaviour:
   regionName: Lobby
   OnRegionEnter:
     m_PersistentCalls:
-      m_Calls: []
-  OnRegionExit:
-    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 333092004}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 1835716989}
+        m_TargetAssemblyTypeName: GameModeManager, Assembly-CSharp
+        m_MethodName: OnRegionEnter
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_StringArgument: Lobby
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRegionExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1835716989}
+        m_TargetAssemblyTypeName: GameModeManager, Assembly-CSharp
+        m_MethodName: OnRegionExit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Lobby
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!50 &322370317
 Rigidbody2D:
@@ -2058,6 +2070,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+<<<<<<< HEAD
 --- !u!1 &333092003
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,6 +2275,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> ce63ef5271aa2486c5f4163b9cb8a8bdb5bb168f
 --- !u!1 &351214832
 GameObject:
   m_ObjectHideFlags: 0
@@ -4933,7 +4948,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameModeDungeon: {fileID: 0}
-  GameModeType: 0
 --- !u!1 &1229774470
 GameObject:
   m_ObjectHideFlags: 0
@@ -7256,6 +7270,72 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &1835716988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1835716990}
+  - component: {fileID: 1835716989}
+  m_Layer: 0
+  m_Name: GameModeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1835716989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835716988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30fa770a69c33740a33f0fc8b6547ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentMode: 0
+  GameMode: {fileID: 0}
+  OnSetGameMode:
+    m_PersistentCalls:
+      m_Calls: []
+  UserInitialPosition: {x: -3, y: 7, z: 0}
+  InitialRemainTime: 5
+  OnRemainTimeExpired:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1268439481}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ReturnToLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &1835716990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835716988}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.264334, y: 2.8819802, z: -0.10753381}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1919405317
 GameObject:
   m_ObjectHideFlags: 0
@@ -8306,7 +8386,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1268439480}
   - {fileID: 1971087650}
-  - {fileID: 333092005}
+  - {fileID: 1835716990}
   - {fileID: 322370313}
   - {fileID: 1319171325}
   - {fileID: 457260397}

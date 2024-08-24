@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unit;
 using UnityEngine;
 
 namespace GameMode
@@ -8,18 +9,30 @@ namespace GameMode
   [Serializable]
   public enum GameModeType
   {
+    None = 0,
     Lobby,
     Dungeon
   }
 
-  public abstract class GameModeBase : MonoBehaviour
+  [RequireComponent(typeof(GameModeManager))]
+  public class GameModeBase : MonoBehaviour
   {
-    public abstract GameModeType GetGameModeType();
+    protected GameModeManager ModeManager;
 
-    // Update is called once per frame
-    protected virtual void Update()
+    virtual public GameModeType GetGameModeType() => GameModeType.None;
+    virtual public void StartGameMode() { ModeManager = GetComponent<GameModeManager>(); }
+    virtual public void FinishGameMode() { }
+
+    virtual protected void Update() { }
+
+    void Start()
     {
-
+      StartGameMode();
     }
+    void OnDestroy()
+    {
+      FinishGameMode();
+    }
+
   }
 }
