@@ -5,6 +5,7 @@ using GameMode;
 using Unity.VisualScripting;
 using UnityEngine.Events;
 using System;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class GameModeEvent : UnityEvent<GameModeType> { }
@@ -15,6 +16,9 @@ public class GameModeManager : MonoBehaviour
   [ReadOnly] public GameModeType CurrentMode = GameModeType.None;
   public GameModeBase GameMode = null;
   public GameModeEvent OnSetGameMode;
+
+  [Header("Lobby")]
+  public Vector3 UserInitialPosition;
 
   [Header("Dungeon")]
   public float InitialRemainTime = 60f;

@@ -2,6 +2,7 @@ using PlayerState;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using GameMode;
 
 using AYellowpaper.SerializedCollections;
 
@@ -353,6 +354,15 @@ namespace Unit
             hitObjects.Add(monster.gameObject);
           }
         }
+      }
+    }
+
+    public void ReturnToLobby()
+    {
+      GameModeManager ModeManager = GameObject.FindObjectOfType<GameModeManager>();
+      if(ModeManager != null && ModeManager.CurrentMode == GameModeType.Dungeon)
+      {
+        transform.position = ModeManager.UserInitialPosition;
       }
     }
   }

@@ -9,17 +9,17 @@ public class GameModeDungeon : GameModeBase
 {
   [Header("GameModeDungeon")]
   [ReadOnly] public float RemainTime = 0f;
-  private GameModeManager ModeManager;
 
   #region GameModeBase
   override public GameModeType GetGameModeType() => GameModeType.Dungeon;
   public override void StartGameMode()
   {
-    ModeManager = GetComponent<GameModeManager>();
+    base.StartGameMode();
     StartTimer();
   }
   public override void FinishGameMode()
   {
+    base.FinishGameMode();
   }
 
   override protected void Update()

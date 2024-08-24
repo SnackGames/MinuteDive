@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unit;
 using UnityEngine;
 
 namespace GameMode
@@ -13,16 +14,16 @@ namespace GameMode
     Dungeon
   }
 
-  public abstract class GameModeBase : MonoBehaviour
+  [RequireComponent(typeof(GameModeManager))]
+  public class GameModeBase : MonoBehaviour
   {
-    public abstract GameModeType GetGameModeType();
-    public abstract void StartGameMode();
-    public abstract void FinishGameMode();
+    protected GameModeManager ModeManager;
 
-    virtual protected void Update()
-    {
+    virtual public GameModeType GetGameModeType() => GameModeType.None;
+    virtual public void StartGameMode() { ModeManager = GetComponent<GameModeManager>(); }
+    virtual public void FinishGameMode() { }
 
-    }
+    virtual protected void Update() { }
 
     void Start()
     {
