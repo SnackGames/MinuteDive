@@ -13,12 +13,15 @@ public class GameModeManager : MonoBehaviour
 {
   [Header("GameModeMangaer")]
   [ReadOnly] public GameModeType CurrentMode = GameModeType.None;
-  public GameModeEvent OnSetGameMode;
   public GameModeBase GameMode = null;
+  public GameModeEvent OnSetGameMode;
+
+  [Header("Dungeon")]
+  public float InitialRemainTime = 60f;
+  public UnityEvent OnRemainTimeExpired;
 
   void Start()
   {
-    SetGameMode(GameModeType.Lobby);
   }
 
   void Update()
@@ -26,7 +29,6 @@ public class GameModeManager : MonoBehaviour
     if (GameMode != null)
     {
       CurrentMode = GameMode.GetGameModeType();
-      GameMode.Update();
     }
   }
 
@@ -55,16 +57,17 @@ public class GameModeManager : MonoBehaviour
       return;
 
     if (GameMode != null)
-      GameMode.FinishGameMode();
+    {
+      Destroy(GameMode);
+    }
+
     switch (Type)
     {
       case GameModeType.Lobby:
-        GameMode = new GameModeLobby();
-        GameMode.StartGameMode();
+        GameMode = gameObject.AddComponent<GameModeLobby>();
         break;
       case GameModeType.Dungeon:
-        GameMode = new GameModeDungeon();
-        GameMode.StartGameMode();
+        GameMode = gameObject.AddComponent<GameModeDungeon>();
         break;
       default:
         GameMode = null;

@@ -1,4 +1,5 @@
 using GameMode;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -16,7 +17,7 @@ public class GameModeLobby : GameModeBase
   }
 
   // Update is called once per frame
-  override public void Update()
+  override protected void Update()
   {
     base.Update();
   }

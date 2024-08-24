@@ -13,15 +13,25 @@ namespace GameMode
     Dungeon
   }
 
-  public abstract class GameModeBase
+  public abstract class GameModeBase : MonoBehaviour
   {
     public abstract GameModeType GetGameModeType();
     public abstract void StartGameMode();
     public abstract void FinishGameMode();
 
-    public virtual void Update()
+    virtual protected void Update()
     {
 
     }
+
+    void Start()
+    {
+      StartGameMode();
+    }
+    void OnDestroy()
+    {
+      FinishGameMode();
+    }
+
   }
 }

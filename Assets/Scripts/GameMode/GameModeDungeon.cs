@@ -9,19 +9,20 @@ public class GameModeDungeon : GameModeBase
 {
   [Header("GameModeDungeon")]
   [ReadOnly] public float RemainTime = 0f;
-  public float InitialRemainTime = 60f;
+  private GameModeManager ModeManager;
 
   #region GameModeBase
   override public GameModeType GetGameModeType() => GameModeType.Dungeon;
   public override void StartGameMode()
   {
+    ModeManager = GetComponent<GameModeManager>();
     StartTimer();
   }
   public override void FinishGameMode()
   {
   }
 
-  override public void Update()
+  override protected void Update()
   {
     base.Update();
 
@@ -40,7 +41,9 @@ public class GameModeDungeon : GameModeBase
 
   public float StartTimer()
   {
-    RemainTime = InitialRemainTime;
+    if (ModeManager != null)
+      RemainTime = ModeManager.InitialRemainTime;
+
     return RemainTime;
   }
 
@@ -51,6 +54,7 @@ public class GameModeDungeon : GameModeBase
     if (RemainTime > 0f)
       return;
 
-    Debug.Log("OnRemainTimeExpired Called");
+    if (ModeManager != null)
+      ModeManager.OnRemainTimeExpired.Invoke();
   }
 }
