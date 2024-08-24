@@ -8,13 +8,16 @@ namespace GameMode
   [Serializable]
   public enum GameModeType
   {
+    None = 0,
     Lobby,
     Dungeon
   }
 
-  public abstract class GameModeBase : MonoBehaviour
+  public abstract class GameModeBase
   {
     public abstract GameModeType GetGameModeType();
+    public abstract void StartGameMode();
+    public abstract void FinishGameMode();
 
     // Update is called once per frame
     protected virtual void Update()

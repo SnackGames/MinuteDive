@@ -13,6 +13,13 @@ public class GameModeDungeon : GameModeBase
 
   #region GameModeBase
   override public GameModeType GetGameModeType() => GameModeType.Dungeon;
+  public override void StartGameMode()
+  {
+    StartTimer();
+  }
+  public override void FinishGameMode()
+  {
+  }
 
   // Update is called once per frame
   override protected void Update()
@@ -28,11 +35,6 @@ public class GameModeDungeon : GameModeBase
       OnRemainTimeExpired();
   }
   #endregion
-
-  private void Awake()
-  {
-    StartTimer();
-  }
 
   public float StartTimer()
   {

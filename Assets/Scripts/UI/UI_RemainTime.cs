@@ -17,7 +17,8 @@ namespace UI
 
     private void Awake()
     {
-      GameModeDungeon = GameObject.FindObjectOfType<GameModeDungeon>();
+      //GameModeDungeon = GameObject.FindObjectOfType<GameModeDungeon>();
+      GameModeDungeon = null;
       if(GameModeDungeon != null)
         GameModeType = GameModeDungeon.GetGameModeType();
 
