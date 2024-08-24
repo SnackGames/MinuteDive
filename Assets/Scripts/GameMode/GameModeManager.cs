@@ -14,7 +14,7 @@ public class GameModeManager : MonoBehaviour
   [Header("GameModeMangaer")]
   [ReadOnly] public GameModeType CurrentMode = GameModeType.None;
   public GameModeEvent OnSetGameMode;
-  private GameModeBase GameMode = null;
+  public GameModeBase GameMode = null;
 
   void Start()
   {
@@ -23,8 +23,11 @@ public class GameModeManager : MonoBehaviour
 
   void Update()
   {
-    if( GameMode != null )
+    if (GameMode != null)
+    {
       CurrentMode = GameMode.GetGameModeType();
+      GameMode.Update();
+    }
   }
 
   public void OnRegionEnter(string RegionName)

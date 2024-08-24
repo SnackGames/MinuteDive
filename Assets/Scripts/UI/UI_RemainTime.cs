@@ -11,23 +11,22 @@ namespace UI
   {
     [Header("RemainTime")]
     [ReadOnly] public GameModeDungeon GameModeDungeon;
-    [ReadOnly] public GameModeType GameModeType;
+    private GameModeManager ModeManager;
 
     protected TextMeshProUGUI text;
 
     private void Awake()
     {
-      //GameModeDungeon = GameObject.FindObjectOfType<GameModeDungeon>();
-      GameModeDungeon = null;
-      if(GameModeDungeon != null)
-        GameModeType = GameModeDungeon.GetGameModeType();
-
+      ModeManager = GameObject.FindObjectOfType<GameModeManager>();
       text = GetComponent<TextMeshProUGUI>();
     }
 
     protected virtual void Update()
     {
-      if(GameModeDungeon != null && text != null)
+      if (ModeManager != null)
+        GameModeDungeon = ModeManager.GameMode as GameModeDungeon;
+
+      if (GameModeDungeon != null && text != null)
       {
         text.SetText($"Remain Time: {GameModeDungeon.GetRemainTime():F2}");
       }

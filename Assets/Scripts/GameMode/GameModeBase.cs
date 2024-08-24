@@ -19,8 +19,7 @@ namespace GameMode
     public abstract void StartGameMode();
     public abstract void FinishGameMode();
 
-    // Update is called once per frame
-    protected virtual void Update()
+    public virtual void Update()
     {
 
     }

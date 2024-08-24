@@ -21,8 +21,7 @@ public class GameModeDungeon : GameModeBase
   {
   }
 
-  // Update is called once per frame
-  override protected void Update()
+  override public void Update()
   {
     base.Update();
 
@@ -32,7 +31,10 @@ public class GameModeDungeon : GameModeBase
     float ElapsedTime = Time.deltaTime;
     RemainTime -= ElapsedTime;
     if (RemainTime <= 0f)
+    {
+      RemainTime = 0f;
       OnRemainTimeExpired();
+    }
   }
   #endregion
 

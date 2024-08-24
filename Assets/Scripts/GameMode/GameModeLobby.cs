@@ -16,7 +16,7 @@ public class GameModeLobby : GameModeBase
   }
 
   // Update is called once per frame
-  override protected void Update()
+  override public void Update()
   {
     base.Update();
   }
