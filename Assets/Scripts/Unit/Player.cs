@@ -320,10 +320,11 @@ namespace Unit
     }
     #endregion
 
+    private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
     protected void ProcessAttack()
     {
-      // 임시 피격 처리
-      // 추후 제대로된 체력 시스템 구현이 필요하다
+      if (!isAttacking && !isFallAttacking) hitObjects.Clear();
+
       if (isAttacking)
       {
         Collider2D[] hitColliders = new Collider2D[4];
@@ -331,8 +332,11 @@ namespace Unit
         for (int i = 0; i < count; ++i)
         {
           Monster monster = hitColliders[i].gameObject.GetComponent<Monster>();
-          if (monster != null)
+          if (monster != null && !hitObjects.Contains(monster.gameObject))
+          {
             monster.OnHit();
+            hitObjects.Add(monster.gameObject);
+          }
         }
       }
 
@@ -343,8 +347,11 @@ namespace Unit
         for (int i = 0; i < count; ++i)
         {
           Monster monster = hitColliders[i].gameObject.GetComponent<Monster>();
-          if (monster != null)
+          if (monster != null && !hitObjects.Contains(monster.gameObject))
+          {
             monster.OnHit();
+            hitObjects.Add(monster.gameObject);
+          }
         }
       }
     }
