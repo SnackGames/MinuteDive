@@ -192,6 +192,7 @@ namespace Unit
 
     #region Animation
     [HideInInspector] public bool isReservedDashDirectionRight = false;
+    private bool isNoGravity = false;
 
     public void SetLookingDirection(bool right)
     {
@@ -205,6 +206,7 @@ namespace Unit
 
     public void AnimTrigger_EnableMoveInput(int enable) => playerStateBehaviour.AnimTrigger_EnableMoveInput(enable > 0);
     public void AnimTrigger_EnableAttackInput(int enable) => playerStateBehaviour.AnimTrigger_EnableAttackInput(enable > 0);
+    public void AnimTrigger_NoGravity(int enable) => isNoGravity = enable > 0;
 
     public void AnimTrigger_Attack(int enable) => isAttacking = enable > 0;
     public void AnimTrigger_FallAttack(int enable) => isFallAttacking = enable > 0;
@@ -239,7 +241,10 @@ namespace Unit
     protected void ProcessVelocity()
     {
       // 중력
-      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+      if (isNoGravity)
+        velocity.y = 0.0f;
+      else
+        velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
 
       // 좌/우 이동
       float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
@@ -276,7 +281,7 @@ namespace Unit
 
         case PlayerStateType.FallAttack:
           {
-            velocity = new Vector2(0.0f, -fallAttackSpeed);
+            velocity = new Vector2(0.0f, isNoGravity ? 0.0f : -fallAttackSpeed);
           } break;
 
         case PlayerStateType.Dash:

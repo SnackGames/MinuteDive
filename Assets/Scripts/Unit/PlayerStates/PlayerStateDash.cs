@@ -5,10 +5,14 @@ namespace PlayerState
 {
   public class PlayerStateDash : PlayerStateBase
   {
+    private bool isAttackInputEnabled = false;
+
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Dash;
 
     override protected void OnPlayerStateEnter() 
     {
+      isAttackInputEnabled = false;
+
       base.OnPlayerStateEnter();
       player.SetLookingDirection(player.isReservedDashDirectionRight);
       player.velocity.x = player.dashSpeed * (player.isReservedDashDirectionRight ? 1.0f : -1.0f);
@@ -36,13 +40,19 @@ namespace PlayerState
               continue;
             }
 
-          // ³«ÇÏ °ø°Ý
           case ButtonInputType.Attack:
             {
+              // ³«ÇÏ °ø°Ý
               if (!player.isOnGround)
               {
                 player.DequePressedInput();
                 return PlayerStateType.FallAttack;
+              }
+              // °ø°Ý
+              else if (isAttackInputEnabled)
+              {
+                player.DequePressedInput();
+                return PlayerStateType.Attack;
               }
             } break;
         }
@@ -50,6 +60,11 @@ namespace PlayerState
       }
 
       return null;
+    }
+
+    public override void AnimTrigger_EnableAttackInput(bool enable)
+    {
+      isAttackInputEnabled = enable;
     }
   }
 }
