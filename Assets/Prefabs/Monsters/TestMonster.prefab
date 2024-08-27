@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5274100962771957324}
   - component: {fileID: 1952991836507199776}
+  - component: {fileID: 9053960069349167447}
   - component: {fileID: 6078355656400996763}
   - component: {fileID: 2182960843310453602}
   - component: {fileID: 4108123517532807800}
@@ -48,10 +49,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066d5fd2293d4774c97b96dd1cab3e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
   monsterData: {fileID: 11400000, guid: a9107d21575ba6945a1eefeaa41b1d6e, type: 2}
   hitParticlePrefab: {fileID: 3463157229188906966, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+--- !u!114 &9053960069349167447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248674364589053392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae99834e0f7f7f4f99129c95d2e4985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
   hpUI: {fileID: 856742794381075776}
+  OnHPChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1952991836507199776}
+        m_TargetAssemblyTypeName: Monster, Assembly-CSharp
+        m_MethodName: OnHPChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!212 &6078355656400996763
 SpriteRenderer:
   m_ObjectHideFlags: 0

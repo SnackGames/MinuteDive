@@ -337,11 +337,11 @@ namespace Unit
         int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
         for (int i = 0; i < count; ++i)
         {
-          Monster monster = hitColliders[i].gameObject.GetComponent<Monster>();
-          if (monster != null && !hitObjects.Contains(monster.gameObject))
+          Health health = hitColliders[i].gameObject.GetComponent<Health>();
+          if (health != null && !hitObjects.Contains(health.gameObject))
           {
-            monster.OnHit();
-            hitObjects.Add(monster.gameObject);
+            health.OnHit(1);
+            hitObjects.Add(health.gameObject);
           }
         }
       }
@@ -352,11 +352,11 @@ namespace Unit
         int count = fallAttackRigidbody.OverlapCollider(attackFilter, hitColliders);
         for (int i = 0; i < count; ++i)
         {
-          Monster monster = hitColliders[i].gameObject.GetComponent<Monster>();
-          if (monster != null && !hitObjects.Contains(monster.gameObject))
+          Health health = hitColliders[i].gameObject.GetComponent<Health>();
+          if (health != null && !hitObjects.Contains(health.gameObject))
           {
-            monster.OnHit();
-            hitObjects.Add(monster.gameObject);
+            health.OnHit(1);
+            hitObjects.Add(health.gameObject);
           }
         }
       }
