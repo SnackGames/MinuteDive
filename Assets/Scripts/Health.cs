@@ -19,14 +19,14 @@ public class Health : MonoBehaviour
 
   private void Awake()
   {
-    if (hpUI != null) hpUI.SetHP(hp);
+    hpUI?.SetHP(hp);
   }
 
   public virtual void SetHP(int newHp, bool isHit = false)
   {
     int prevHp = hp;
     hp = newHp;
-    hpUI.SetHP(hp);
+    hpUI?.SetHP(hp);
     OnHPChanged.Invoke(isHit, prevHp, hp);
   }
 
