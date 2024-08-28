@@ -29,8 +29,7 @@ public class GameModeDungeon : GameModeBase
     if (RemainTime <= 0f)
       return;
 
-    float ElapsedTime = Time.deltaTime;
-    RemainTime -= ElapsedTime;
+    RemainTime -= Time.deltaTime;
     if (RemainTime <= 0f)
     {
       RemainTime = 0f;
