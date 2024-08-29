@@ -80,4 +80,9 @@ public class GameModeManager : MonoBehaviour
 
     OnSetGameMode.Invoke(Type);
   }
+
+  public void OnPlayerHit(float damage)
+  {
+    GameMode?.OnPlayerHit(damage);
+  }
 }

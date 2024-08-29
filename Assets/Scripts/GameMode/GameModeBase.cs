@@ -22,8 +22,9 @@ namespace GameMode
     virtual public GameModeType GetGameModeType() => GameModeType.None;
     virtual public void StartGameMode() { ModeManager = GetComponent<GameModeManager>(); }
     virtual public void FinishGameMode() { }
-
+    virtual public void OnPlayerHit(float damage) { }
     virtual protected void Update() { }
+
 
     void Start()
     {

@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GameMode;
-using Unity.VisualScripting;
 
 public class GameModeDungeon : GameModeBase
 {
   [Header("GameModeDungeon")]
   [ReadOnly] public float RemainTime = 0f;
+  private bool hasTimeExpired = false;
 
   #region GameModeBase
   override public GameModeType GetGameModeType() => GameModeType.Dungeon;
@@ -16,24 +13,31 @@ public class GameModeDungeon : GameModeBase
   {
     base.StartGameMode();
     StartTimer();
+    hasTimeExpired = false;
   }
   public override void FinishGameMode()
   {
     base.FinishGameMode();
   }
 
+  override public void OnPlayerHit(float damage)
+  {
+    RemainTime -= damage;
+  }
+
   override protected void Update()
   {
     base.Update();
 
-    if (RemainTime <= 0f)
-      return;
-
-    RemainTime -= Time.deltaTime;
-    if (RemainTime <= 0f)
+    if (!hasTimeExpired)
     {
-      RemainTime = 0f;
-      OnRemainTimeExpired();
+      RemainTime -= Time.deltaTime;
+      if (RemainTime <= 0f)
+      {
+        hasTimeExpired = true;
+        RemainTime = 0f;
+        OnRemainTimeExpired();
+      }
     }
   }
   #endregion
@@ -50,10 +54,6 @@ public class GameModeDungeon : GameModeBase
 
   private void OnRemainTimeExpired()
   {
-    if (RemainTime > 0f)
-      return;
-
-    if (ModeManager != null)
-      ModeManager.OnRemainTimeExpired.Invoke();
+    ModeManager?.OnRemainTimeExpired.Invoke();
   }
 }

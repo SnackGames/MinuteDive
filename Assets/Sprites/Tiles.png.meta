@@ -7179,7 +7179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_336
+      name: Spike_1
       rect:
         serializedVersion: 2
         x: 336
@@ -9877,6 +9877,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Spike_1: 957208873
       Tiles_0: 831679993
       Tiles_1: -1940507384
       Tiles_10: 1978791170
@@ -10141,7 +10142,6 @@ TextureImporter:
       Tiles_333: 467602355
       Tiles_334: -2012101032
       Tiles_335: 1723223243
-      Tiles_336: 957208873
       Tiles_337: -846730515
       Tiles_338: 128510114
       Tiles_339: 564382999
