@@ -5449,10 +5449,12 @@ MonoBehaviour:
   attackMoveSpeed: 5
   fallAttackSpeed: 45
   dashSpeed: 40
-  moveAcceleration: 80
+  moveAcceleration: 79.7
   gravityScale: 3
+  fallAttackThreshold: 2
   velocity: {x: 0, y: 0}
   isOnGround: 0
+  canFallAttack: 0
   isAttacking: 0
   isFallAttacking: 0
   playerSounds:

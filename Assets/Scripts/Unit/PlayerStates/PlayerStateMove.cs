@@ -25,9 +25,17 @@ namespace PlayerState
           // АјАн
           case ButtonInputType.Attack:
             {
-              player.DequePressedInput();
-              return player.isOnGround ? PlayerStateType.Attack : PlayerStateType.FallAttack;
-            }
+              if (player.isOnGround)
+              {
+                player.DequePressedInput();
+                return PlayerStateType.Attack;
+              }
+              else if (player.canFallAttack)
+              {
+                player.DequePressedInput();
+                return PlayerStateType.FallAttack;
+              }
+            } break;
         }
         break;
       }

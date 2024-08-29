@@ -48,8 +48,10 @@ namespace Unit
     public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
     public float gravityScale = 1.0f;
+    public float fallAttackThreshold = 1.0f;
     [ReadOnly] public Vector2 velocity = Vector2.zero;
     [ReadOnly] public bool isOnGround = false;
+    [ReadOnly] public bool canFallAttack = false;
     private ContactFilter2D contactFilter;
 
     [Header("Attack")]
@@ -102,6 +104,9 @@ namespace Unit
 
       // 땅 위인지 여부
       isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
+
+      // 낙하 공격 가능 여부
+      canFallAttack = CheckMoveCollision(body.position, Vector2.down * fallAttackThreshold) == null;
     }
 
     #region Input

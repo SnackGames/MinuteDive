@@ -43,7 +43,7 @@ namespace PlayerState
           case ButtonInputType.Attack:
             {
               // ³«ÇÏ °ø°Ý
-              if (!player.isOnGround)
+              if (player.canFallAttack)
               {
                 player.DequePressedInput();
                 return PlayerStateType.FallAttack;
