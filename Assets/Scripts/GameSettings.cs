@@ -22,6 +22,12 @@ namespace Setting
     }
     #endregion
 
+    private void Awake()
+    {
+      // 프레임 60으로 고정
+      Application.targetFrameRate = 60;
+    }
+
     // 게임 시작 시 저장 정보 불러오기
     private void Start()
     {

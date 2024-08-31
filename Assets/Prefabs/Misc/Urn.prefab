@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4341873624206966792}
+  - component: {fileID: 999961902557202281}
   - component: {fileID: 8864842393673912526}
   - component: {fileID: 6765017803740005617}
   - component: {fileID: 5185886748287350016}
@@ -35,6 +36,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &999961902557202281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2347624905522999885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14dbd9101637b16489781f61d6c54858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8864842393673912526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,10 +65,10 @@ MonoBehaviour:
   OnHPChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2347624905522999885}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 999961902557202281}
+        m_TargetAssemblyTypeName: FragileObject, Assembly-CSharp
+        m_MethodName: OnHealthChanged
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
