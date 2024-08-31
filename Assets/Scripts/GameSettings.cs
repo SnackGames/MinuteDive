@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Setting
 {
@@ -20,6 +21,7 @@ namespace Setting
     private bool enableVibrate;
     public void EnableVibrate(bool enable)
     {
+      Debug.Log("Enabled Vibrate!");
       bool cachedEnableVibrate = enableVibrate;
       enableVibrate = enable;
       if (cachedEnableVibrate != enable)
@@ -45,6 +47,17 @@ namespace Setting
       }
       PlayerPrefs.Save();
       changedGameSettings.Clear();
+    }
+
+    public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
+    {
+      switch(gameSettingType)
+      {
+        case GameSettingType.EnableVibrate:
+          return EnableVibrate;
+        default:
+          return null;
+      }
     }
     #endregion
 
