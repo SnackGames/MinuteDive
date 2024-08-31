@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Setting
 {
@@ -12,47 +14,72 @@ namespace Setting
 
   public class GameSettings : MonoBehaviour
   {
+    private HashSet<GameSettingType> changedGameSettings = new HashSet<GameSettingType>();
+
     #region Vibration
     // 진동 On / Off
     private bool enableVibrate;
     public void EnableVibrate(bool enable)
     {
+      Debug.Log("Enabled Vibrate!");
+      bool cachedEnableVibrate = enableVibrate;
       enableVibrate = enable;
-      OnChangedGameOption(GameSettingType.EnableVibrate);
+      if (cachedEnableVibrate != enable)
+      {
+        changedGameSettings.Add(GameSettingType.EnableVibrate);
+      }
     }
     #endregion
 
-    private void Awake()
+    #region Public Methods
+    public void SaveChangedGameSettings()
     {
-      // 프레임 60으로 고정
-      Application.targetFrameRate = 60;
-    }
-
-    // 게임 시작 시 저장 정보 불러오기
-    private void Start()
-    {
-      enableVibrate = GetGameSettingValueAsBool(GameSettingType.EnableVibrate);
-    }
-    // 게임 종료 시 현재 세팅 자동 저장
-    private void OnDestroy()
-    {
+      foreach (GameSettingType changedGameSettingType in changedGameSettings)
+      {
+        switch(changedGameSettingType)
+        {
+          case GameSettingType.EnableVibrate:
+            SetGameSettingValueAsBool(changedGameSettingType, enableVibrate);
+            break;
+          default:
+            continue;
+        }
+      }
       PlayerPrefs.Save();
+      changedGameSettings.Clear();
     }
 
-    // 게임 옵션 변경 시 저장
-    private void OnChangedGameOption(GameSettingType gameSettingType)
+    public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
     {
       switch(gameSettingType)
       {
         case GameSettingType.EnableVibrate:
-          PlayerPrefs.SetInt("enableVibrate", Convert.ToInt32(enableVibrate));
-          break;
+          return EnableVibrate;
+        default:
+          return null;
       }
+    }
+    #endregion
 
-      PlayerPrefs.Save();
+    #region Private Methods
+    private void Awake()
+    {
+      // 프레임 60으로 고정
+      Application.targetFrameRate = 60;
+
+      // 게임 시작 시 저장 정보 불러오기
+      changedGameSettings = new HashSet<GameSettingType>();
+      enableVibrate = GetGameSettingValueAsBool(GameSettingType.EnableVibrate);
     }
 
-    #region Static Functions
+    // 게임 종료 시 변경된 세팅 있으면 자동 저장
+    private void OnDestroy()
+    {
+      SaveChangedGameSettings();
+    }
+    #endregion
+
+    #region Static Methods
     public static string GetGameSettingKey(GameSettingType gameSettingType)
     {
       switch(gameSettingType)
@@ -82,6 +109,19 @@ namespace Setting
 
       Debug.LogError("GetDefaultGameSettingValueAsBool: Cannot Find Default Game Setting Value as Bool!");
       return false;
+    }
+
+    public static bool SetGameSettingValueAsBool(GameSettingType gameSettingType, bool _value)
+    {
+      string gameSettingKey = GetGameSettingKey(gameSettingType);
+      if (gameSettingKey == string.Empty)
+      {
+        Debug.LogError("SetGameSettingValueAsBool: Cannot Find Valid game Setting Key!");
+        return false;
+      }
+
+      PlayerPrefs.SetInt(gameSettingKey, Convert.ToInt32(_value));
+      return true;
     }
     #endregion
   }

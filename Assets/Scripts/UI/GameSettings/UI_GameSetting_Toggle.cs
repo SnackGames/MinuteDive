@@ -19,6 +19,12 @@ public class UI_GameSetting_Toggle : MonoBehaviour
     if(toggle != null )
     {
       toggle.isOn = GameSettings.GetGameSettingValueAsBool(gameSettingType);
+
+      GameSettings gameSettings = FindObjectOfType<GameSettings>();
+      if (gameSettings != null)
+      {
+        toggle.onValueChanged.AddListener(gameSettings.GetBoolAction(gameSettingType));
+      }
     }
   }
 }
