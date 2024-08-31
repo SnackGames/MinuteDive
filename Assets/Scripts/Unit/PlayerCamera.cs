@@ -39,4 +39,14 @@ public class PlayerCamera : MonoBehaviour
   {
     cameraShake = Math.Max(cameraShake, strength);
   }
+
+  public void AddCameraOffsetX(float offsetX)
+  {
+    cameraOffset.x += offsetX;
+  }
+
+  public void AddCameraOffsetY(float offsetY)
+  {
+    cameraOffset.y += offsetY;
+  }
 }
