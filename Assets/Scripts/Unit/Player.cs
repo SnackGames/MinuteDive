@@ -102,10 +102,10 @@ namespace Unit
       ProcessVelocity();
       ProcessMovement();
 
-      // ¶¥ À§ÀÎÁö ¿©ºÎ
+      // ë•… ìœ„ì¸ì§€ ì—¬ë¶€
       isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
 
-      // ³«ÇÏ °ø°İ °¡´É ¿©ºÎ
+      // ë‚™í•˜ ê³µê²© ê°€ëŠ¥ ì—¬ë¶€
       canFallAttack = CheckMoveCollision(body.position, Vector2.down * fallAttackThreshold) == null;
     }
 
@@ -119,7 +119,7 @@ namespace Unit
     {
       if (buttonInputType < 0 || buttonInputType >= holdingInputs.Length)
       {
-        Debug.LogError($"¹öÆ° ´©¸£±â ½ÇÆĞ: {buttonInputType}");
+        Debug.LogError($"ë²„íŠ¼ ëˆ„ë¥´ê¸° ì‹¤íŒ¨: {buttonInputType}");
         return;
       }
 
@@ -132,7 +132,7 @@ namespace Unit
     {
       if (buttonInputType < 0 || buttonInputType >= holdingInputs.Length)
       {
-        Debug.LogError($"¹öÆ° ¶¼±â ½ÇÆĞ: {buttonInputType}");
+        Debug.LogError($"ë²„íŠ¼ ë–¼ê¸° ì‹¤íŒ¨: {buttonInputType}");
         return;
       }
 
@@ -165,7 +165,7 @@ namespace Unit
 
     protected void ProcessInput()
     {
-      // ¿À·¡µÈ ¼±ÀÔ·Â Á¦°Å
+      // ì˜¤ë˜ëœ ì„ ì…ë ¥ ì œê±°
       while (pressedInputs.Count > 0)
       {
         float pressedInputTime = pressedInputs.Peek().Item2;
@@ -173,11 +173,11 @@ namespace Unit
         pressedInputs.Dequeue();
       }
 
-      // °ø°İ Å°¸¶ ÀÔ·Â
+      // ê³µê²© í‚¤ë§ˆ ì…ë ¥
       if(Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Space))
         PressInput(ButtonInputType.Attack);
 
-      // ÀÌµ¿ Å°º¸µå ÀÔ·Â
+      // ì´ë™ í‚¤ë³´ë“œ ì…ë ¥
       float currentAxisInput = Input.GetAxisRaw("Horizontal");
       if (previousAxisInput != currentAxisInput)
       {
@@ -188,7 +188,7 @@ namespace Unit
       }
       previousAxisInput = currentAxisInput;
 
-      // ÀÌµ¿
+      // ì´ë™
       moveInput = 0.0f;
       if (IsHoldingInput(ButtonInputType.Left)) moveInput = -1.0f;
       else if (IsHoldingInput(ButtonInputType.Right)) moveInput = 1.0f;
@@ -218,7 +218,7 @@ namespace Unit
 
     public void AnimTrigger_Vibrate()
     {
-      // #TODO Áøµ¿ ¼¼±â, ½Ã°£ µî Ä¿½ºÅÒ µÇ´Â plugin Ã£À»°Í
+      // #TODO ì§„ë™ ì„¸ê¸°, ì‹œê°„ ë“± ì»¤ìŠ¤í…€ ë˜ëŠ” plugin ì°¾ì„ê²ƒ
       if (GameSettings.GetGameSettings().gameSettingData.enableVibrate) Handheld.Vibrate();
     }
 
@@ -227,7 +227,7 @@ namespace Unit
     #endregion
 
     #region Movement
-    // ÇÃ·¹ÀÌ¾î°¡ move ¸¸Å­ ÀÌµ¿ ½Ã ºÎ‹HÈ÷´Â Ãæµ¹ Á¤º¸
+    // í”Œë ˆì´ì–´ê°€ move ë§Œí¼ ì´ë™ ì‹œ ë¶€ë”«íˆëŠ” ì¶©ëŒ ì •ë³´
     protected RaycastHit2D? CheckMoveCollision(Vector2 position, Vector2 move)
     {
       RaycastHit2D[] hitBuffer = new RaycastHit2D[4];
@@ -235,7 +235,7 @@ namespace Unit
       if (count <= 0) return null;
 
       int closestIndex = 0;
-      // °¡Àå °¡±î¿î Ãæµ¹Á¡ °Ë»ö
+      // ê°€ì¥ ê°€ê¹Œìš´ ì¶©ëŒì  ê²€ìƒ‰
       for (int i = 0; i < count; ++i)
         if (hitBuffer[i].distance < hitBuffer[closestIndex].distance)
           closestIndex = i;
@@ -245,29 +245,29 @@ namespace Unit
 
     protected void ProcessVelocity()
     {
-      // Áß·Â
+      // ì¤‘ë ¥
       if (isNoGravity)
         velocity.y = 0.0f;
       else
         velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
 
-      // ÁÂ/¿ì ÀÌµ¿
+      // ì¢Œ/ìš° ì´ë™
       float maxSpeed = isOnGround ? moveSpeed : aerialMoveSpeed;
       switch (playerState)
       {
         case PlayerStateType.Move:
           {
-            // °¡¼Ó
+            // ê°€ì†
             if (Math.Abs(moveInput) > 0.0f)
             {
               float acceleration = moveAcceleration;
-              // ¹æÇâÀüÈ¯Àº °¡¼Óµµ¸¦ ½ê°Ô ÁØ´Ù
+              // ë°©í–¥ì „í™˜ì€ ê°€ì†ë„ë¥¼ ì„ê²Œ ì¤€ë‹¤
               if (moveInput * velocity.x < 0.0f) acceleration *= 3.0f;
 
               float newSpeed = velocity.x + moveInput * acceleration * Time.deltaTime;
               velocity.x = moveInput > 0.0f ? Math.Max(Math.Min(maxSpeed, newSpeed), velocity.x) : Math.Min(Math.Max(-maxSpeed, newSpeed), velocity.x);
             }
-            // °¨¼Ó
+            // ê°ì†
             else
             {
               velocity.x = velocity.x > 0.0f ?
@@ -278,7 +278,7 @@ namespace Unit
 
         case PlayerStateType.Attack:
           {
-            // °¨¼Ó
+            // ê°ì†
             velocity.x = velocity.x > 0.0f ?
                 Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
@@ -291,7 +291,7 @@ namespace Unit
 
         case PlayerStateType.Dash:
           {
-            // ¼Óµµ 3¹è·Î °¨¼Ó
+            // ì†ë„ 3ë°°ë¡œ ê°ì†
             velocity.x = velocity.x > 0.0f ?
                 Math.Max(0.0f, velocity.x - 3.0f * moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + 3.0f * moveAcceleration * Time.deltaTime);
@@ -318,14 +318,14 @@ namespace Unit
 
         float newDistance = hit.Value.distance - epsilon;
 
-        // Ãæµ¹ÇÏ±â Á÷Àü¸¸Å­ ÀÌµ¿
+        // ì¶©ëŒí•˜ê¸° ì§ì „ë§Œí¼ ì´ë™
         body.position += move.normalized * newDistance;
 
-        // velocity °»½Å
+        // velocity ê°±ì‹ 
         Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);
         velocity = Vector3.Project(velocity, surfaceTangent);
 
-        // move °»½Å
+        // move ê°±ì‹ 
         move = Vector3.Project(move.normalized * (move.magnitude - newDistance), surfaceTangent);
       }
     }

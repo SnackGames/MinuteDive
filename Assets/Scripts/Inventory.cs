@@ -61,7 +61,7 @@ public class Inventory : MonoBehaviour
   {
     inventoryData = SaveLoadInventorySystem.LoadInventory();
 
-    // ÀÓ½Ã·Î ¾ÆÀÌÅÛ Ç¥½Ã
+    // ì„ì‹œë¡œ ì•„ì´í…œ í‘œì‹œ
     inventoryData.items = new int[16];
     inventoryData.items[0] = 1;
     inventoryData.items[2] = 1;

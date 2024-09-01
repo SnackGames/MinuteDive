@@ -18,7 +18,7 @@ public class Monster : MonoBehaviour
 
   public void OnHPChanged(bool isHit, int prevHp, int hp)
   {
-    // ÀÓ½Ã·Î »ç¶óÁö¸ç ÆÄÆ¼Å¬ ¼ÒÈ¯
+    // ì„ì‹œë¡œ ì‚¬ë¼ì§€ë©° íŒŒí‹°í´ ì†Œí™˜
     if (isHit)
       Instantiate(hitParticlePrefab, transform.position, Quaternion.identity);
 

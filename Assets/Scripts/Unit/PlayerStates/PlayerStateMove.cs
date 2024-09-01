@@ -14,7 +14,7 @@ namespace PlayerState
         ButtonInputType pressedInput = player.PeekPressedInput();
         switch(pressedInput)
         {
-          // ÀÌµ¿ Å°´Â ¹«½ÃÇÑ´Ù
+          // ì´ë™ í‚¤ëŠ” ë¬´ì‹œí•œë‹¤
           case ButtonInputType.Left:
           case ButtonInputType.Right:
             {
@@ -22,7 +22,7 @@ namespace PlayerState
               continue;
             }
 
-          // °ø°İ
+          // ê³µê²©
           case ButtonInputType.Attack:
             {
               if (player.isOnGround)

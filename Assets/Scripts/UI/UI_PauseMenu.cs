@@ -13,7 +13,7 @@ namespace UI
       Time.timeScale = pause ? 0.0f : 1.0f;
       pauseUI.SetActive(pause);
 
-      // ÀÏ½ÃÁ¤Áö ÇØÁ¦µÉ ¶§ º¯°æµÈ ¼¼ÆÃ ÀÏ°ı ÀúÀå
+      // ì¼ì‹œì •ì§€ í•´ì œë  ë•Œ ë³€ê²½ëœ ì„¸íŒ… ì¼ê´„ ì €ì¥
       if (!pause)
       {
         GameSettings.GetGameSettings().SaveGameSettings();

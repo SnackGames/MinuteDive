@@ -42,7 +42,7 @@ namespace PlayerState
       animator.SetBool("isRunning", Math.Abs(player.velocity.x) > 0.0f);
       animator.SetBool("isFalling", !player.isOnGround);
 
-      // Ä³¸¯ÅÍ°¡ ¹Ù¶óº¸´Â ¹æÇâ
+      // ìºë¦­í„°ê°€ ë°”ë¼ë³´ëŠ” ë°©í–¥
       bool isRight = false;
       if (player.isLookingRight) isRight = player.velocity.x >= 0.0f;
       else isRight = player.velocity.x > 0.0f;
@@ -59,7 +59,7 @@ namespace PlayerState
         case PlayerStateType.Attack: animator.SetTrigger("attack"); break;
         case PlayerStateType.FallAttack: animator.SetTrigger("fallAttack"); break;
         case PlayerStateType.Dash: animator.SetTrigger("dash"); break;
-        default: Debug.LogError($"µî·ÏµÇÁö ¾ÊÀº PlayerState: {state}"); break;
+        default: Debug.LogError($"ë“±ë¡ë˜ì§€ ì•Šì€ PlayerState: {state}"); break;
       }
     }
 

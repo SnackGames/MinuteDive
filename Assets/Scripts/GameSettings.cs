@@ -11,7 +11,7 @@ public enum GameSettingType
   // Frame Rate
   FrameRate,
 
-  // Áøµ¿ »ç¿ë ¿©ºÎ
+  // ì§„ë™ ì‚¬ìš© ì—¬ë¶€
   EnableVibrate,
 }
 
@@ -138,13 +138,13 @@ public class GameSettings : MonoBehaviour
   {
     gameSettingSingleton = this;
 
-    // °ÔÀÓ ½ÃÀÛ ½Ã ÀúÀåµÈ ¼¼ÆÃ ·Îµå
+    // ê²Œì„ ì‹œì‘ ì‹œ ì €ì¥ëœ ì„¸íŒ… ë¡œë“œ
     gameSettingData = SaveLoadGameSettingsSystem.LoadGameSettings();
   }
 
   private void OnDestroy()
   {
-    // °ÔÀÓ Á¾·á ½Ã ¼¼ÆÃ ÀÚµ¿ ÀúÀå
+    // ê²Œì„ ì¢…ë£Œ ì‹œ ì„¸íŒ… ìë™ ì €ì¥
     SaveGameSettings();
   }
   #endregion

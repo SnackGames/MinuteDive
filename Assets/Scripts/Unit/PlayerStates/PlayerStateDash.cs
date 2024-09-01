@@ -32,7 +32,7 @@ namespace PlayerState
         ButtonInputType pressedInput = player.PeekPressedInput();
         switch (pressedInput)
         {
-          // ÀÌµ¿ Å°´Â ¹«½ÃÇÑ´Ù
+          // ì´ë™ í‚¤ëŠ” ë¬´ì‹œí•œë‹¤
           case ButtonInputType.Left:
           case ButtonInputType.Right:
             {
@@ -42,13 +42,13 @@ namespace PlayerState
 
           case ButtonInputType.Attack:
             {
-              // ³«ÇÏ °ø°İ
+              // ë‚™í•˜ ê³µê²©
               if (player.canFallAttack)
               {
                 player.DequePressedInput();
                 return PlayerStateType.FallAttack;
               }
-              // °ø°İ
+              // ê³µê²©
               else if (isAttackInputEnabled)
               {
                 player.DequePressedInput();
