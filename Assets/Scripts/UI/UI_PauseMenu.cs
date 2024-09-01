@@ -1,5 +1,4 @@
 using UnityEngine;
-using Setting;
 
 namespace UI
 {
@@ -15,13 +14,9 @@ namespace UI
       pauseUI.SetActive(pause);
 
       // 일시정지 해제될 때 변경된 세팅 일괄 저장
-      if (pause == false)
+      if (!pause)
       {
-        GameSettings gameSettings = FindObjectOfType<GameSettings>();
-        if (gameSettings != null)
-        {
-          gameSettings.SaveChangedGameSettings();
-        }
+        SaveLoadGameSettingsSystem.SaveGameSettings(GameSettings.GetGameSettings().gameSettingData);
       }
     }
 

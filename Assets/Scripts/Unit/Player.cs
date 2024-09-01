@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameMode;
-using Setting;
 
 using AYellowpaper.SerializedCollections;
 
@@ -220,7 +219,7 @@ namespace Unit
     public void AnimTrigger_Vibrate()
     {
       // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
-      if (SaveLoadGameSettingsSystem.GetGameSettingValueAsBool(GameSettingType.EnableVibrate)) Handheld.Vibrate();
+      if (GameSettings.GetGameSettings().GetGameSettingValueAsBool(GameSettingType.EnableVibrate)) Handheld.Vibrate();
     }
 
     public void AnimTrigger_CameraShake(float strength = 1.0f) => playerCamera.ShakeCamera(strength);

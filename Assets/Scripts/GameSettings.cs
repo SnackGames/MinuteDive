@@ -1,128 +1,137 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Setting
+[Serializable]
+public enum GameSettingType
 {
-  [Serializable]
-  public enum GameSettingType
+  // Frame Rate
+  FrameRate,
+
+  // 진동 사용 여부
+  EnableVibrate,
+}
+
+[System.Serializable]
+public class GameSettingData
+{
+  public int targetFrameRate = 60;
+  public bool enableVibrate = true;
+}
+
+public static class SaveLoadGameSettingsSystem
+{
+  private static string gameSettingsSavePath = Application.persistentDataPath + "/Settings.sav";
+
+  public static void SaveGameSettings(GameSettingData gameSettingData)
   {
-    // 진동 사용 여부
-    EnableVibrate,
+    if (!GameSettings.GetGameSettings().gameSettingChanged)
+      return;
+
+    Debug.Log("Save Game Setting!");
+    BinaryFormatter formatter = new BinaryFormatter();
+    FileStream stream = new FileStream(gameSettingsSavePath, FileMode.OpenOrCreate);
+    formatter.Serialize(stream, gameSettingData);
+    stream.Close();
   }
 
-  public static class SaveLoadGameSettingsSystem
+  public static GameSettingData LoadGameSettings()
   {
-    public static string GetGameSettingKey(GameSettingType gameSettingType)
+    GameSettingData settingData = null;
+
+    if(File.Exists(gameSettingsSavePath))
     {
-      switch (gameSettingType)
-      {
-        case GameSettingType.EnableVibrate:
-          return "enableVibrate";
-      }
-      return string.Empty;
+      BinaryFormatter formatter = new BinaryFormatter();
+
+      FileStream stream = new FileStream(gameSettingsSavePath, FileMode.Open);
+      settingData = formatter.Deserialize(stream) as GameSettingData;
+      stream.Close();
+    }
+    else
+    {
+      settingData = LoadDefaultGameSettings();
     }
 
-    public static bool GetGameSettingValueAsBool(GameSettingType gameSettingType)
-    {
-      if (PlayerPrefs.HasKey(GetGameSettingKey(gameSettingType)) == true)
-      {
-        return Convert.ToBoolean(PlayerPrefs.GetInt(GetGameSettingKey(gameSettingType)));
-      }
+    return settingData;
+  }
 
-      return GetDefaultGameSettingValueAsBool(gameSettingType);
+  public static GameSettingData LoadDefaultGameSettings()
+  {
+    return new GameSettingData();
+  }
+}
+
+public class GameSettings : MonoBehaviour
+{
+  [ReadOnly] public GameSettingData gameSettingData;
+  [ReadOnly] public bool gameSettingChanged = false;
+
+  static private GameSettings gameSettingSingleton;
+
+  #region Public Methods
+  static public GameSettings GetGameSettings() { return gameSettingSingleton; }
+
+  public void EnableVibrate(bool enable)
+  {
+    bool cachedEnableVibrate = gameSettingData.enableVibrate;
+    gameSettingData.enableVibrate = enable;
+    if (cachedEnableVibrate != enable)
+    {
+      gameSettingChanged = true;
     }
+  }
 
-    public static bool GetDefaultGameSettingValueAsBool(GameSettingType gameSettingType)
+  public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
+  {
+    switch(gameSettingType)
     {
-      switch (gameSettingType)
-      {
-        case GameSettingType.EnableVibrate: return true;
-      }
-
-      Debug.LogError("GetDefaultGameSettingValueAsBool: Cannot Find Default Game Setting Value as Bool!");
-      return false;
+      case GameSettingType.EnableVibrate:
+        return EnableVibrate;
+      default:
+        return null;
     }
+  }
 
-    public static bool SetGameSettingValueAsBool(GameSettingType gameSettingType, bool _value)
+  public bool GetGameSettingValueAsBool(GameSettingType gameSettingType)
+  {
+    switch(gameSettingType)
     {
-      string gameSettingKey = GetGameSettingKey(gameSettingType);
-      if (gameSettingKey == string.Empty)
-      {
-        Debug.LogError("SetGameSettingValueAsBool: Cannot Find Valid game Setting Key!");
+      case GameSettingType.EnableVibrate:
+        return gameSettingData.enableVibrate;
+      default:
+        Debug.LogError("GetGameSettingValueAsBool: Cannot Get Setting Value of " + gameSettingType + " as Bool!");
         return false;
-      }
-
-      PlayerPrefs.SetInt(gameSettingKey, Convert.ToInt32(_value));
-      return true;
     }
   }
-
-  public class GameSettings : MonoBehaviour
+  public int GetGameSettingValueAsInt(GameSettingType gameSettingType)
   {
-    private HashSet<GameSettingType> changedGameSettings = new HashSet<GameSettingType>();
-
-    #region Vibration
-    // 진동 On / Off
-    private bool enableVibrate;
-    public void EnableVibrate(bool enable)
+    switch (gameSettingType)
     {
-      bool cachedEnableVibrate = enableVibrate;
-      enableVibrate = enable;
-      if (cachedEnableVibrate != enable)
-      {
-        changedGameSettings.Add(GameSettingType.EnableVibrate);
-      }
+      case GameSettingType.FrameRate:
+        return gameSettingData.targetFrameRate;
+      default:
+        Debug.LogError("GetGameSettingValueAsInt: Cannot Get Setting Value of " + gameSettingType + " as Int!");
+        return 0;
     }
-    #endregion
-
-    #region Public Methods
-    public void SaveChangedGameSettings()
-    {
-      foreach (GameSettingType changedGameSettingType in changedGameSettings)
-      {
-        switch(changedGameSettingType)
-        {
-          case GameSettingType.EnableVibrate:
-            SaveLoadGameSettingsSystem.SetGameSettingValueAsBool(changedGameSettingType, enableVibrate);
-            break;
-          default:
-            continue;
-        }
-      }
-      PlayerPrefs.Save();
-      changedGameSettings.Clear();
-    }
-
-    public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
-    {
-      switch(gameSettingType)
-      {
-        case GameSettingType.EnableVibrate:
-          return EnableVibrate;
-        default:
-          return null;
-      }
-    }
-    #endregion
-
-    #region Private Methods
-    private void Awake()
-    {
-      // 프레임 60으로 고정
-      Application.targetFrameRate = 60;
-
-      // 게임 시작 시 저장 정보 불러오기
-      changedGameSettings = new HashSet<GameSettingType>();
-      enableVibrate = SaveLoadGameSettingsSystem.GetGameSettingValueAsBool(GameSettingType.EnableVibrate);
-    }
-
-    // 게임 종료 시 변경된 세팅 있으면 자동 저장
-    private void OnDestroy()
-    {
-      SaveChangedGameSettings();
-    }
-    #endregion
   }
+  #endregion
+
+  #region Private Methods
+  private void Awake()
+  {
+    gameSettingSingleton = this;
+
+    // 게임 시작 시 저장된 세팅 로드
+    gameSettingData = SaveLoadGameSettingsSystem.LoadGameSettings();
+  }
+
+  private void OnDestroy()
+  {
+    // 게임 종료 시 세팅 자동 저장
+    SaveLoadGameSettingsSystem.SaveGameSettings(gameSettingData);
+  }
+  #endregion
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Setting;
 using GameMode;
 using UnityEngine.UI;
 using System;
@@ -18,13 +17,8 @@ public class UI_GameSetting_Toggle : MonoBehaviour
     toggle = gameObject.GetComponent<Toggle>();
     if(toggle != null )
     {
-      toggle.isOn = SaveLoadGameSettingsSystem.GetGameSettingValueAsBool(gameSettingType);
-
-      GameSettings gameSettings = FindObjectOfType<GameSettings>();
-      if (gameSettings != null)
-      {
-        toggle.onValueChanged.AddListener(gameSettings.GetBoolAction(gameSettingType));
-      }
+      toggle.isOn = GameSettings.GetGameSettings().GetGameSettingValueAsBool(gameSettingType);
+      toggle.onValueChanged.AddListener(GameSettings.GetGameSettings().GetBoolAction(gameSettingType));
     }
   }
 }
