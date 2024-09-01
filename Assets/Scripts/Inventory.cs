@@ -1,16 +1,56 @@
 using UnityEngine;
 using UI;
-using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
+[System.Serializable]
+public class InventoryData
+{
+  public int money;
+  public int[] items;
+}
+
+public static class SaveLoadInventorySystem
+{
+  private static string inventorySavePath = Application.persistentDataPath + "/inventory.sav";
+
+  public static void SaveInventory(InventoryData inventoryData)
+  {
+    BinaryFormatter formatter = new BinaryFormatter();
+
+    FileStream stream = new FileStream(inventorySavePath, FileMode.OpenOrCreate);
+    formatter.Serialize(stream, inventoryData);
+    stream.Close();
+  }
+
+  public static InventoryData LoadInventory()
+  {
+    InventoryData invntoryData = null;
+
+    if (File.Exists(inventorySavePath))
+    {
+      BinaryFormatter formatter = new BinaryFormatter();
+
+      FileStream stream = new FileStream(inventorySavePath, FileMode.Open);
+      invntoryData = formatter.Deserialize(stream) as InventoryData;
+      stream.Close();
+    }
+    else
+    {
+      invntoryData= new InventoryData();
+    }
+
+    return invntoryData;
+  }
+}
 
 public class Inventory : MonoBehaviour
 {
   static private Inventory inventorySingleton;
   static public Inventory GetInventory() { return inventorySingleton; }
 
-  [ReadOnly] public int money = 0;
+  [ReadOnly] public InventoryData inventoryData;
   public UI_MainInfo mainInfo;
-
-  int[] items = new int[16];
 
   private void Awake()
   {
@@ -19,17 +59,25 @@ public class Inventory : MonoBehaviour
 
   private void Start()
   {
-    // 임시로 아이템 표시
-    items[0] = 1;
-    items[2] = 1;
+    inventoryData = SaveLoadInventorySystem.LoadInventory();
 
-    mainInfo.SetMoney(money);
-    mainInfo.SetItems(items);
+    // 임시로 아이템 표시
+    inventoryData.items = new int[16];
+    inventoryData.items[0] = 1;
+    inventoryData.items[2] = 1;
+
+    mainInfo.SetMoney(inventoryData.money);
+    mainInfo.SetItems(inventoryData.items);
+  }
+
+  public void SaveInventory()
+  {
+    SaveLoadInventorySystem.SaveInventory(inventoryData);
   }
 
   public void AddMoney(int amount)
   {
-    money += amount;
-    mainInfo.SetMoney(money);
+    inventoryData.money += amount;
+    mainInfo.SetMoney(inventoryData.money);
   }
 }
