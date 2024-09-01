@@ -18,7 +18,7 @@ public class UI_GameSetting_Toggle : MonoBehaviour
     toggle = gameObject.GetComponent<Toggle>();
     if(toggle != null )
     {
-      toggle.isOn = GameSettings.GetGameSettingValueAsBool(gameSettingType);
+      toggle.isOn = SaveLoadGameSettingsSystem.GetGameSettingValueAsBool(gameSettingType);
 
       GameSettings gameSettings = FindObjectOfType<GameSettings>();
       if (gameSettings != null)

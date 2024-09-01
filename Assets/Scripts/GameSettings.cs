@@ -12,6 +12,53 @@ namespace Setting
     EnableVibrate,
   }
 
+  public static class SaveLoadGameSettingsSystem
+  {
+    public static string GetGameSettingKey(GameSettingType gameSettingType)
+    {
+      switch (gameSettingType)
+      {
+        case GameSettingType.EnableVibrate:
+          return "enableVibrate";
+      }
+      return string.Empty;
+    }
+
+    public static bool GetGameSettingValueAsBool(GameSettingType gameSettingType)
+    {
+      if (PlayerPrefs.HasKey(GetGameSettingKey(gameSettingType)) == true)
+      {
+        return Convert.ToBoolean(PlayerPrefs.GetInt(GetGameSettingKey(gameSettingType)));
+      }
+
+      return GetDefaultGameSettingValueAsBool(gameSettingType);
+    }
+
+    public static bool GetDefaultGameSettingValueAsBool(GameSettingType gameSettingType)
+    {
+      switch (gameSettingType)
+      {
+        case GameSettingType.EnableVibrate: return true;
+      }
+
+      Debug.LogError("GetDefaultGameSettingValueAsBool: Cannot Find Default Game Setting Value as Bool!");
+      return false;
+    }
+
+    public static bool SetGameSettingValueAsBool(GameSettingType gameSettingType, bool _value)
+    {
+      string gameSettingKey = GetGameSettingKey(gameSettingType);
+      if (gameSettingKey == string.Empty)
+      {
+        Debug.LogError("SetGameSettingValueAsBool: Cannot Find Valid game Setting Key!");
+        return false;
+      }
+
+      PlayerPrefs.SetInt(gameSettingKey, Convert.ToInt32(_value));
+      return true;
+    }
+  }
+
   public class GameSettings : MonoBehaviour
   {
     private HashSet<GameSettingType> changedGameSettings = new HashSet<GameSettingType>();
@@ -21,7 +68,6 @@ namespace Setting
     private bool enableVibrate;
     public void EnableVibrate(bool enable)
     {
-      Debug.Log("Enabled Vibrate!");
       bool cachedEnableVibrate = enableVibrate;
       enableVibrate = enable;
       if (cachedEnableVibrate != enable)
@@ -39,7 +85,7 @@ namespace Setting
         switch(changedGameSettingType)
         {
           case GameSettingType.EnableVibrate:
-            SetGameSettingValueAsBool(changedGameSettingType, enableVibrate);
+            SaveLoadGameSettingsSystem.SetGameSettingValueAsBool(changedGameSettingType, enableVibrate);
             break;
           default:
             continue;
@@ -69,59 +115,13 @@ namespace Setting
 
       // 게임 시작 시 저장 정보 불러오기
       changedGameSettings = new HashSet<GameSettingType>();
-      enableVibrate = GetGameSettingValueAsBool(GameSettingType.EnableVibrate);
+      enableVibrate = SaveLoadGameSettingsSystem.GetGameSettingValueAsBool(GameSettingType.EnableVibrate);
     }
 
     // 게임 종료 시 변경된 세팅 있으면 자동 저장
     private void OnDestroy()
     {
       SaveChangedGameSettings();
-    }
-    #endregion
-
-    #region Static Methods
-    public static string GetGameSettingKey(GameSettingType gameSettingType)
-    {
-      switch(gameSettingType)
-      {
-        case GameSettingType.EnableVibrate:
-          return "enableVibrate";
-      }
-      return string.Empty;
-    }
-
-    public static bool GetGameSettingValueAsBool(GameSettingType gameSettingType)
-    {
-      if(PlayerPrefs.HasKey(GetGameSettingKey(gameSettingType)) == true)
-      {
-        return Convert.ToBoolean(PlayerPrefs.GetInt(GetGameSettingKey(gameSettingType)));
-      }
-
-      return GetDefaultGameSettingValueAsBool(gameSettingType);
-    }
-
-    public static bool GetDefaultGameSettingValueAsBool(GameSettingType gameSettingType)
-    {
-      switch(gameSettingType)
-      {
-        case GameSettingType.EnableVibrate: return true;
-      }
-
-      Debug.LogError("GetDefaultGameSettingValueAsBool: Cannot Find Default Game Setting Value as Bool!");
-      return false;
-    }
-
-    public static bool SetGameSettingValueAsBool(GameSettingType gameSettingType, bool _value)
-    {
-      string gameSettingKey = GetGameSettingKey(gameSettingType);
-      if (gameSettingKey == string.Empty)
-      {
-        Debug.LogError("SetGameSettingValueAsBool: Cannot Find Valid game Setting Key!");
-        return false;
-      }
-
-      PlayerPrefs.SetInt(gameSettingKey, Convert.ToInt32(_value));
-      return true;
     }
     #endregion
   }
