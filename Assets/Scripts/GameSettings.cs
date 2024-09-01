@@ -31,11 +31,12 @@ public static class SaveLoadGameSettingsSystem
     if (!GameSettings.GetGameSettings().gameSettingChanged)
       return;
 
-    Debug.Log("Save Game Setting!");
     BinaryFormatter formatter = new BinaryFormatter();
     FileStream stream = new FileStream(gameSettingsSavePath, FileMode.OpenOrCreate);
     formatter.Serialize(stream, gameSettingData);
     stream.Close();
+
+    GameSettings.GetGameSettings().gameSettingChanged = false;
   }
 
   public static GameSettingData LoadGameSettings()
@@ -71,8 +72,17 @@ public class GameSettings : MonoBehaviour
 
   static private GameSettings gameSettingSingleton;
 
-  #region Public Methods
-  static public GameSettings GetGameSettings() { return gameSettingSingleton; }
+  #region Actions
+  public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
+  {
+    switch (gameSettingType)
+    {
+      case GameSettingType.EnableVibrate:
+        return EnableVibrate;
+      default:
+        return null;
+    }
+  }
 
   public void EnableVibrate(bool enable)
   {
@@ -83,17 +93,10 @@ public class GameSettings : MonoBehaviour
       gameSettingChanged = true;
     }
   }
+  #endregion
 
-  public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
-  {
-    switch(gameSettingType)
-    {
-      case GameSettingType.EnableVibrate:
-        return EnableVibrate;
-      default:
-        return null;
-    }
-  }
+  #region Public Methods
+  static public GameSettings GetGameSettings() { return gameSettingSingleton; }
 
   public bool GetGameSettingValueAsBool(GameSettingType gameSettingType)
   {
@@ -117,6 +120,17 @@ public class GameSettings : MonoBehaviour
         return 0;
     }
   }
+
+  public void ResetGameSettings()
+  {
+    gameSettingData = SaveLoadGameSettingsSystem.LoadDefaultGameSettings();
+    gameSettingChanged = true;
+  }
+
+  public void SaveGameSettings()
+  {
+    SaveLoadGameSettingsSystem.SaveGameSettings(gameSettingData);
+  }
   #endregion
 
   #region Private Methods
@@ -131,7 +145,7 @@ public class GameSettings : MonoBehaviour
   private void OnDestroy()
   {
     // 게임 종료 시 세팅 자동 저장
-    SaveLoadGameSettingsSystem.SaveGameSettings(gameSettingData);
+    SaveGameSettings();
   }
   #endregion
 }

@@ -16,7 +16,7 @@ namespace UI
       // 일시정지 해제될 때 변경된 세팅 일괄 저장
       if (!pause)
       {
-        SaveLoadGameSettingsSystem.SaveGameSettings(GameSettings.GetGameSettings().gameSettingData);
+        GameSettings.GetGameSettings().SaveGameSettings();
       }
     }
 
