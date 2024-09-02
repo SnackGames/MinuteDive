@@ -71,6 +71,7 @@ public class GameSettings : MonoBehaviour
   [ReadOnly] public bool gameSettingChanged = false;
 
   static private GameSettings gameSettingSingleton;
+  private List<UI_GameSettings_Base> gameSettingUIList;
 
   #region Actions
   public UnityAction<bool> GetBoolAction(GameSettingType gameSettingType)
@@ -125,11 +126,26 @@ public class GameSettings : MonoBehaviour
   {
     gameSettingData = SaveLoadGameSettingsSystem.LoadDefaultGameSettings();
     gameSettingChanged = true;
+    foreach (UI_GameSettings_Base gameSettingUI in gameSettingUIList)
+    {
+      gameSettingUI.OnSetGameSettingValue();
+    }
   }
 
   public void SaveGameSettings()
   {
     SaveLoadGameSettingsSystem.SaveGameSettings(gameSettingData);
+  }
+
+  public void RegisterGameSettingUI(UI_GameSettings_Base gameSettingUI)
+  {
+    Debug.Log("RegisterGameSettingUI Called!");
+    gameSettingUIList.Add(gameSettingUI);
+    gameSettingUI.OnSetGameSettingValue();
+  }
+  public void UnregisterGameSettingUI(UI_GameSettings_Base gameSettingUI)
+  {
+    gameSettingUIList.Remove(gameSettingUI);
   }
   #endregion
 
@@ -137,6 +153,7 @@ public class GameSettings : MonoBehaviour
   private void Awake()
   {
     gameSettingSingleton = this;
+    gameSettingUIList = new List<UI_GameSettings_Base>();
 
     // 게임 시작 시 저장된 세팅 로드
     gameSettingData = SaveLoadGameSettingsSystem.LoadGameSettings();

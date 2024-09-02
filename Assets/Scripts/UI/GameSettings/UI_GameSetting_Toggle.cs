@@ -5,20 +5,34 @@ using GameMode;
 using UnityEngine.UI;
 using System;
 
-public class UI_GameSetting_Toggle : MonoBehaviour
+public class UI_GameSetting_Toggle : UI_GameSettings_Base
 {
   [Header("UI_GameSetting_Toggle")]
-  public GameSettingType gameSettingType;
   [ReadOnly] public Toggle toggle;
 
-  // Start is called before the first frame update
-  void Start()
+  override protected void Start()
   {
     toggle = gameObject.GetComponent<Toggle>();
-    if(toggle != null )
+    if (toggle != null)
+    {
+      toggle.onValueChanged.AddListener(GameSettings.GetGameSettings().GetBoolAction(gameSettingType));
+    }
+
+    base.Start();
+  }
+
+  override protected void OnDestroy()
+  {
+    base.OnDestroy();
+  }
+
+  override public void OnSetGameSettingValue()
+  {
+    base.OnSetGameSettingValue();
+
+    if (toggle != null)
     {
       toggle.isOn = GameSettings.GetGameSettings().GetGameSettingValueAsBool(gameSettingType);
-      toggle.onValueChanged.AddListener(GameSettings.GetGameSettings().GetBoolAction(gameSettingType));
     }
   }
 }
