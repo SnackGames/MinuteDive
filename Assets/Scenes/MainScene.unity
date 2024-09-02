@@ -3078,7 +3078,7 @@ GameObject:
   - component: {fileID: 415773786}
   - component: {fileID: 415773785}
   m_Layer: 5
-  m_Name: Resume
+  m_Name: ResetGameSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5790,7 +5790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &767320041
 RectTransform:
   m_ObjectHideFlags: 0

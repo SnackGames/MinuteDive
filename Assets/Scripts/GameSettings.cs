@@ -139,7 +139,6 @@ public class GameSettings : MonoBehaviour
 
   public void RegisterGameSettingUI(UI_GameSettings_Base gameSettingUI)
   {
-    Debug.Log("RegisterGameSettingUI Called!");
     gameSettingUIList.Add(gameSettingUI);
     gameSettingUI.OnSetGameSettingValue();
   }
