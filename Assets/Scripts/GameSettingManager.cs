@@ -28,7 +28,7 @@ public static class SaveLoadGameSettingsSystem
 
   public static void SaveGameSettings(GameSettingData gameSettingData)
   {
-    if (!GameSettings.GetGameSettings().gameSettingChanged)
+    if (!GameSettingManager.GetGameSettings().gameSettingChanged)
       return;
 
     BinaryFormatter formatter = new BinaryFormatter();
@@ -36,7 +36,7 @@ public static class SaveLoadGameSettingsSystem
     formatter.Serialize(stream, gameSettingData);
     stream.Close();
 
-    GameSettings.GetGameSettings().gameSettingChanged = false;
+    GameSettingManager.GetGameSettings().gameSettingChanged = false;
   }
 
   public static GameSettingData LoadGameSettings()
@@ -65,12 +65,12 @@ public static class SaveLoadGameSettingsSystem
   }
 }
 
-public class GameSettings : MonoBehaviour
+public class GameSettingManager : MonoBehaviour
 {
   [ReadOnly] public GameSettingData gameSettingData;
   [ReadOnly] public bool gameSettingChanged = false;
 
-  static private GameSettings gameSettingSingleton;
+  static private GameSettingManager gameSettingSingleton;
   private List<UI_GameSettings_Base> gameSettingUIList;
 
   #region Actions
@@ -97,7 +97,7 @@ public class GameSettings : MonoBehaviour
   #endregion
 
   #region Public Methods
-  static public GameSettings GetGameSettings() { return gameSettingSingleton; }
+  static public GameSettingManager GetGameSettings() { return gameSettingSingleton; }
 
   public bool GetGameSettingValueAsBool(GameSettingType gameSettingType)
   {
@@ -156,6 +156,9 @@ public class GameSettings : MonoBehaviour
 
     // 게임 시작 시 저장된 세팅 로드
     gameSettingData = SaveLoadGameSettingsSystem.LoadGameSettings();
+
+    // 프레임 60으로 고정
+    Application.targetFrameRate = 60;
   }
 
   private void OnDestroy()

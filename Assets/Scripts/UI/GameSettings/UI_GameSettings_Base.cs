@@ -9,12 +9,12 @@ public class UI_GameSettings_Base : MonoBehaviour
 
   protected virtual void Start()
   {
-    GameSettings.GetGameSettings().RegisterGameSettingUI(this);
+    GameSettingManager.GetGameSettings().RegisterGameSettingUI(this);
   }
 
   protected virtual void OnDestroy()
   {
-    GameSettings.GetGameSettings().UnregisterGameSettingUI(this);
+    GameSettingManager.GetGameSettings().UnregisterGameSettingUI(this);
   }
 
   public virtual void OnSetGameSettingValue() { }

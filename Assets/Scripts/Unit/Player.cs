@@ -219,7 +219,7 @@ namespace Unit
     public void AnimTrigger_Vibrate()
     {
       // #TODO 진동 세기, 시간 등 커스텀 되는 plugin 찾을것
-      if (GameSettings.GetGameSettings().gameSettingData.enableVibrate) Handheld.Vibrate();
+      if (GameSettingManager.GetGameSettings().gameSettingData.enableVibrate) Handheld.Vibrate();
     }
 
     public void AnimTrigger_CameraShake(float strength = 1.0f) => playerCamera.ShakeCamera(strength);

@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "Data/Monster")]
-public class MonsterData : ScriptableObject
+namespace Data
 {
-  public string monsterName;
-  public int monsterHP = 3;
+  [CreateAssetMenu(fileName = "Data", menuName = "Data/Monster")]
+  public class MonsterData : ScriptableObject
+  {
+    public string monsterName;
+    public int monsterHP = 3;
+  }
 }

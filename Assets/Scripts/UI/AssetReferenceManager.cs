@@ -5,12 +5,19 @@ using UnityEngine.UI;
 namespace UI
 {
   [DisallowMultipleComponent]
-  [AddComponentMenu("UI/Main Info")]
-  public class UI_MainInfo : MonoBehaviour
+  public class AssetReferenceManager : MonoBehaviour
   {
+    static private AssetReferenceManager assetReferenceSingleton;
+    static public AssetReferenceManager GetAssetReferences() { return assetReferenceSingleton; }
+
     [Header("UI Links")]
     public TextMeshProUGUI moneyText;
     public GameObject itemGrid;
+
+    private void Awake()
+    {
+      assetReferenceSingleton = this;
+    }
 
     public void SetMoney(int money)
     {

@@ -44,13 +44,12 @@ public static class SaveLoadInventorySystem
   }
 }
 
-public class Inventory : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
-  static private Inventory inventorySingleton;
-  static public Inventory GetInventory() { return inventorySingleton; }
+  static private InventoryManager inventorySingleton;
+  static public InventoryManager GetInventory() { return inventorySingleton; }
 
   [ReadOnly] public InventoryData inventoryData;
-  public UI_MainInfo mainInfo;
 
   private void Awake()
   {
@@ -66,8 +65,8 @@ public class Inventory : MonoBehaviour
     inventoryData.items[0] = 1;
     inventoryData.items[2] = 1;
 
-    mainInfo.SetMoney(inventoryData.money);
-    mainInfo.SetItems(inventoryData.items);
+    AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
+    AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
   }
 
   public void SaveInventory()
@@ -78,6 +77,6 @@ public class Inventory : MonoBehaviour
   public void AddMoney(int amount)
   {
     inventoryData.money += amount;
-    mainInfo.SetMoney(inventoryData.money);
+    AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
   }
 }

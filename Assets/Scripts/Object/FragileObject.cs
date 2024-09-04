@@ -6,7 +6,7 @@ public class FragileObject : MonoBehaviour
   { 
     if (health <= 0)
     {
-      Inventory.GetInventory()?.AddMoney(1);
+      InventoryManager.GetInventory()?.AddMoney(1);
 
       Destroy(gameObject);
     }

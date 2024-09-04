@@ -1,4 +1,4 @@
-using UI;
+using Data;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]

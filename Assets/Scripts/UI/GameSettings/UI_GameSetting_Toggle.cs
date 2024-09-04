@@ -15,7 +15,7 @@ public class UI_GameSetting_Toggle : UI_GameSettings_Base
     toggle = gameObject.GetComponent<Toggle>();
     if (toggle != null)
     {
-      toggle.onValueChanged.AddListener(GameSettings.GetGameSettings().GetBoolAction(gameSettingType));
+      toggle.onValueChanged.AddListener(GameSettingManager.GetGameSettings().GetBoolAction(gameSettingType));
     }
 
     base.Start();
@@ -32,7 +32,7 @@ public class UI_GameSetting_Toggle : UI_GameSettings_Base
 
     if (toggle != null)
     {
-      toggle.isOn = GameSettings.GetGameSettings().GetGameSettingValueAsBool(gameSettingType);
+      toggle.isOn = GameSettingManager.GetGameSettings().GetGameSettingValueAsBool(gameSettingType);
     }
   }
 }
