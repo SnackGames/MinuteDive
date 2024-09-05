@@ -9978,6 +9978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d7d86b7f7b60c41bca48b16c42138d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assetReferences: {fileID: 11400000, guid: 5354339f971a84340adabce1102095e1, type: 2}
   moneyText: {fileID: 361066827}
   itemGrid: {fileID: 607143598}
 --- !u!114 &1405958200
@@ -9995,7 +9996,6 @@ MonoBehaviour:
   inventoryData:
     money: 0
     items: 
-  mainInfo: {fileID: 1405958199}
 --- !u!1 &1416998076
 GameObject:
   m_ObjectHideFlags: 0

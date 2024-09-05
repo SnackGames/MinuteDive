@@ -1,3 +1,4 @@
+using Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,9 @@ namespace UI
   {
     static private AssetReferenceManager assetReferenceSingleton;
     static public AssetReferenceManager GetAssetReferences() { return assetReferenceSingleton; }
+
+    [Header("Asset References")]
+    public AssetReferenceData assetReferences;
 
     [Header("UI Links")]
     public TextMeshProUGUI moneyText;
