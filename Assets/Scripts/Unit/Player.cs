@@ -25,11 +25,10 @@ namespace Unit
     Dash
   }
 
-  [RequireComponent(typeof(Rigidbody2D))]
   [RequireComponent(typeof(Animator))]
   [RequireComponent(typeof(SpriteRenderer))]
   [RequireComponent(typeof(AudioSource))]
-  public class Player : MonoBehaviour
+  public class Player : KinematicObject
   {
     [Header("Input")]
     public float reservePressedInputDuration = 0.3f;
@@ -47,12 +46,9 @@ namespace Unit
     public float fallAttackSpeed = 3.0f;
     public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
-    public float gravityScale = 1.0f;
     public float fallAttackThreshold = 1.0f;
-    [ReadOnly] public Vector2 velocity = Vector2.zero;
     [ReadOnly] public bool isOnGround = false;
     [ReadOnly] public bool canFallAttack = false;
-    private ContactFilter2D contactFilter;
 
     [Header("Attack")]
     [ReadOnly] public bool isAttacking = false;
@@ -69,44 +65,38 @@ namespace Unit
     public Rigidbody2D fallAttackRigidbody;
     public ParticleSystem dashEffect;
 
-    protected Rigidbody2D body;
     protected Animator anim;
     protected SpriteRenderer sprite;
     protected AudioSource sound;
 
-    private void Awake()
+    protected override void Awake()
     {
-      body = GetComponent<Rigidbody2D>();
-      body.isKinematic = true;
+      base.Awake();
+
       anim = GetComponent<Animator>();
       sprite = GetComponent<SpriteRenderer>();
       sound = GetComponent<AudioSource>();
-
-      contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-      contactFilter.useLayerMask = true;
-      contactFilter.useTriggers = false;
 
       attackFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(attackRigidbody.gameObject.layer));
       attackFilter.useLayerMask = true;
       attackFilter.useTriggers = false;
     }
 
-    protected virtual void Update()
+    protected override void FixedUpdate()
     {
-      ProcessInput();
-      ProcessAttack();
-    }
-
-    protected virtual void FixedUpdate()
-    {
-      ProcessVelocity();
-      ProcessMovement();
+      base.FixedUpdate();
 
       // 땅 위인지 여부
       isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
 
       // 낙하 공격 가능 여부
       canFallAttack = CheckMoveCollision(body.position, Vector2.down * fallAttackThreshold) == null;
+    }
+
+    protected virtual void Update()
+    {
+      ProcessInput();
+      ProcessAttack();
     }
 
     #region Input
@@ -227,23 +217,7 @@ namespace Unit
     #endregion
 
     #region Movement
-    // 플레이어가 move 만큼 이동 시 부딫히는 충돌 정보
-    protected RaycastHit2D? CheckMoveCollision(Vector2 position, Vector2 move)
-    {
-      RaycastHit2D[] hitBuffer = new RaycastHit2D[4];
-      int count = body.Cast(move.normalized, contactFilter, hitBuffer, move.magnitude);
-      if (count <= 0) return null;
-
-      int closestIndex = 0;
-      // 가장 가까운 충돌점 검색
-      for (int i = 0; i < count; ++i)
-        if (hitBuffer[i].distance < hitBuffer[closestIndex].distance)
-          closestIndex = i;
-
-      return hitBuffer[closestIndex];
-    }
-
-    protected void ProcessVelocity()
+    protected override void ProcessVelocity()
     {
       // 중력
       if (isNoGravity)
@@ -296,37 +270,6 @@ namespace Unit
                 Math.Max(0.0f, velocity.x - 3.0f * moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + 3.0f * moveAcceleration * Time.deltaTime);
           } break;
-      }
-    }
-
-    protected void ProcessMovement()
-    {
-      const float epsilon = 0.1f;
-      const int maxMovementIteration = 5;
-
-      Vector2 move = velocity * Time.deltaTime;
-      for (int i = 0; i < maxMovementIteration; ++i)
-      {
-        if (move.magnitude <= 0.0f || Time.deltaTime <= 0.0f) break;
-
-        RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * epsilon);
-        if (hit == null)
-        {
-          body.position += move;
-          break;
-        }
-
-        float newDistance = hit.Value.distance - epsilon;
-
-        // 충돌하기 직전만큼 이동
-        body.position += move.normalized * newDistance;
-
-        // velocity 갱신
-        Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);
-        velocity = Vector3.Project(velocity, surfaceTangent);
-
-        // move 갱신
-        move = Vector3.Project(move.normalized * (move.magnitude - newDistance), surfaceTangent);
       }
     }
     #endregion

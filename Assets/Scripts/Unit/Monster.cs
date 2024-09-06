@@ -1,17 +1,18 @@
 using Data;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Health))]
-public class Monster : MonoBehaviour
+public class Monster : KinematicObject
 {
   public MonsterData monsterData;
   public GameObject hitParticlePrefab;
 
   protected Health health;
 
-  private void Awake()
+  protected override void Awake()
   {
+    base.Awake();
+
     health = GetComponent<Health>();
     health.SetHP(monsterData.monsterHP);
   }
