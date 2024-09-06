@@ -62,6 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   hpUI: {fileID: 0}
+  displayDamageOnHit: 0
   OnHPChanged:
     m_PersistentCalls:
       m_Calls:

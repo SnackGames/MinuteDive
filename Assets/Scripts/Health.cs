@@ -14,6 +14,7 @@ public class Health : MonoBehaviour
   private int hp = 1;
 
   public UI_HP hpUI;
+  public bool displayDamageOnHit = true;
 
   public HealthEvent OnHPChanged;
 
@@ -34,7 +35,10 @@ public class Health : MonoBehaviour
   {
     SetHP(Math.Max(0, hp - damage), true);
 
-    GameObject damageUI = Instantiate(AssetReferenceManager.GetAssetReferences().assetReferences.damageUI, gameObject.transform.position, Quaternion.identity);
-    damageUI.GetComponent<UI_Damage>()?.SetDamage(damage);
+    if (displayDamageOnHit)
+    {
+      GameObject damageUI = Instantiate(AssetReferenceManager.GetAssetReferences().assetReferences.damageUI, gameObject.transform.position, Quaternion.identity);
+      damageUI.GetComponent<UI_Damage>()?.SetDamage(damage);
+    }
   }
 }
