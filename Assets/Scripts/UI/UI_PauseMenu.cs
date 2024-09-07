@@ -10,7 +10,7 @@ namespace UI
 
     public void PauseGame(bool pause)
     {
-      TimeManager.SetTimeScale(pause ? 0.0f : 1.0f);
+      TimeManager.GetTimeManager().SetTimeScale(pause ? 0.0f : 1.0f);
       pauseUI.SetActive(pause);
 
       // 일시정지 해제될 때 변경된 세팅 일괄 저장

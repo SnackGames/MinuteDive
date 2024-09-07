@@ -10005,6 +10005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff6820d939b8804ba98cc24bf750637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  remainTimeReadOnly: 0
+  currentTimeScaleReadOnly: 0
   initialRemainTime: 30
   initialTimeScale: 1
   OnRemainTimeExpired:
@@ -10034,6 +10036,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnTimeScaleChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1416998076
 GameObject:
   m_ObjectHideFlags: 0
@@ -15790,8 +15795,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1405958196}
   - {fileID: 519420032}
+  - {fileID: 1405958196}
   - {fileID: 1268439480}
   - {fileID: 1971087650}
   - {fileID: 322370313}

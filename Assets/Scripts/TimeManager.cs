@@ -17,12 +17,45 @@ public class TimeManager : MonoBehaviour
   public float initialRemainTime = 30.0f;
   public float initialTimeScale = 1.0f;
   public UnityEvent OnRemainTimeExpired;
+  public UnityEvent OnTimeScaleChanged;
 
+  #region Public Methods
   static public float GetRemainTime() => remainTime;
   static public float GetTimeScale() => currentTimeScale;
-  static public void SetTimeScale(float newTimeScale) { Time.timeScale = newTimeScale; currentTimeScale = newTimeScale; }
-  // TODO: OnSetTimeSclae 이벤트 추가
 
+  public void SetTimeScale(float newTimeScale)
+  {
+    Time.timeScale = newTimeScale;
+    currentTimeScale = newTimeScale;
+
+    OnTimeScaleChanged.Invoke();
+  }
+
+  public void StartTimer(float newRemainTime)
+  {
+    remainTime = newRemainTime;
+  }
+
+  public void ReduceTime(float reduceTime)
+  {
+    if (remainTime <= 0f)
+      return;
+
+    remainTime -= reduceTime;
+    if (remainTime <= 0f)
+    {
+      remainTime = 0f;
+      OnRemainTimeExpired.Invoke();
+    }
+  }
+
+  public void PrintCurrentTimeScale(float newTimeScale)
+  {
+    Debug.Log(newTimeScale);
+  }
+  #endregion
+
+  #region Private Methods
   private void Awake()
   {
     timeManagerSingleton = this;
@@ -36,26 +69,9 @@ public class TimeManager : MonoBehaviour
 
   void Update()
   {
-    remainTimeReadOnly = remainTime;
-    currentTimeScaleReadOnly = currentTimeScale;
+    if (remainTimeReadOnly != remainTime) remainTimeReadOnly = remainTime;
+    if (currentTimeScaleReadOnly != currentTimeScale) currentTimeScaleReadOnly = currentTimeScale;
     ReduceTime(Time.deltaTime);
   }
-
-  public void StartTimer(float newRemainTime)
-  {
-    remainTime = newRemainTime;
-  }
-
-  public void ReduceTime(float reduceTime)
-  {
-    if (remainTime > 0f)
-    {
-      remainTime -= reduceTime;
-      if (remainTime < 0f)
-      {
-        remainTime = 0f;
-        OnRemainTimeExpired.Invoke();
-      }
-    }
-  }
+  #endregion
 }
