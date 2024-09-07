@@ -28,7 +28,7 @@ namespace UI
 
       if (GameModeDungeon != null)
       {
-        float time = GameModeDungeon.GetRemainTime();
+        float time = TimeManager.GetRemainTime();
         bool isTimeUrgent = time <= 10.0f;
         text.enabled = true;
         text.color = isTimeUrgent ? Color.red : Color.white;

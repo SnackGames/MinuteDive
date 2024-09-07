@@ -20,10 +20,6 @@ public class GameModeManager : MonoBehaviour
   [Header("Lobby")]
   public Vector3 UserInitialPosition;
 
-  [Header("Dungeon")]
-  public float InitialRemainTime = 60f;
-  public UnityEvent OnRemainTimeExpired;
-
   void Start()
   {
   }

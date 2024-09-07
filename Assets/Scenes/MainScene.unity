@@ -9868,6 +9868,7 @@ GameObject:
   - component: {fileID: 1405958194}
   - component: {fileID: 1405958197}
   - component: {fileID: 1405958198}
+  - component: {fileID: 1405958201}
   - component: {fileID: 1405958200}
   - component: {fileID: 1405958199}
   m_Layer: 0
@@ -9961,34 +9962,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   UserInitialPosition: {x: -3, y: 7, z: 0}
-  InitialRemainTime: 30
-  OnRemainTimeExpired:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1268439481}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ReturnToLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1405958200}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SaveInventory
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1405958199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10020,6 +9993,47 @@ MonoBehaviour:
   inventoryData:
     money: 0
     items: 
+--- !u!114 &1405958201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405958193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff6820d939b8804ba98cc24bf750637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialRemainTime: 30
+  initialTimeScale: 1
+  OnRemainTimeExpired:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1268439481}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: ReturnToLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1405958200}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: SaveInventory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1416998076
 GameObject:
   m_ObjectHideFlags: 0
