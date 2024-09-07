@@ -7826,6 +7826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1174759945}
+  - component: {fileID: 1174759950}
   - component: {fileID: 1174759948}
   - component: {fileID: 1174759947}
   - component: {fileID: 1174759949}
@@ -7966,6 +7967,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameModeDungeon: {fileID: 0}
   ModeManager: {fileID: 1405958198}
+  timeChangePrefab: {fileID: 4743516426492251377, guid: 38a2fe99b7f63ec47868293a7a248c30, type: 3}
+--- !u!95 &1174759950
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174759944}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ffe7d477196c40e4ebd4192709e848c7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1180876315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8540,6 +8563,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d19e50c02bd5c04991019db17faaac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityScale: 3
+  velocity: {x: 0, y: 0}
   reservePressedInputDuration: 0.2
   moveInput: 0
   isLookingRight: 1
@@ -8551,9 +8576,7 @@ MonoBehaviour:
   fallAttackSpeed: 45
   dashSpeed: 40
   moveAcceleration: 79.7
-  gravityScale: 3
   fallAttackThreshold: 2
-  velocity: {x: 0, y: 0}
   isOnGround: 0
   canFallAttack: 0
   isAttacking: 0
@@ -9981,6 +10004,7 @@ MonoBehaviour:
   assetReferences: {fileID: 11400000, guid: 5354339f971a84340adabce1102095e1, type: 2}
   moneyText: {fileID: 361066827}
   itemGrid: {fileID: 607143598}
+  remainTime: {fileID: 1174759949}
 --- !u!114 &1405958200
 MonoBehaviour:
   m_ObjectHideFlags: 0

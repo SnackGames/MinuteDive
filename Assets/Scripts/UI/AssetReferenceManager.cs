@@ -17,6 +17,7 @@ namespace UI
     [Header("UI Links")]
     public TextMeshProUGUI moneyText;
     public GameObject itemGrid;
+    public UI_RemainTime remainTime;
 
     private void Awake()
     {

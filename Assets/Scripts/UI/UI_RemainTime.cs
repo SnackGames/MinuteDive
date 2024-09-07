@@ -3,24 +3,26 @@ using TMPro;
 
 namespace UI
 {
+  [RequireComponent(typeof(Animator))]
+  [RequireComponent(typeof(TextMeshProUGUI))]
   public class UI_RemainTime : MonoBehaviour
   {
     [Header("RemainTime")]
     [ReadOnly] public GameModeDungeon GameModeDungeon;
     public GameModeManager ModeManager;
+    public GameObject timeChangePrefab;
 
+    protected Animator animator;
     protected TextMeshProUGUI text;
 
     private void Awake()
     {
+      animator = GetComponent<Animator>();
       text = GetComponent<TextMeshProUGUI>();
     }
 
     protected virtual void Update()
     {
-      if (text == null)
-        return;
-
       if (ModeManager != null)
         GameModeDungeon = ModeManager.GameMode as GameModeDungeon;
 
@@ -36,6 +38,22 @@ namespace UI
       {
         text.enabled = false;
       }
+    }
+
+    public virtual void OnTimeChanged(float time)
+    {
+      if (time > 0.0f)
+      {
+        animator.SetTrigger("Plus");
+      }
+      else
+      {
+        animator.SetTrigger("Minus");
+      }
+
+      GameObject timeChangeUI = Instantiate(timeChangePrefab, transform.position, Quaternion.identity);
+      timeChangeUI.transform.SetParent(transform,true);
+      timeChangeUI.GetComponent<UI_TimeChange>()?.SetTimeChange(time);
     }
   }
 }

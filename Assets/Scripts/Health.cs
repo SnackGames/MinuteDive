@@ -37,7 +37,7 @@ public class Health : MonoBehaviour
 
     if (displayDamageOnHit)
     {
-      GameObject damageUI = Instantiate(AssetReferenceManager.GetAssetReferences().assetReferences.damageUI, gameObject.transform.position, Quaternion.identity);
+      GameObject damageUI = Instantiate(AssetReferenceManager.GetAssetReferences().assetReferences.damageUI, transform.position, Quaternion.identity);
       damageUI.GetComponent<UI_Damage>()?.SetDamage(damage);
     }
   }

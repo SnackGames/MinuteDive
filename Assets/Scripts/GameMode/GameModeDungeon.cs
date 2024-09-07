@@ -1,10 +1,11 @@
 using UnityEngine;
 using GameMode;
+using UI;
 
 public class GameModeDungeon : GameModeBase
 {
   [Header("GameModeDungeon")]
-  [ReadOnly] public float RemainTime = 0f;
+  [ReadOnly] public float remainTime = 0f;
   private bool hasTimeExpired = false;
 
   #region GameModeBase
@@ -22,7 +23,8 @@ public class GameModeDungeon : GameModeBase
 
   override public void OnPlayerHit(float damage)
   {
-    RemainTime -= damage;
+    remainTime -= damage;
+    AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(damage);
   }
 
   override protected void Update()
@@ -31,11 +33,11 @@ public class GameModeDungeon : GameModeBase
 
     if (!hasTimeExpired)
     {
-      RemainTime -= Time.deltaTime;
-      if (RemainTime <= 0f)
+      remainTime -= Time.deltaTime;
+      if (remainTime <= 0f)
       {
         hasTimeExpired = true;
-        RemainTime = 0f;
+        remainTime = 0f;
         OnRemainTimeExpired();
       }
     }
@@ -45,12 +47,12 @@ public class GameModeDungeon : GameModeBase
   public float StartTimer()
   {
     if (ModeManager != null)
-      RemainTime = ModeManager.InitialRemainTime;
+      remainTime = ModeManager.InitialRemainTime;
 
-    return RemainTime;
+    return remainTime;
   }
 
-  public float GetRemainTime() => RemainTime;
+  public float GetRemainTime() => remainTime;
 
   private void OnRemainTimeExpired()
   {
