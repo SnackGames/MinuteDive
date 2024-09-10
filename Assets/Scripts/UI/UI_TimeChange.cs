@@ -11,7 +11,7 @@ namespace UI
 
     public void SetTimeChange(float time)
     {
-      if (timeText != null) timeText.text = $"{time:F2}";
+      if (timeText != null) timeText.text = $"{time:F2}s";
     }
   }
 }

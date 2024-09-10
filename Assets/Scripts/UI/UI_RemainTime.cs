@@ -31,7 +31,8 @@ namespace UI
         float time = TimeManager.GetRemainTime();
         bool isTimeUrgent = time <= 10.0f;
         text.enabled = true;
-        text.color = isTimeUrgent ? Color.red : Color.white;
+        // #TODO 색을 animation으로 이전하면서 작동하지 않게 됨
+        // text.color = isTimeUrgent ? Color.red : Color.white;
         text.SetText(isTimeUrgent ? $"{time:F2}" : $"{time:F0}");
       }
       else

@@ -19,7 +19,7 @@ public class GameModeDungeon : GameModeBase
   override public void OnPlayerHit(float damage)
   {
     TimeManager.GetTimeManager().ReduceTime(damage);
-    AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(damage);
+    AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(-damage);
   }
 
   override protected void Update()
