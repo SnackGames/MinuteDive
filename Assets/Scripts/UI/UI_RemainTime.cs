@@ -54,6 +54,8 @@ namespace UI
 
       GameObject timeChangeUI = Instantiate(timeChangePrefab, transform.position, Quaternion.identity);
       timeChangeUI.transform.SetParent(transform,true);
+      timeChangeUI.transform.localScale = Vector3.one;
+      timeChangeUI.transform.localPosition = new Vector3(0.0f, -300.0f, 0.0f);
       timeChangeUI.GetComponent<UI_TimeChange>()?.SetTimeChange(time);
     }
   }
