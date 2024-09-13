@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -8,6 +9,7 @@ namespace UI
   public class UI_Damage : MonoBehaviour
   {
     public TextMeshProUGUI damageText;
+    public Image iconImage; 
 
     public void SetDamage(int damage)
     {
