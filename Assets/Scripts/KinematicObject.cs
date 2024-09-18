@@ -26,7 +26,7 @@ public class KinematicObject : MonoBehaviour
     ProcessMovement();
   }
 
-  // move ¸¸Å­ ÀÌµ¿ ½Ã ºÎ‹HÈ÷´Â Ãæµ¹ Á¤º¸
+  // move ë§Œí¼ ì´ë™ ì‹œ ë¶€ë”«íˆëŠ” ì¶©ëŒ ì •ë³´
   protected RaycastHit2D? CheckMoveCollision(Vector2 position, Vector2 move)
   {
     RaycastHit2D[] hitBuffer = new RaycastHit2D[4];
@@ -34,7 +34,7 @@ public class KinematicObject : MonoBehaviour
     if (count <= 0) return null;
 
     int closestIndex = 0;
-    // °¡Àå °¡±î¿î Ãæµ¹Á¡ °Ë»ö
+    // ê°€ì¥ ê°€ê¹Œìš´ ì¶©ëŒì  ê²€ìƒ‰
     for (int i = 0; i < count; ++i)
       if (hitBuffer[i].distance < hitBuffer[closestIndex].distance)
         closestIndex = i;
@@ -44,7 +44,7 @@ public class KinematicObject : MonoBehaviour
 
   protected virtual void ProcessVelocity()
   {
-    // Áß·Â
+    // ì¤‘ë ¥
     velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
   }
 
@@ -65,16 +65,26 @@ public class KinematicObject : MonoBehaviour
         break;
       }
 
+      // TODO_MMJ KinematicObjectë¼ë¦¬ ì¶©ëŒ ì˜ˆìƒë˜ëŠ” ê²½ìš°ì— ëŒ€í•œ ì²˜ë¦¬(ì¢Œìš° ì´ë™ ë¶ˆê°€ ë“±)
+      if (hit.Value.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
+      {
+        Debug.Log("Collided with Monster " + hit.Value.collider.gameObject.name);
+      }
+      else if (hit.Value.collider.gameObject.layer == LayerMask.NameToLayer("Destructible"))
+      {
+        Debug.Log("Collided with Destructible " + hit.Value.collider.gameObject.name);
+      }
+
       float newDistance = hit.Value.distance - epsilon;
 
-      // Ãæµ¹ÇÏ±â Á÷Àü¸¸Å­ ÀÌµ¿
+      // ì¶©ëŒí•˜ê¸° ì§ì „ë§Œí¼ ì´ë™
       body.position += move.normalized * newDistance;
 
-      // velocity °»½Å
+      // velocity ê°±ì‹ 
       Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);
       velocity = Vector3.Project(velocity, surfaceTangent);
 
-      // move °»½Å
+      // move ê°±ì‹ 
       move = Vector3.Project(move.normalized * (move.magnitude - newDistance), surfaceTangent);
     }
   }
