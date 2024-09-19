@@ -6,6 +6,7 @@ public class KinematicObject : MonoBehaviour
   [Header("Kinematic")]
   public float gravityScale = 1.0f;
   [ReadOnly] public Vector2 velocity = Vector2.zero;
+  public float mass = 1.0f;
 
   protected Rigidbody2D body;
   protected ContactFilter2D contactFilter;
@@ -63,16 +64,6 @@ public class KinematicObject : MonoBehaviour
       {
         body.position += move;
         break;
-      }
-
-      // TODO_MMJ KinematicObject끼리 충돌 예상되는 경우에 대한 처리(좌우 이동 불가 등)
-      if (hit.Value.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
-      {
-        Debug.Log("Collided with Monster " + hit.Value.collider.gameObject.name);
-      }
-      else if (hit.Value.collider.gameObject.layer == LayerMask.NameToLayer("Destructible"))
-      {
-        Debug.Log("Collided with Destructible " + hit.Value.collider.gameObject.name);
       }
 
       float newDistance = hit.Value.distance - epsilon;

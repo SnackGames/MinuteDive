@@ -5,6 +5,7 @@ using UnityEngine;
 using GameMode;
 
 using AYellowpaper.SerializedCollections;
+using Unity.VisualScripting;
 
 namespace Unit
 {
@@ -270,6 +271,68 @@ namespace Unit
                 Math.Max(0.0f, velocity.x - 3.0f * moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + 3.0f * moveAcceleration * Time.deltaTime);
           } break;
+      }
+    }
+
+    protected override void ProcessMovement()
+    {
+      const float epsilon = 0.1f;
+      const int maxMovementIteration = 5;
+
+      Vector2 move = velocity * Time.deltaTime;
+      for (int i = 0; i < maxMovementIteration; ++i)
+      {
+        if (move.magnitude <= 0.0f || Time.deltaTime <= 0.0f) break;
+
+        RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * epsilon);
+        if (hit == null)
+        {
+          body.position += move;
+          break;
+        }
+
+        // TODO_MMJ KinematicObject끼리 충돌 예상되는 경우에 대한 처리(좌우 이동 불가 등)
+        // 충돌 결과에 따라 자기 자신 혹은 충돌 대상을 밀치는 기능은 오작동 방지를 위해 유저에서만 구현한다.
+        if (hit.Value.collider.gameObject.GetComponent<KinematicObject>() != null)
+        {
+          switch (LayerMask.LayerToName(hit.Value.collider.gameObject.layer))
+          {
+            case "Monster":
+              {
+                Monster collidingMonster = hit.Value.collider.gameObject.GetComponent<Monster>();
+                if (collidingMonster != null)
+                {
+                  switch (playerState)
+                  {
+                    case PlayerStateType.FallAttack:
+                      {
+                        // TODO_MMJ 임시 구현으로, mass의 역할에 대한 재구현 필요.
+                        Vector2 monsterToUser = new Vector2(transform.position.x - collidingMonster.transform.position.x, 0f);
+                        if (monsterToUser == Vector2.zero) monsterToUser.x = -1;  // 몬스터와 x좌표가 일치하는 경우, 왼쪽으로 밀침.
+                        move += monsterToUser * mass;
+                        Debug.Log("Hit Normal: " + hit.Value.normal + ", surfaceTangent: " + Vector2.Perpendicular(hit.Value.normal) + ", MonsterToUser: " + monsterToUser);
+                      }
+                      break;
+                  }
+                }
+              } break;
+            default:
+              //Debug.Log("Collided with Undefined Layer! Object Name: " + hit.Value.collider.gameObject.name);
+              break;
+          }
+        }
+
+        float newDistance = hit.Value.distance - epsilon;
+
+        // 충돌하기 직전만큼 이동
+        body.position += move.normalized * newDistance;
+
+        // velocity 갱신
+        Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);
+        velocity = Vector3.Project(velocity, surfaceTangent);
+
+        // move 갱신
+        move = Vector3.Project(move.normalized * (move.magnitude - newDistance), surfaceTangent);
       }
     }
     #endregion
