@@ -49,8 +49,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 066d5fd2293d4774c97b96dd1cab3e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravityScale: 1
+  velocity: {x: 0, y: 0}
+  mass: 1
   monsterData: {fileID: 11400000, guid: 791296f970907734ab31968420a48007, type: 2}
   hitParticlePrefab: {fileID: 3463157229188906966, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+  isLookingRight: 1
+  attackRigidbody: {fileID: 0}
 --- !u!114 &9053960069349167447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   hpUI: {fileID: 856742794381075776}
+  displayDamageOnHit: 1
   OnHPChanged:
     m_PersistentCalls:
       m_Calls:
@@ -123,7 +129,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.026763566, g: 0, b: 0.6039216, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}

@@ -53,8 +53,10 @@ MonoBehaviour:
   gravityScale: 1
   velocity: {x: 0, y: 0}
   mass: 1
-  monsterData: {fileID: 11400000, guid: a9107d21575ba6945a1eefeaa41b1d6e, type: 2}
+  monsterData: {fileID: 11400000, guid: 917e7c07a25c2c34d91e3635572a1765, type: 2}
   hitParticlePrefab: {fileID: 3463157229188906966, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+  isLookingRight: 1
+  attackRigidbody: {fileID: 0}
 --- !u!114 &9053960069349167447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +130,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 1292029945, guid: 44697b7aba165bc4cbc5104c7a70c1f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
