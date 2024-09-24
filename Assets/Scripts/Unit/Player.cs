@@ -70,9 +70,17 @@ namespace Unit
     protected SpriteRenderer sprite;
     protected AudioSource sound;
 
+    static private Player player;
+    static public Player Get
+    {
+      get => player;
+    }
+
     protected override void Awake()
     {
       base.Awake();
+
+      player = this;
 
       anim = GetComponent<Animator>();
       sprite = GetComponent<SpriteRenderer>();
