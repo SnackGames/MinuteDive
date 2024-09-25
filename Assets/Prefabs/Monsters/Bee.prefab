@@ -58,6 +58,7 @@ MonoBehaviour:
   hitParticlePrefab: {fileID: 3463157229188906966, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   isLookingRight: 1
   isMonsterActive: 0
+  behaviourType: 0
   attackRigidbody: {fileID: 1210655502287976677}
 --- !u!114 &9053960069349167447
 MonoBehaviour:
@@ -245,7 +246,7 @@ GameObject:
   - component: {fileID: 182783106852135876}
   - component: {fileID: 1210655502287976677}
   - component: {fileID: 2197168407843777038}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

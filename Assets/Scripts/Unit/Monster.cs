@@ -73,8 +73,10 @@ namespace Unit
 
     public void SetLookingDirection(bool right)
     {
-      sprite.flipX = right;
+      if (right == isLookingRight) return;
+
       isLookingRight = right;
+      sprite.flipX = right;
 
       if (attackRigidbody)
       {
@@ -93,6 +95,31 @@ namespace Unit
       Player player = Player.Get;
       if(player)
       {
+        // 공격 범위 안에 들어왔을 시 공격 시도
+        // #TODO IsTouching 이 아무리해도 작동을 안한다, 원인 파악 필요
+        //if (player.GetComponent<Rigidbody2D>().IsTouching(attackRigidbody.GetComponent<BoxCollider2D>()))
+        //if (attackRigidbody.GetComponent<BoxCollider2D>().IsTouching(player.GetComponent<BoxCollider2D>()))
+        //if (attackRigidbody.IsTouching(player.GetComponent<BoxCollider2D>()))
+        //if (GetComponent<Rigidbody2D>().IsTouching(player.GetComponent<BoxCollider2D>()))
+
+        if(attackRigidbody)
+        {
+          ContactFilter2D attackFilter = new ContactFilter2D();
+          attackFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(attackRigidbody.gameObject.layer));
+          attackFilter.useLayerMask = false;
+          attackFilter.useTriggers = false;
+          //Collider2D[] hitColliders = new Collider2D[4];
+          //int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
+          //if (count > 0)
+          if (attackRigidbody.IsTouching(player.GetComponent<BoxCollider2D>(), attackFilter))
+          //if (player.GetComponent<Rigidbody2D>().IsTouching(attackRigidbody.GetComponent<BoxCollider2D>(), attackFilter))
+          {
+            Debug.Log("Touched!");
+            behaviourType = MonsterBehaviourType.Attack;
+            return;
+          }
+        }
+
         // 임시로, 유저가 근처에 없으면 움직이지 않게 한다
         // 추후에 같은 층 (또는 윗층)에 있을 때 발동하게 할 것
         const float epsilon = 1.0f;
@@ -100,6 +127,7 @@ namespace Unit
           && player.transform.position.y > transform.position.y - epsilon)
         {
           behaviourType = MonsterBehaviourType.Pursue;
+          return;
         }
       }
     }
@@ -116,6 +144,9 @@ namespace Unit
           break;
 
         case MonsterBehaviourType.Pursue:
+          Player player = Player.Get;
+          if (player) SetLookingDirection(player.transform.position.x > transform.position.x);
+
           float moveDirection = isLookingRight ? 1.0f : -1.0f;
           velocity = new Vector2(monsterData.monsterMoveSpeed * moveDirection * Time.deltaTime, velocity.y);
           break;
