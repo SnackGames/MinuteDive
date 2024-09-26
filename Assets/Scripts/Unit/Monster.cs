@@ -33,6 +33,9 @@ namespace Unit
     protected Health health;
     protected SpriteRenderer sprite;
 
+    private ContactFilter2D attackFilter;
+    private Collider2D[] hitColliders = new Collider2D[1];
+
     protected virtual void OnValidate()
     {
       sprite = GetComponent<SpriteRenderer>();
@@ -46,6 +49,13 @@ namespace Unit
       health = GetComponent<Health>();
       health.SetHP(monsterData.monsterHP);
       sprite = GetComponent<SpriteRenderer>();
+
+      if (attackRigidbody)
+      {
+        attackFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(attackRigidbody.gameObject.layer));
+        attackFilter.useLayerMask = true;
+        attackFilter.useTriggers = false;
+      }
 
       SetLookingDirection(isLookingRight);
     }
@@ -96,25 +106,11 @@ namespace Unit
       if(player)
       {
         // 공격 범위 안에 들어왔을 시 공격 시도
-        // #TODO IsTouching 이 아무리해도 작동을 안한다, 원인 파악 필요
-        //if (player.GetComponent<Rigidbody2D>().IsTouching(attackRigidbody.GetComponent<BoxCollider2D>()))
-        //if (attackRigidbody.GetComponent<BoxCollider2D>().IsTouching(player.GetComponent<BoxCollider2D>()))
-        //if (attackRigidbody.IsTouching(player.GetComponent<BoxCollider2D>()))
-        //if (GetComponent<Rigidbody2D>().IsTouching(player.GetComponent<BoxCollider2D>()))
-
         if(attackRigidbody)
-        {
-          ContactFilter2D attackFilter = new ContactFilter2D();
-          attackFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(attackRigidbody.gameObject.layer));
-          attackFilter.useLayerMask = false;
-          attackFilter.useTriggers = false;
-          //Collider2D[] hitColliders = new Collider2D[4];
-          //int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
-          //if (count > 0)
-          if (attackRigidbody.IsTouching(player.GetComponent<BoxCollider2D>(), attackFilter))
-          //if (player.GetComponent<Rigidbody2D>().IsTouching(attackRigidbody.GetComponent<BoxCollider2D>(), attackFilter))
+        {         
+          int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
+          if (count > 0)
           {
-            Debug.Log("Touched!");
             behaviourType = MonsterBehaviourType.Attack;
             return;
           }
@@ -140,6 +136,7 @@ namespace Unit
       switch (behaviourType)
       {
         case MonsterBehaviourType.Idle:
+        case MonsterBehaviourType.Attack:
           velocity = new Vector2(0.0f, velocity.y);
           break;
 
