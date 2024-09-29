@@ -11,10 +11,13 @@ namespace Unit
   {
     Idle,
     Pursue,
+    Wait,
     Attack
   }
 
   [RequireComponent(typeof(Health))]
+  [RequireComponent(typeof(Animator))]
+  [RequireComponent(typeof(SpriteRenderer))]
   public class Monster : KinematicObject
   {
     public MonsterData monsterData;
@@ -26,11 +29,14 @@ namespace Unit
     [Header("Actions")]
     [ReadOnly] public bool isMonsterActive = false;
     [ReadOnly] public MonsterBehaviourType behaviourType = MonsterBehaviourType.Idle;
+    [ReadOnly] private float currentWaitingTime = 0.0f;
+    [ReadOnly] private bool isAttacking = false;
 
     [Header("Component Links")]
     public Rigidbody2D attackRigidbody;
 
     protected Health health;
+    protected Animator anim;
     protected SpriteRenderer sprite;
 
     private ContactFilter2D attackFilter;
@@ -47,6 +53,7 @@ namespace Unit
       base.Awake();
 
       health = GetComponent<Health>();
+      anim = GetComponent<Animator>();
       health.SetHP(monsterData.monsterHP);
       sprite = GetComponent<SpriteRenderer>();
 
@@ -103,29 +110,45 @@ namespace Unit
       behaviourType = MonsterBehaviourType.Idle;
 
       Player player = Player.Get;
-      if(player)
-      {
-        // 공격 범위 안에 들어왔을 시 공격 시도
-        if(attackRigidbody)
-        {         
-          int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
-          if (count > 0)
-          {
-            behaviourType = MonsterBehaviourType.Attack;
-            return;
-          }
-        }
+      if (!player) return;
 
-        // 임시로, 유저가 근처에 없으면 움직이지 않게 한다
-        // 추후에 같은 층 (또는 윗층)에 있을 때 발동하게 할 것
-        const float epsilon = 1.0f;
-        if (player.transform.position.y < transform.position.y + epsilon
-          && player.transform.position.y > transform.position.y - epsilon)
-        {
-          behaviourType = MonsterBehaviourType.Pursue;
-          return;
-        }
+      if (isAttacking)
+      {
+        behaviourType = MonsterBehaviourType.Attack;
+        return;
       }
+
+      // 임시로, 유저가 근처에 없으면 움직이지 않게 한다
+      // 추후에 같은 층 (또는 윗층)에 있을 때 발동하게 할 것
+      const float epsilon = 1.0f;
+      if (player.transform.position.y >= transform.position.y + epsilon
+        || player.transform.position.y <= transform.position.y - epsilon)
+      {
+        currentWaitingTime = 0.0f;
+        return;
+      }
+
+      behaviourType = MonsterBehaviourType.Pursue;
+      if (!attackRigidbody) return;
+
+      // 공격 범위 밖일 시 추격       
+      int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
+      if (count <= 0)
+      {
+        currentWaitingTime = 0.0f;
+        return;
+      }
+
+      // 범위 안에 들어오면 대기
+      if (currentWaitingTime < monsterData.monsterWaitTime)
+      {
+        currentWaitingTime += Time.deltaTime;
+        behaviourType = MonsterBehaviourType.Wait;
+      }
+
+      isAttacking = true;
+      anim?.SetTrigger("Attack");
+      behaviourType = MonsterBehaviourType.Attack;
     }
 
     protected override void ProcessVelocity()
@@ -136,6 +159,7 @@ namespace Unit
       switch (behaviourType)
       {
         case MonsterBehaviourType.Idle:
+        case MonsterBehaviourType.Wait:
         case MonsterBehaviourType.Attack:
           velocity = new Vector2(0.0f, velocity.y);
           break;
