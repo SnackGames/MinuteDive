@@ -299,7 +299,7 @@ namespace Unit
           break;
         }
 
-        // TODO_MMJ KinematicObject끼리 충돌 예상되는 경우에 대한 처리(좌우 이동 불가 등)
+        // KinematicObject끼리 충돌 예상되는 경우에 대한 처리(좌우 이동 불가 등)
         // 충돌 결과에 따라 자기 자신 혹은 충돌 대상을 밀치는 기능은 오작동 방지를 위해 유저에서만 구현한다.
         if (hit.Value.collider.gameObject.GetComponent<KinematicObject>() != null)
         {
@@ -310,15 +310,20 @@ namespace Unit
                 Monster collidingMonster = hit.Value.collider.gameObject.GetComponent<Monster>();
                 if (collidingMonster != null)
                 {
+                  // x좌표 기준 (몬스터 중심 -> 내 중심) 방향으로 밀침
+                  Vector2 monsterToUser = new Vector2(transform.position.x - collidingMonster.transform.position.x, 0f).normalized;
+                  if (monsterToUser == Vector2.zero) monsterToUser.x = -1;  // 몬스터와 x좌표가 일치하는 경우, 왼쪽으로 밀침.
+
                   switch (playerState)
                   {
                     case PlayerStateType.FallAttack:
                       {
-                        // TODO_MMJ 임시 구현으로, mass의 역할에 대한 재구현 필요.
-                        Vector2 monsterToUser = new Vector2(transform.position.x - collidingMonster.transform.position.x, 0f);
-                        if (monsterToUser == Vector2.zero) monsterToUser.x = -1;  // 몬스터와 x좌표가 일치하는 경우, 왼쪽으로 밀침.
-                        move += monsterToUser * mass;
-                        Debug.Log("Hit Normal: " + hit.Value.normal + ", surfaceTangent: " + Vector2.Perpendicular(hit.Value.normal) + ", MonsterToUser: " + monsterToUser);
+                        // 몬스터와 비교해 무거울수록 덜 움직임
+                        float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0, 100);
+                        move += (monsterToUser * velocity.magnitude * Time.deltaTime * massRatio);
+
+                        Debug.Log("Hit Normal: " + hit.Value.normal + ", surfaceTangent: " + Vector2.Perpendicular(hit.Value.normal) + ", MonsterToUser: " + monsterToUser + ", massRatio: " + massRatio);
+                        Debug.Log("Velocity: " + velocity + ", NewVelocity: " + Vector3.Project(velocity, Vector2.Perpendicular(hit.Value.normal)) + ", Move: " + move + ", Normalized Move: " + move.normalized + ", Add Position: " + move.normalized * (hit.Value.distance - epsilon));
                       }
                       break;
                   }
