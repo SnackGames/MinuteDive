@@ -30,6 +30,7 @@ namespace Unit
     [ReadOnly] public bool isMonsterActive = false;
     [ReadOnly] public MonsterBehaviourType behaviourType = MonsterBehaviourType.Idle;
     [ReadOnly] private float currentWaitingTime = 0.0f;
+    [ReadOnly] private bool isInAttackState = false;
     [ReadOnly] private bool isAttacking = false;
 
     [Header("Component Links")]
@@ -102,6 +103,9 @@ namespace Unit
         attackRigidbody.transform.localPosition = newPosition;
       }
     }
+
+    public void AnimTrigger_Attack(int enable) => isAttacking = enable > 0;
+    public void AnimTrigger_StopAttack() => isInAttackState = false;
     #endregion
 
     #region Movement
@@ -112,7 +116,7 @@ namespace Unit
       Player player = Player.Get;
       if (!player) return;
 
-      if (isAttacking)
+      if (isInAttackState)
       {
         behaviourType = MonsterBehaviourType.Attack;
         return;
@@ -146,7 +150,7 @@ namespace Unit
         behaviourType = MonsterBehaviourType.Wait;
       }
 
-      isAttacking = true;
+      isInAttackState = true;
       anim?.SetTrigger("Attack");
       behaviourType = MonsterBehaviourType.Attack;
     }
