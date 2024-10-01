@@ -323,7 +323,8 @@ namespace Unit
                         move += (monsterToUser * velocity.magnitude * Time.deltaTime * massRatio);
 
                         Debug.Log("Hit Normal: " + hit.Value.normal + ", surfaceTangent: " + Vector2.Perpendicular(hit.Value.normal) + ", MonsterToUser: " + monsterToUser + ", massRatio: " + massRatio);
-                        Debug.Log("Velocity: " + velocity + ", NewVelocity: " + Vector3.Project(velocity, Vector2.Perpendicular(hit.Value.normal)) + ", Move: " + move + ", Normalized Move: " + move.normalized + ", Add Position: " + move.normalized * (hit.Value.distance - epsilon));
+                        Debug.Log("Velocity: " + velocity + ", NewVelocity: " + Vector3.Project(velocity, Vector2.Perpendicular(hit.Value.normal)) + ", Add Position: " + move.normalized * (hit.Value.distance - epsilon));
+                        Debug.Log("Move: " + move + ", Normalized Move: " + move.normalized + ", New Move: " + Vector3.Project(move.normalized * (move.magnitude - hit.Value.distance - epsilon), Vector2.Perpendicular(hit.Value.normal)));
                       }
                       break;
                   }
