@@ -20,6 +20,9 @@ namespace PlayerState
     {
       base.OnPlayerStateEnter();
       RefreshPlayerState();
+
+      // 낙하 공격 시전 시 x축 속도를 제거
+      player.velocity = Vector2.zero;
     }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator)

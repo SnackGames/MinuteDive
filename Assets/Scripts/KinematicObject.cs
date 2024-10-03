@@ -79,4 +79,9 @@ public class KinematicObject : MonoBehaviour
       move = Vector3.Project(move.normalized * (move.magnitude - newDistance), surfaceTangent);
     }
   }
+
+  public void AddImpulse(Vector2 impulse)
+  {
+    velocity += impulse;
+  }
 }

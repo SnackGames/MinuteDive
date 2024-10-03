@@ -42,11 +42,14 @@ namespace PlayerState
       animator.SetBool("isRunning", Math.Abs(player.velocity.x) > 0.0f);
       animator.SetBool("isFalling", !player.isOnGround);
 
-      // 캐릭터가 바라보는 방향
-      bool isRight = false;
-      if (player.isLookingRight) isRight = player.velocity.x >= 0.0f;
-      else isRight = player.velocity.x > 0.0f;
-      player.SetLookingDirection(isRight);
+      // 캐릭터가 바라보는 방향. 이동 입력이 있을 때에만 변경함
+      if (player.moveInput != 0)
+      {
+        bool isRight = false;
+        if (player.isLookingRight) isRight = player.velocity.x >= 0.0f;
+        else isRight = player.velocity.x > 0.0f;
+        player.SetLookingDirection(isRight);
+      }
     }
 
     virtual protected PlayerStateType? ProcessStateChange(Animator animator) => null;
