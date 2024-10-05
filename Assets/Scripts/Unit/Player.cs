@@ -289,8 +289,6 @@ namespace Unit
 
       // 임펄스
       ApplyImpulse();
-
-      Debug.Log("Player newVelocity: " + velocity);
     }
 
     protected override void ProcessMovement()

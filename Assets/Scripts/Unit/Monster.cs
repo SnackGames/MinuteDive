@@ -153,27 +153,29 @@ namespace Unit
       isInAttackState = true;
       anim?.SetTrigger("Attack");
       behaviourType = MonsterBehaviourType.Attack;
+      velocity = new Vector2(0.0f, velocity.y);
     }
 
     protected override void ProcessVelocity()
     {
       base.ProcessVelocity();
 
-      // 임시 이동
       switch (behaviourType)
       {
         case MonsterBehaviourType.Idle:
         case MonsterBehaviourType.Wait:
         case MonsterBehaviourType.Attack:
-          velocity = new Vector2(0.0f, velocity.y);
           break;
 
         case MonsterBehaviourType.Pursue:
           Player player = Player.Get;
           if (player) SetLookingDirection(player.transform.position.x > transform.position.x);
 
-          float moveDirection = isLookingRight ? 1.0f : -1.0f;
-          velocity = new Vector2(monsterData.monsterMoveSpeed * moveDirection * Time.deltaTime, velocity.y);
+          // 유저 방향으로 가속
+          float accDirection = isLookingRight ? 1.0f : -1.0f;
+          float newSpeed = velocity.x + (accDirection * monsterData.monsterMoveAcceleration * Time.deltaTime);
+          velocity.x = newSpeed > 0.0f ? Math.Min(monsterData.monsterMoveSpeed, newSpeed) : Math.Max(-monsterData.monsterMoveSpeed, newSpeed);
+
           break;
       }
     }
