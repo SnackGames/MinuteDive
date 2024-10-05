@@ -329,7 +329,7 @@ namespace Unit
                     case PlayerStateType.FallAttack:
                       {
                         // 몬스터와 비교해 무거울수록 덜 움직임
-                        float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0, 100);
+                        float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0.01f, 100);
                         ReserveImpulse(monsterToUser * velocity.magnitude * massRatio);
                         collidingMonster.ReserveImpulse(userToMonster * velocity.magnitude / massRatio);
                       }

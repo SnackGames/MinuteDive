@@ -165,6 +165,10 @@ namespace Unit
         case MonsterBehaviourType.Idle:
         case MonsterBehaviourType.Wait:
         case MonsterBehaviourType.Attack:
+          // 감속
+          velocity.x = velocity.x > 0.0f ?
+            Math.Max(0.0f, velocity.x - monsterData.monsterMoveAcceleration * Time.deltaTime) :
+            Math.Min(0.0f, velocity.x + monsterData.monsterMoveAcceleration * Time.deltaTime);
           break;
 
         case MonsterBehaviourType.Pursue:
