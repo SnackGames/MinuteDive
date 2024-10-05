@@ -6,6 +6,7 @@ public class KinematicObject : MonoBehaviour
   [Header("Kinematic")]
   public float gravityScale = 1.0f;
   [ReadOnly] public Vector2 velocity = Vector2.zero;
+  [ReadOnly] public Vector2 reservedImpulse = Vector2.zero;
   public float mass = 1.0f;
 
   protected Rigidbody2D body;
@@ -47,6 +48,9 @@ public class KinematicObject : MonoBehaviour
   {
     // 중력
     velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+
+    // 임펄스
+    ApplyImpulse();
   }
 
   protected virtual void ProcessMovement()
@@ -80,8 +84,14 @@ public class KinematicObject : MonoBehaviour
     }
   }
 
-  public void AddImpulse(Vector2 impulse)
+  public void ReserveImpulse(Vector2 impulse)
   {
-    velocity += impulse;
+    reservedImpulse = impulse;
+  }
+
+  public void ApplyImpulse()
+  {
+    velocity += reservedImpulse;
+    reservedImpulse = Vector2.zero;
   }
 }

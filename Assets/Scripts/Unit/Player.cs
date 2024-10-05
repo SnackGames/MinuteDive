@@ -286,6 +286,11 @@ namespace Unit
                 Math.Min(0.0f, velocity.x + 3.0f * moveAcceleration * Time.deltaTime);
           } break;
       }
+
+      // 임펄스
+      ApplyImpulse();
+
+      Debug.Log("Player newVelocity: " + velocity);
     }
 
     protected override void ProcessMovement()
@@ -318,8 +323,8 @@ namespace Unit
                 {
                   // x좌표 기준 (몬스터 중심 -> 내 중심) 방향으로 밀침
                   Vector2 monsterToUser = new Vector2(transform.position.x - collidingMonster.transform.position.x, 0f).normalized;
-                  Vector2 userToMonster = -monsterToUser;
                   if (monsterToUser == Vector2.zero) monsterToUser.x = -1;  // 몬스터와 x좌표가 일치하는 경우, 왼쪽으로 밀침.
+                  Vector2 userToMonster = -monsterToUser;
 
                   switch (playerState)
                   {
@@ -327,11 +332,8 @@ namespace Unit
                       {
                         // 몬스터와 비교해 무거울수록 덜 움직임
                         float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0, 100);
-                        AddImpulse(monsterToUser * velocity.magnitude * massRatio);
-
-                        Debug.Log("Hit Normal: " + hit.Value.normal + ", surfaceTangent: " + Vector2.Perpendicular(hit.Value.normal) + ", MonsterToUser: " + monsterToUser + ", massRatio: " + massRatio);
-                        Debug.Log("Velocity: " + velocity + ", NewVelocity: " + Vector3.Project(velocity, Vector2.Perpendicular(hit.Value.normal)) + ", Add Position: " + move.normalized * (hit.Value.distance - epsilon));
-                        Debug.Log("Move: " + move + ", Normalized Move: " + move.normalized + ", New Move: " + Vector3.Project(move.normalized * (move.magnitude - hit.Value.distance - epsilon), Vector2.Perpendicular(hit.Value.normal)));
+                        ReserveImpulse(monsterToUser * velocity.magnitude * massRatio);
+                        collidingMonster.ReserveImpulse(userToMonster * velocity.magnitude / massRatio);
                       }
                       break;
                   }
