@@ -83,10 +83,20 @@ namespace Unit
     protected void ProcessAnimation()
     {
       // 몬스터가 바라보는 방향
-      bool isRight = false;
-      if (isLookingRight) isRight = velocity.x >= 0.0f;
-      else isRight = velocity.x > 0.0f;
-      SetLookingDirection(isRight);
+      switch (behaviourType)
+      {
+        case MonsterBehaviourType.Pursue:
+          Player player = Player.Get;
+          if (player) SetLookingDirection(player.transform.position.x > transform.position.x);
+          break;
+
+        default:
+          bool isRight = false;
+          if (isLookingRight) isRight = velocity.x >= 0.0f;
+          else isRight = velocity.x > 0.0f;
+          SetLookingDirection(isRight);
+          break;
+      }
     }
 
     public void SetLookingDirection(bool right)
@@ -176,9 +186,6 @@ namespace Unit
           break;
 
         case MonsterBehaviourType.Pursue:
-          Player player = Player.Get;
-          if (player) SetLookingDirection(player.transform.position.x > transform.position.x);
-
           // 유저 방향으로 가속
           float accDirection = isLookingRight ? 1.0f : -1.0f;
           float newSpeed = velocity.x + (accDirection * monsterData.monsterMoveAcceleration * Time.deltaTime);
