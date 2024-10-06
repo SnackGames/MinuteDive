@@ -1,3 +1,4 @@
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -8,6 +9,7 @@ public class KinematicObject : MonoBehaviour
   [ReadOnly] public Vector2 velocity = Vector2.zero;
   [ReadOnly] public Vector2 reservedImpulse = Vector2.zero;
   public float mass = 1.0f;
+  [ReadOnly] public bool isOnGround = false;
 
   protected Rigidbody2D body;
   protected ContactFilter2D contactFilter;
@@ -26,6 +28,10 @@ public class KinematicObject : MonoBehaviour
   {
     ProcessVelocity();
     ProcessMovement();
+
+    // 땅 위인지 여부
+    RaycastHit2D? hit = CheckMoveCollision(body.position, Vector2.down * 0.1f);
+    isOnGround = hit != null && LayerMask.LayerToName(hit.Value.collider.gameObject.layer) == "Wall";
   }
 
   // move 만큼 이동 시 부딫히는 충돌 정보
@@ -46,8 +52,11 @@ public class KinematicObject : MonoBehaviour
 
   protected virtual void ProcessVelocity()
   {
-    // 중력
-    velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
+    // 중력: 이미 땅 위에 있을 경우 y축 방향 속도를 주지 않음 (몬스터 움직임이 덜덜 떨리는 현상 발생 방지)
+    if (isOnGround)
+      velocity.y = 0f;
+    else
+      velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
 
     // 임펄스
     ApplyImpulse();

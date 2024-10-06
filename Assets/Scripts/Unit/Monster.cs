@@ -153,7 +153,7 @@ namespace Unit
       isInAttackState = true;
       anim?.SetTrigger("Attack");
       behaviourType = MonsterBehaviourType.Attack;
-      velocity = new Vector2(0.0f, velocity.y);
+      velocity = new Vector2(0.0f, velocity.y); // 공격 시 몬스터 강제 멈춤
     }
 
     protected override void ProcessVelocity()
@@ -164,11 +164,15 @@ namespace Unit
       {
         case MonsterBehaviourType.Idle:
         case MonsterBehaviourType.Wait:
-        case MonsterBehaviourType.Attack:
           // 감속
           velocity.x = velocity.x > 0.0f ?
             Math.Max(0.0f, velocity.x - monsterData.monsterMoveAcceleration * Time.deltaTime) :
             Math.Min(0.0f, velocity.x + monsterData.monsterMoveAcceleration * Time.deltaTime);
+          break;
+
+        case MonsterBehaviourType.Attack:
+          // 공격 시 몬스터 강제 멈춤
+          velocity.x = 0.0f;
           break;
 
         case MonsterBehaviourType.Pursue:
@@ -179,7 +183,6 @@ namespace Unit
           float accDirection = isLookingRight ? 1.0f : -1.0f;
           float newSpeed = velocity.x + (accDirection * monsterData.monsterMoveAcceleration * Time.deltaTime);
           velocity.x = newSpeed > 0.0f ? Math.Min(monsterData.monsterMoveSpeed, newSpeed) : Math.Max(-monsterData.monsterMoveSpeed, newSpeed);
-
           break;
       }
     }

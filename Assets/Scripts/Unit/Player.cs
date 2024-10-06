@@ -48,7 +48,6 @@ namespace Unit
     public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
     public float fallAttackThreshold = 1.0f;
-    [ReadOnly] public bool isOnGround = false;
     [ReadOnly] public bool canFallAttack = false;
 
     [Header("Attack")]
@@ -94,9 +93,6 @@ namespace Unit
     protected override void FixedUpdate()
     {
       base.FixedUpdate();
-
-      // 땅 위인지 여부
-      isOnGround = CheckMoveCollision(body.position, Vector2.down * 0.1f) != null;
 
       // 낙하 공격 가능 여부
       canFallAttack = CheckMoveCollision(body.position, Vector2.down * fallAttackThreshold) == null;
@@ -229,7 +225,7 @@ namespace Unit
     protected override void ProcessVelocity()
     {
       // 중력
-      if (isNoGravity)
+      if (isNoGravity || isOnGround)
         velocity.y = 0.0f;
       else
         velocity += Physics2D.gravity * gravityScale * Time.deltaTime;
