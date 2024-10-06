@@ -188,15 +188,9 @@ namespace Unit
 
           // 가속하는 방향으로만 최대 속도에 영향을 받음. 가속하는 반대 방향으로는 최대 속도 이상으로 속도를 낼 수 있음. (impulse로 인해 날아가는 것 고려)
           if (Mathf.Sign(accDirection) == Mathf.Sign(newSpeed))
-          {
             velocity.x = newSpeed > 0.0f ? Math.Min(monsterData.monsterMoveSpeed, newSpeed) : Math.Max(-monsterData.monsterMoveSpeed, newSpeed);
-          }
           else
-          {
             velocity.x = newSpeed;
-          }
-
-          Debug.Log("" + Mathf.Sign(accDirection) + ", " + Mathf.Sign(newSpeed) + ", " + velocity);
 
           break;
       }
