@@ -7,6 +7,7 @@ namespace Data
   {
     public string monsterName;
     public int monsterHP = 3;
+    public int monsterDamage = 5;
     public float monsterMoveSpeed = 10.0f;
     public float monsterMoveAcceleration = 10.0f;
     public float monsterWaitTime = 1.0f;

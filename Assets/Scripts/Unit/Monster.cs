@@ -1,8 +1,7 @@
 using Data;
 using System;
-using Unity.Mathematics;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Unit
 {
@@ -73,6 +72,11 @@ namespace Unit
       ProcessBehaviour();
       ProcessAnimation();
       base.FixedUpdate();
+    }
+
+    protected virtual void Update()
+    {
+      ProcessAttack();
     }
 
     #region Animation
@@ -196,6 +200,26 @@ namespace Unit
       }
     }
     #endregion
+
+    private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
+    protected void ProcessAttack()
+    {
+      if (!isAttacking) hitObjects.Clear();
+      else
+      {
+        Collider2D[] hitColliders = new Collider2D[4];
+        int count = attackRigidbody.OverlapCollider(attackFilter, hitColliders);
+        for (int i = 0; i < count; ++i)
+        {
+          Player player = hitColliders[i].gameObject.GetComponent<Player>();
+          if (player != null && !hitObjects.Contains(player.gameObject))
+          {
+            FindObjectOfType<GameModeManager>()?.OnPlayerHit(monsterData.monsterDamage);
+            hitObjects.Add(player.gameObject);
+          }
+        }
+      }
+    }
 
     public void OnHPChanged(bool isHit, int prevHp, int hp)
     {
