@@ -128,6 +128,7 @@ namespace Unit
 
       if (isInAttackState)
       {
+        currentWaitingTime = 0.0f;
         behaviourType = MonsterBehaviourType.Attack;
         return;
       }
@@ -158,6 +159,7 @@ namespace Unit
       {
         currentWaitingTime += Time.deltaTime;
         behaviourType = MonsterBehaviourType.Wait;
+        return;
       }
 
       isInAttackState = true;
