@@ -227,7 +227,10 @@ namespace Unit
     {
       // 임시로 사라지며 파티클 소환
       if (isHit)
+      {
         Instantiate(hitParticlePrefab, transform.position, Quaternion.identity);
+        anim.SetTrigger("Hit");
+      }
 
       if (hp <= 0)
         Destroy(gameObject);

@@ -53,7 +53,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityScale: 1
   velocity: {x: 0, y: 0}
+  reservedImpulse: {x: 0, y: 0}
   mass: 1
+  isOnGround: 0
   monsterData: {fileID: 11400000, guid: 917e7c07a25c2c34d91e3635572a1765, type: 2}
   hitParticlePrefab: {fileID: 3463157229188906966, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   isLookingRight: 1

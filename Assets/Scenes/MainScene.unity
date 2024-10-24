@@ -8565,7 +8565,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityScale: 3
   velocity: {x: 0, y: 0}
+  reservedImpulse: {x: 0, y: 0}
   mass: 1
+  isOnGround: 0
   reservePressedInputDuration: 0.2
   moveInput: 0
   isLookingRight: 1
@@ -8578,7 +8580,6 @@ MonoBehaviour:
   dashSpeed: 40
   moveAcceleration: 79.7
   fallAttackThreshold: 2
-  isOnGround: 0
   canFallAttack: 0
   isAttacking: 0
   isFallAttacking: 0
