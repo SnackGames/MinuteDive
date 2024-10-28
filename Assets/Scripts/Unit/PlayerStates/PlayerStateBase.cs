@@ -47,8 +47,8 @@ namespace PlayerState
       if (player.moveInput != 0)
       {
         bool isRight = false;
-        if (player.isLookingRight) isRight = player.velocity.x >= 0.0f;
-        else isRight = player.velocity.x > 0.0f;
+        if (player.isLookingRight) isRight = player.moveInput >= 0.0f;
+        else isRight = player.moveInput > 0.0f;
         player.SetLookingDirection(isRight);
       }
     }
