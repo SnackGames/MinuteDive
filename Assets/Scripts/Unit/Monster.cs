@@ -229,7 +229,8 @@ namespace Unit
       if (isHit)
       {
         Instantiate(hitParticlePrefab, transform.position, Quaternion.identity);
-        anim.SetTrigger("Hit");
+        if (anim.runtimeAnimatorController)
+          anim.SetTrigger("Hit");
       }
 
       if (hp <= 0)
