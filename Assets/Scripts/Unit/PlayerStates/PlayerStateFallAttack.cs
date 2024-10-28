@@ -23,6 +23,12 @@ namespace PlayerState
 
       // 낙하 공격 시전 시 x축 속도를 제거
       player.velocity = Vector2.zero;
+
+      // 낙하 공격 도중 impulse 받았는지 여부 초기화
+      if (player.prevPlayerState != GetPlayerStateType())
+      {
+        player.receivedImpulseDuringFallAttack = false;
+      }
     }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator)

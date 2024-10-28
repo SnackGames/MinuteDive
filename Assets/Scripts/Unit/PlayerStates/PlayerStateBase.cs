@@ -17,6 +17,7 @@ namespace PlayerState
       isStateChangeTriggered = false;
 
       player = animator.GetComponent<Player>();
+      player.prevPlayerState = player.playerState;
       player.playerState = GetPlayerStateType();
       player.playerStateBehaviour = this;
       player.isAttacking = false;

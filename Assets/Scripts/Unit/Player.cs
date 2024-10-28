@@ -37,6 +37,7 @@ namespace Unit
     [ReadOnly] public bool isLookingRight = true;
 
     [Header("State")]
+    [ReadOnly] public PlayerStateType prevPlayerState = PlayerStateType.Move;
     [ReadOnly] public PlayerStateType playerState = PlayerStateType.Move;
     [ReadOnly] public PlayerStateBase playerStateBehaviour;
 
@@ -49,6 +50,7 @@ namespace Unit
     public float moveAcceleration = 50.0f;
     public float fallAttackThreshold = 1.0f;
     [ReadOnly] public bool canFallAttack = false;
+    [ReadOnly] public bool receivedImpulseDuringFallAttack = false;
 
     [Header("Attack")]
     [ReadOnly] public bool isAttacking = false;
@@ -324,10 +326,15 @@ namespace Unit
                   {
                     case PlayerStateType.FallAttack:
                       {
-                        // 몬스터와 비교해 무거울수록 덜 움직임
-                        float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0.01f, 100);
-                        ReserveImpulse(monsterToUser * velocity.magnitude * massRatio);
-                        collidingMonster.ReserveImpulse(userToMonster * velocity.magnitude / massRatio);
+                        // 낙하 공격 중 여러 마리 몬스터를 공격하여 여러 차례 튕겨나가는 현상 방지를 위해 한 번만 밀친다.
+                        if (!receivedImpulseDuringFallAttack)
+                        {
+                          // 몬스터와 비교해 무거울수록 덜 움직임
+                          float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0.01f, 100);
+                          ReserveImpulse(monsterToUser * velocity.magnitude * massRatio);
+                          collidingMonster.ReserveImpulse(userToMonster * velocity.magnitude / massRatio);
+                          receivedImpulseDuringFallAttack = true;
+                        }
                       }
                       break;
                   }
