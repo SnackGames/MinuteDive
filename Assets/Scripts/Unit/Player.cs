@@ -337,6 +337,11 @@ namespace Unit
                         }
                       }
                       break;
+                    case PlayerStateType.Move:
+                      {
+                        ReserveImpulse(monsterToUser * velocity.magnitude * 0.7f);
+                      }
+                      break;
                   }
                 }
               } break;
