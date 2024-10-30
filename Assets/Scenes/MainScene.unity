@@ -8571,6 +8571,7 @@ MonoBehaviour:
   reservePressedInputDuration: 0.2
   moveInput: 0
   isLookingRight: 1
+  prevPlayerState: 0
   playerState: 0
   playerStateBehaviour: {fileID: 0}
   moveSpeed: 10
@@ -8581,6 +8582,7 @@ MonoBehaviour:
   moveAcceleration: 79.7
   fallAttackThreshold: 2
   canFallAttack: 0
+  receivedImpulseDuringFallAttack: 0
   isAttacking: 0
   isFallAttacking: 0
   playerSounds:
@@ -9873,6 +9875,7 @@ GameObject:
   - component: {fileID: 1405958201}
   - component: {fileID: 1405958200}
   - component: {fileID: 1405958199}
+  - component: {fileID: 1405958202}
   m_Layer: 0
   m_Name: Game Systems
   m_TagString: Untagged
@@ -10041,6 +10044,19 @@ MonoBehaviour:
   OnTimeScaleChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1405958202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405958193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef2daf8f4b86c74394c69b70effae8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnStart: {x: 0, y: 0}
 --- !u!1 &1416998076
 GameObject:
   m_ObjectHideFlags: 0
