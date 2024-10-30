@@ -20,6 +20,7 @@ public class GameModeDungeon : GameModeBase
   {
     TimeManager.GetTimeManager().ReduceTime(damage);
     AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(-damage);
+    // TODO_HIT 피격시 플레이어 쪽에 해야 할 작업 추가
   }
 
   override protected void Update()

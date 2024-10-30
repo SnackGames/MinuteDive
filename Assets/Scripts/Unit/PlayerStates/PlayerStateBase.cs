@@ -63,6 +63,7 @@ namespace PlayerState
         case PlayerStateType.Attack: animator.SetTrigger("attack"); break;
         case PlayerStateType.FallAttack: animator.SetTrigger("fallAttack"); break;
         case PlayerStateType.Dash: animator.SetTrigger("dash"); break;
+        case PlayerStateType.Hit: animator.SetTrigger("hit"); break;
         default: Debug.LogError($"등록되지 않은 PlayerState: {state}"); break;
       }
     }

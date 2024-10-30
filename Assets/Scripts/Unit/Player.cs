@@ -23,7 +23,8 @@ namespace Unit
     Move,
     Attack,
     FallAttack,
-    Dash
+    Dash,
+    Hit
   }
 
   [RequireComponent(typeof(Animator))]
