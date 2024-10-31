@@ -1,10 +1,4 @@
 using GameMode;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
-using UnityEngine;
-using Unit;
 
 public class GameModeLobby : GameModeBase
 {
@@ -13,6 +7,8 @@ public class GameModeLobby : GameModeBase
   public override void StartGameMode()
   {
     base.StartGameMode();
+
+    GetComponent<FloorManager>()?.GenerateFloors();
   }
   public override void FinishGameMode()
   {

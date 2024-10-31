@@ -10057,6 +10057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnStart: {x: 0, y: 0}
+  dungeonData: {fileID: 11400000, guid: 84f85c28e6648e049803b5d490371a1c, type: 2}
 --- !u!1 &1416998076
 GameObject:
   m_ObjectHideFlags: 0
