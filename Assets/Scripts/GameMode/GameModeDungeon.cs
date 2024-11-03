@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameMode;
 using UI;
+using Unit;
 
 public class GameModeDungeon : GameModeBase
 {
@@ -20,7 +21,8 @@ public class GameModeDungeon : GameModeBase
   {
     TimeManager.GetTimeManager().ReduceTime(damage);
     AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(-damage);
-    // TODO_HIT 피격시 플레이어 쪽에 해야 할 작업 추가
+    Player player = Player.Get;
+    player.userStateChangeData.reserveHit(true);
   }
 
   override protected void Update()

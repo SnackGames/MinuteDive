@@ -6,6 +6,7 @@ using GameMode;
 
 using AYellowpaper.SerializedCollections;
 using Unity.VisualScripting;
+using Data;
 
 namespace Unit
 {
@@ -41,6 +42,7 @@ namespace Unit
     [ReadOnly] public PlayerStateType prevPlayerState = PlayerStateType.Move;
     [ReadOnly] public PlayerStateType playerState = PlayerStateType.Move;
     [ReadOnly] public PlayerStateBase playerStateBehaviour;
+    [ReadOnly] public UserStateChangeData userStateChangeData;
 
     [Header("Movement")]
     public float moveSpeed = 5.0f;
@@ -91,6 +93,8 @@ namespace Unit
       attackFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(attackRigidbody.gameObject.layer));
       attackFilter.useLayerMask = true;
       attackFilter.useTriggers = false;
+
+      userStateChangeData = UserStateChangeData.CreateInstance<UserStateChangeData>();
     }
 
     protected override void FixedUpdate()

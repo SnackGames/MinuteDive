@@ -9,6 +9,7 @@ namespace PlayerState
 
     private void RefreshPlayerState()
     {
+      player.userStateChangeData.resetReserveHit();
     }
 
     override protected void OnPlayerStateEnter()
@@ -21,7 +22,9 @@ namespace PlayerState
 
     protected override PlayerStateType? ProcessStateChange(Animator animator)
     {
-      return PlayerStateType.Move;
+      Debug.Log("Process State Change at Hit State!");
+      //return PlayerStateType.Move;
+      return null;
     }
   }
 }

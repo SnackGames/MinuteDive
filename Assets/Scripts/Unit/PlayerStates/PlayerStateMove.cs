@@ -9,6 +9,11 @@ namespace PlayerState
 
     override protected PlayerStateType? ProcessStateChange(Animator animator)
     {
+      if (player.userStateChangeData.isHitReserved())
+      {
+        return PlayerStateType.Hit;
+      }
+
       while (player.HasPressedInput())
       {
         ButtonInputType pressedInput = player.PeekPressedInput();
@@ -39,8 +44,6 @@ namespace PlayerState
         }
         break;
       }
-
-      // TODO_HIT
 
       return null;
     }
