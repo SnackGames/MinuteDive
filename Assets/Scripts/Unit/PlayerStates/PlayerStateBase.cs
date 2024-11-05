@@ -23,10 +23,10 @@ namespace PlayerState
       player.isAttacking = false;
       player.isFallAttacking = false;
 
-      OnPlayerStateEnter();
+      OnPlayerStateEnter(animator, stateInfo, layerIndex);
     }
 
-    virtual protected void OnPlayerStateEnter() { }
+    virtual protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -59,11 +59,24 @@ namespace PlayerState
     {
       switch(state)
       {
-        case PlayerStateType.Move: animator.SetTrigger("move"); break;
-        case PlayerStateType.Attack: animator.SetTrigger("attack"); break;
-        case PlayerStateType.FallAttack: animator.SetTrigger("fallAttack"); break;
-        case PlayerStateType.Dash: animator.SetTrigger("dash"); break;
-        case PlayerStateType.Hit: animator.SetTrigger("hit"); break;
+        case PlayerStateType.Move:
+          animator.SetTrigger("move");
+          break;
+        case PlayerStateType.Attack:
+          animator.SetTrigger("leaveMove");
+          animator.SetBool("attack", true);
+          break;
+        case PlayerStateType.FallAttack:
+          animator.SetTrigger("leaveMove");
+          animator.SetBool("fallAttack", true);
+          break;
+        case PlayerStateType.Dash:
+          animator.SetTrigger("dash");
+          break;
+        case PlayerStateType.Hit:
+          animator.SetTrigger("leaveMove");
+          animator.SetBool("hit", true);
+          break;
         default: Debug.LogError($"등록되지 않은 PlayerState: {state}"); break;
       }
     }

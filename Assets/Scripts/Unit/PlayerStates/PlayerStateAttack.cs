@@ -10,18 +10,19 @@ namespace PlayerState
 
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Attack;
 
-    private void RefreshPlayerState()
+    private void RefreshPlayerState(Animator animator)
     {
       isMoveInputEnabled = false;
       isAttackInputEnabled = false;
+      animator.SetBool("attack", false);
 
       player.velocity.x = player.attackMoveSpeed * (player.isLookingRight ? 1.0f : -1.0f);
     }
 
-    override protected void OnPlayerStateEnter()
+    override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      base.OnPlayerStateEnter();
-      RefreshPlayerState();
+      base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
+      RefreshPlayerState(animator);
     }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator)
@@ -48,7 +49,7 @@ namespace PlayerState
               if (isAttackInputEnabled && player.isOnGround)
               {
                 player.DequePressedInput();
-                RefreshPlayerState();
+                RefreshPlayerState(animator);
                 animator.SetTrigger("nextAttack");
                 return null;
               }

@@ -7,22 +7,22 @@ namespace PlayerState
   {
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Hit;
 
-    private void RefreshPlayerState()
+    private void RefreshPlayerState(Animator animator)
     {
       player.userStateChangeData.resetReserveHit();
+      animator.SetBool("hit", false);
     }
 
-    override protected void OnPlayerStateEnter()
+    override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      base.OnPlayerStateEnter();
-      RefreshPlayerState();
+      base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
+      RefreshPlayerState(animator);
 
       Debug.Log("Enter Hit State!");
     }
 
     protected override PlayerStateType? ProcessStateChange(Animator animator)
     {
-      Debug.Log("Process State Change at Hit State!");
       //return PlayerStateType.Move;
       return null;
     }

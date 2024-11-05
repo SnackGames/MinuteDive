@@ -9,11 +9,11 @@ namespace PlayerState
 
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Dash;
 
-    override protected void OnPlayerStateEnter() 
+    override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
       isAttackInputEnabled = false;
 
-      base.OnPlayerStateEnter();
+      base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
       player.SetLookingDirection(player.isReservedDashDirectionRight);
       player.velocity.x = player.dashSpeed * (player.isReservedDashDirectionRight ? 1.0f : -1.0f);
       player.dashEffect.Play();

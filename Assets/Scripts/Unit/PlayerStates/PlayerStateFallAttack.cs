@@ -10,16 +10,17 @@ namespace PlayerState
 
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.FallAttack;
 
-    private void RefreshPlayerState()
+    private void RefreshPlayerState(Animator animator)
     {
       isMoveInputEnabled = false;
       isAttackInputEnabled = false;
+      animator.SetBool("fallAttack", false);
     }
 
-    override protected void OnPlayerStateEnter()
+    override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      base.OnPlayerStateEnter();
-      RefreshPlayerState();
+      base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
+      RefreshPlayerState(animator);
 
       // 낙하 공격 시전 시 x축 속도를 제거
       player.velocity = Vector2.zero;
