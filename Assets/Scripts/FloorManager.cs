@@ -33,15 +33,15 @@ public class FloorManager : MonoBehaviour
       if (viableFloorList.Count <= 0)
         break;
 
-      FloorGenData pickedFloorGenData = viableFloorList[Random.Range(0, viableFloorList.Count - 1)];
+      FloorGenData pickedFloorGenData = viableFloorList[Random.Range(0, viableFloorList.Count)];
       float? pickedFloorHeight = pickedFloorGenData.floorPrefab.GetComponent<Floor>()?.GetFloorSize().y;
 
-      GameObject spawnedFloor = Instantiate(pickedFloorGenData.floorPrefab, floorPosition + new Vector3(0.0f, pickedFloorHeight * 0.5f ?? 0.0f, 0.0f), Quaternion.identity);
+      GameObject spawnedFloor = Instantiate(pickedFloorGenData.floorPrefab, floorPosition - new Vector3(0.0f, pickedFloorHeight * 0.5f ?? 0.0f, 0.0f), Quaternion.identity);
       Floor floorComponent = spawnedFloor.GetComponent<Floor>();
       if (floorComponent != null)
         floorList.Add(floorComponent);
 
-      floorPosition.y += pickedFloorHeight ?? 0.0f;
+      floorPosition.y -= pickedFloorHeight ?? 0.0f;
     }
   }
 }

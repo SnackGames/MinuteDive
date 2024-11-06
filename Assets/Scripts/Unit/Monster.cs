@@ -45,7 +45,7 @@ namespace Unit
     protected virtual void OnValidate()
     {
       sprite = GetComponent<SpriteRenderer>();
-      SetLookingDirection(isLookingRight);
+      SetLookingDirection(isLookingRight, true);
     }
 
     protected override void Awake()
@@ -99,9 +99,9 @@ namespace Unit
       }
     }
 
-    public void SetLookingDirection(bool right)
+    public void SetLookingDirection(bool right, bool forceSet = false)
     {
-      if (right == isLookingRight) return;
+      if (!forceSet && right == isLookingRight) return;
 
       isLookingRight = right;
       sprite.flipX = right;
