@@ -6,6 +6,7 @@ public class FloorManager : MonoBehaviour
 {
   public Vector2 spawnStart;
   public DungeonData dungeonData;
+  public int dungeonSeed = 0;
 
   private List<Floor> floorList = new List<Floor>();
 
@@ -15,6 +16,8 @@ public class FloorManager : MonoBehaviour
     foreach (Floor floor in floorList)
       Destroy(floor.gameObject);
     floorList.Clear();
+
+    System.Random random = new System.Random(dungeonSeed);
 
     // 매 층마다 소환 가능한 층들을 선발해서 무작위로 생성
     // sliding window 기법으로 추후에 더 최적화 가능.
@@ -33,7 +36,7 @@ public class FloorManager : MonoBehaviour
       if (viableFloorList.Count <= 0)
         break;
 
-      FloorGenData pickedFloorGenData = viableFloorList[Random.Range(0, viableFloorList.Count)];
+      FloorGenData pickedFloorGenData = viableFloorList[random.Next(0, viableFloorList.Count)];
       float? pickedFloorHeight = pickedFloorGenData.floorPrefab.GetComponent<Floor>()?.GetFloorSize().y;
 
       GameObject spawnedFloor = Instantiate(pickedFloorGenData.floorPrefab, floorPosition - new Vector3(0.0f, pickedFloorHeight * 0.5f ?? 0.0f, 0.0f), Quaternion.identity);

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonName: 
   floorGenData:
-  - validFloorRange: {x: 1, y: 5}
+  - validFloorRange: {x: 1, y: 10}
     floorPrefab: {fileID: 6886268010505610876, guid: 9653d8e6faa6d7042a492733bed25011, type: 3}
-  - validFloorRange: {x: 1, y: 5}
+  - validFloorRange: {x: 1, y: 10}
     floorPrefab: {fileID: 6886268010505610876, guid: 2c68435655885ec4eac960da50f5b19e, type: 3}
