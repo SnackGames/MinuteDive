@@ -288,6 +288,15 @@ namespace Unit
                 Math.Max(0.0f, velocity.x - 3.0f * moveAcceleration * Time.deltaTime) :
                 Math.Min(0.0f, velocity.x + 3.0f * moveAcceleration * Time.deltaTime);
           } break;
+
+        case PlayerStateType.Hit:
+          {
+            // x축 감속
+            velocity.x = velocity.x > 0.0f ?
+                Math.Max(0.0f, velocity.x - moveAcceleration * Time.deltaTime) :
+                Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
+          }
+          break;
       }
 
       // 임펄스
