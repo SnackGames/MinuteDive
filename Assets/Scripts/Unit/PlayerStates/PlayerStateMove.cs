@@ -7,7 +7,7 @@ namespace PlayerState
   {
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Move;
 
-    override protected PlayerStateType? ProcessStateChange(Animator animator)
+    override protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       if (player.userStateChangeData.isHitReserved())
       {

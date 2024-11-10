@@ -1,5 +1,7 @@
 using Unit;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace PlayerState
 {
@@ -7,7 +9,7 @@ namespace PlayerState
   {
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Hit;
 
-    private void RefreshPlayerState(Animator animator)
+    private void RefreshPlayerState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       player.userStateChangeData.resetReserveHit();
       animator.SetBool("hit", false);
@@ -16,14 +18,14 @@ namespace PlayerState
     override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
-      RefreshPlayerState(animator);
+      RefreshPlayerState(animator, stateInfo, layerIndex);
 
-      Debug.Log("Enter Hit State!");
+      // x축 속도 제거
+      player.velocity = Vector2.zero;
     }
 
-    protected override PlayerStateType? ProcessStateChange(Animator animator)
+    protected override PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      //return PlayerStateType.Move;
       return null;
     }
   }

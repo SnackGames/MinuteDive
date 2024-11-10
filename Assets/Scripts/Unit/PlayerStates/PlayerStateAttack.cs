@@ -25,7 +25,7 @@ namespace PlayerState
       RefreshPlayerState(animator);
     }
 
-    override protected PlayerStateType? ProcessStateChange(Animator animator)
+    override protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       while (player.HasPressedInput())
       {

@@ -32,7 +32,7 @@ namespace PlayerState
     {
       if(!isStateChangeTriggered)
       {
-        PlayerStateType? nextState = ProcessStateChange(animator);
+        PlayerStateType? nextState = ProcessStateChange(animator, stateInfo, layerIndex);
         if (nextState != null)
         {
           isStateChangeTriggered = true;
@@ -53,7 +53,7 @@ namespace PlayerState
       }
     }
 
-    virtual protected PlayerStateType? ProcessStateChange(Animator animator) => null;
+    virtual protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) => null;
 
     protected void TriggerStateChange(Animator animator, PlayerStateType state)
     {
