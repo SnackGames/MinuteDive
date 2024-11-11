@@ -27,10 +27,6 @@ public class GameModeDungeon : GameModeBase
     {
       player.userStateChangeData.reserveHit(true);
     }
-    else
-    {
-      player.userStateChangeData.reserveDying(true);
-    }
   }
 
   override protected void Update()
