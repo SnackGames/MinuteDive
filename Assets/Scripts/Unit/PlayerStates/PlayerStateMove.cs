@@ -13,6 +13,10 @@ namespace PlayerState
       {
         return PlayerStateType.Hit;
       }
+      else if (player.userStateChangeData.isDyingReserved())
+      {
+        return PlayerStateType.Dying;
+      }
 
       while (player.HasPressedInput())
       {

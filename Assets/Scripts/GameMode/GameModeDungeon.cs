@@ -22,7 +22,15 @@ public class GameModeDungeon : GameModeBase
     TimeManager.GetTimeManager().ReduceTime(damage);
     AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(-damage);
     Player player = Player.Get;
-    player.userStateChangeData.reserveHit(true);
+
+    if (TimeManager.GetRemainTime() > 0)
+    {
+      player.userStateChangeData.reserveHit(true);
+    }
+    else
+    {
+      player.userStateChangeData.reserveDying(true);
+    }
   }
 
   override protected void Update()

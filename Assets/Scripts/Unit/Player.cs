@@ -25,7 +25,8 @@ namespace Unit
     Attack,
     FallAttack,
     Dash,
-    Hit
+    Hit,
+    Dying
   }
 
   [RequireComponent(typeof(Animator))]
@@ -297,6 +298,13 @@ namespace Unit
                 Math.Min(0.0f, velocity.x + moveAcceleration * Time.deltaTime);
           }
           break;
+
+        case PlayerStateType.Dying:
+          {
+            // x축 속도 제거
+            velocity.x = 0.0f;
+          }
+          break;
       }
 
       // 임펄스
@@ -414,6 +422,12 @@ namespace Unit
           }
         }
       }
+    }
+
+    public void OnRemainTimeExpired()
+    {
+      userStateChangeData.reserveDying(true);
+      ReturnToLobby();
     }
 
     public void ReturnToLobby()

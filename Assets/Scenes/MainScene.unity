@@ -5123,7 +5123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1268439481}
         m_TargetAssemblyTypeName: 
-        m_MethodName: ReturnToLobby
+        m_MethodName: OnRemainTimeExpired
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5162,6 +5162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnStart: {x: 0, y: -0.5}
   dungeonData: {fileID: 11400000, guid: 84f85c28e6648e049803b5d490371a1c, type: 2}
+  dungeonSeed: 0
 --- !u!1 &1417393461
 GameObject:
   m_ObjectHideFlags: 0
