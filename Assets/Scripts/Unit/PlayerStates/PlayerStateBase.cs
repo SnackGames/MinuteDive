@@ -85,6 +85,13 @@ namespace PlayerState
       }
     }
 
+    sealed override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+      OnPlayerStateExit(animator, stateInfo, layerIndex);
+    }
+
+    virtual protected void OnPlayerStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
+
     public virtual void AnimTrigger_EnableMoveInput(bool enable) { }
     public virtual void AnimTrigger_EnableAttackInput(bool enable) { }
   }

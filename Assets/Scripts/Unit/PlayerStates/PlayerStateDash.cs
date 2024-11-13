@@ -19,10 +19,10 @@ namespace PlayerState
       player.dashEffect.Play();
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override protected void OnPlayerStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       player.dashEffect.Stop();
-      base.OnStateExit(animator, stateInfo, layerIndex);
+      base.OnPlayerStateExit(animator, stateInfo, layerIndex);
     }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
