@@ -14,6 +14,7 @@ public class KinematicObject : MonoBehaviour
   protected Rigidbody2D body;
   protected ContactFilter2D contactFilter;
 
+  private const float collisionEpsilon = 0.1f;
   protected virtual void Awake()
   {
     body = GetComponent<Rigidbody2D>();
@@ -30,7 +31,7 @@ public class KinematicObject : MonoBehaviour
     ProcessMovement();
 
     // 땅 위인지 여부
-    RaycastHit2D? hit = CheckMoveCollision(body.position, Vector2.down * 0.1f);
+    RaycastHit2D? hit = CheckMoveCollision(body.position, Vector2.down * (collisionEpsilon * 1.1f));
     isOnGround = hit != null && LayerMask.LayerToName(hit.Value.collider.gameObject.layer) == "Wall";
   }
 
@@ -64,7 +65,6 @@ public class KinematicObject : MonoBehaviour
 
   protected virtual void ProcessMovement()
   {
-    const float epsilon = 0.1f;
     const int maxMovementIteration = 5;
 
     Vector2 move = velocity * Time.deltaTime;
@@ -72,17 +72,20 @@ public class KinematicObject : MonoBehaviour
     {
       if (move.magnitude <= 0.0f || Time.deltaTime <= 0.0f) break;
 
-      RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * epsilon);
+      RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * collisionEpsilon);
       if (hit == null)
       {
         body.position += move;
         break;
       }
 
-      float newDistance = hit.Value.distance - epsilon;
+      float newDistance = hit.Value.distance - collisionEpsilon;
 
       // 충돌하기 직전만큼 이동
-      body.position += move.normalized * newDistance;
+      body.position += move.normalized * hit.Value.distance;
+
+      // 충돌한 면에서 살짝 띄우기
+      body.position += hit.Value.normal * collisionEpsilon;
 
       // velocity 갱신
       Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);
