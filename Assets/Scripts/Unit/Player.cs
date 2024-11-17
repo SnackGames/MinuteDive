@@ -26,7 +26,8 @@ namespace Unit
     FallAttack,
     Dash,
     Hit,
-    Dying
+    Dying,
+    Win
   }
 
   [RequireComponent(typeof(Animator))]
@@ -300,6 +301,13 @@ namespace Unit
           break;
 
         case PlayerStateType.Dying:
+          {
+            // x축 속도 제거
+            velocity.x = 0.0f;
+          }
+          break;
+
+        case PlayerStateType.Win:
           {
             // x축 속도 제거
             velocity.x = 0.0f;

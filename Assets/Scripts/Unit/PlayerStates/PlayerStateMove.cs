@@ -6,6 +6,11 @@ namespace PlayerState
   public class PlayerStateMove : PlayerStateBase
   {
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Move;
+    override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+      base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
+      player.userStateChangeData.resetReserveMove();
+    }
 
     override protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -16,6 +21,10 @@ namespace PlayerState
       else if (player.userStateChangeData.isDyingReserved())
       {
         return PlayerStateType.Dying;
+      }
+      else if (player.userStateChangeData.isWinReserved())
+      {
+        return PlayerStateType.Win;
       }
 
       while (player.HasPressedInput())

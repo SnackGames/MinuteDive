@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine.Events;
 using System;
 using UnityEngine.UIElements;
+using Unit;
 
 [Serializable]
 public class GameModeEvent : UnityEvent<GameModeType> { }
@@ -38,12 +39,28 @@ public class GameModeManager : MonoBehaviour
     {
       SetGameMode(GameModeType.Lobby);
     }
+    else if(RegionName == "Clear")
+    {
+      Player player = Player.Get;
+      if(player != null)
+      {
+        player.userStateChangeData.reserveWin(true);
+      }
+    }
   }
   public void OnRegionExit(string RegionName)
   {
     if (RegionName == "Lobby")
     {
       SetGameMode(GameModeType.Dungeon);
+    }
+    else if (RegionName == "Clear")
+    {
+      Player player = Player.Get;
+      if (player != null)
+      {
+        player.userStateChangeData.reserveMove(true);
+      }
     }
   }
 

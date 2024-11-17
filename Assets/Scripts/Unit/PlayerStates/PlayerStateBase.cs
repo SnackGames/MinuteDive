@@ -81,6 +81,10 @@ namespace PlayerState
           animator.SetTrigger("leaveMove");
           animator.SetBool("dying", true);
           break;
+        case PlayerStateType.Win:
+          animator.SetTrigger("leaveMove");
+          animator.SetBool("win", true);
+          break;
         default: Debug.LogError($"등록되지 않은 PlayerState: {state}"); break;
       }
     }
