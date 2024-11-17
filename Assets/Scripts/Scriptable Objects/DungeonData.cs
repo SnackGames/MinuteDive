@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 [System.Serializable]
 public struct FloorGenData
 {
@@ -15,5 +19,25 @@ namespace Data
   {
     public string dungeonName;
     public List<FloorGenData> floorGenData;
+
+    public void VerifyDungeonFloorGen()
+    {
+      if (floorGenData.Count <= 0)
+      {
+        StopPlaying("There is no floors to generate.");
+        StopPlaying();
+        return;
+      }
+    }
+
+    private void StopPlaying(string reason = null)
+    {
+      if(reason != null)
+        Debug.LogError(reason);
+
+#if UNITY_EDITOR
+      EditorApplication.isPlaying = false;
+#endif
+    }
   }
 }

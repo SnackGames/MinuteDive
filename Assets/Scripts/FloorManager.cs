@@ -12,6 +12,15 @@ public class FloorManager : MonoBehaviour
 
   public void GenerateFloors()
   {
+    if (dungeonData == null)
+    {
+      Debug.LogWarning("Dungeon Data is null.");
+      return;
+    }
+
+    // #TODO 추후에 게임 킬때만 실행하도록 개선
+    dungeonData.VerifyDungeonFloorGen();
+
     // 층 배열 초기화
     foreach (Floor floor in floorList)
       Destroy(floor.gameObject);
@@ -46,5 +55,7 @@ public class FloorManager : MonoBehaviour
 
       floorPosition.y -= pickedFloorHeight ?? 0.0f;
     }
+
+    Debug.Log($"Generated dungeon floors with the seed {dungeonSeed}.");
   }
 }
