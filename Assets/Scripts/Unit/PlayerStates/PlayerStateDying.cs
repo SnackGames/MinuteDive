@@ -34,6 +34,11 @@ namespace PlayerState
 
     protected override PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+      if (player.userStateChangeData.isMoveReserved())
+      {
+        return PlayerStateType.Move;
+      }
+
       float elapsedTime = Time.time - stateEnterTime;
       if (elapsedTime > stateDuration)
       {
