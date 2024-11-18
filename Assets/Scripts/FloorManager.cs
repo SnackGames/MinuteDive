@@ -35,13 +35,7 @@ public class FloorManager : MonoBehaviour
     List<FloorGenData> viableFloorList;
     while (true)
     {
-      floorNumber++;
-      viableFloorList = new List<FloorGenData>();
-
-      foreach (FloorGenData floorGenData in dungeonData.floorGenData)
-        if (floorNumber >= floorGenData.validFloorRange.x && floorNumber <= floorGenData.validFloorRange.y)
-          viableFloorList.Add(floorGenData);
-
+      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++);
       if (viableFloorList.Count <= 0)
         break;
 
