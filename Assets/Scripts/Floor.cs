@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum FloorExitType
+{
+  LeftMost,
+  Center,
+  RightMost,
+  LeftAndRightMost
+}
+
 [RequireComponent(typeof(BoxCollider2D))]
 public class Floor : Region
 {

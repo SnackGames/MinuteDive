@@ -30,12 +30,13 @@ public class FloorManager : MonoBehaviour
 
     // 매 층마다 소환 가능한 층들을 선발해서 무작위로 생성
     // sliding window 기법으로 추후에 더 최적화 가능.
-    int floorNumber = 0;
+    int floorNumber = 1;
     Vector3 floorPosition = new Vector3(spawnStart.x, spawnStart.y, 0.0f);
     List<FloorGenData> viableFloorList;
+    FloorExitType? prevFloorExitType = FloorExitType.Center;
     while (true)
     {
-      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++);
+      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++, prevFloorExitType);
       if (viableFloorList.Count <= 0)
         break;
 
@@ -48,6 +49,7 @@ public class FloorManager : MonoBehaviour
         floorList.Add(floorComponent);
 
       floorPosition.y -= pickedFloorHeight ?? 0.0f;
+      prevFloorExitType = pickedFloorGenData.floorExitType;
     }
 
     Debug.Log($"Generated dungeon floors with the seed {dungeonSeed}.");

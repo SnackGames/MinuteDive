@@ -9,6 +9,8 @@ using UnityEditor;
 public struct FloorGenData
 {
   public Vector2Int validFloorRange;
+  public List<FloorExitType> validFloorEntranceTypes;
+  public FloorExitType floorExitType;
   public GameObject floorPrefab;
 }
 
@@ -36,21 +38,32 @@ namespace Data
       {
         List<FloorGenData> viableFloorList = GetViableFloorGenList(i);
 
+        // 빠진 층이 있는지 검수
         if (viableFloorList.Count <= 0)
         {
           StopPlaying($"Missing floor gen data on floor {i}.");
           return;
         }
+
+        // 이전 층의 출구에서, 현재 층의 입구로 쓸 수 없는 경우가 있는지 검수
+        // #TODO
       }
     }
 
-    public List<FloorGenData> GetViableFloorGenList(int floorNumber)
+    public List<FloorGenData> GetViableFloorGenList(int floorNumber, FloorExitType? prevFloorExitType = null)
     {
       List<FloorGenData> list = new List<FloorGenData>();
 
       foreach (FloorGenData floorGenData in floorGenData)
-        if (floorNumber >= floorGenData.validFloorRange.x && floorNumber <= floorGenData.validFloorRange.y)
-          list.Add(floorGenData);
+      {
+        if (floorNumber < floorGenData.validFloorRange.x || floorNumber > floorGenData.validFloorRange.y)
+          continue;
+
+        if (prevFloorExitType != null && floorGenData.validFloorEntranceTypes.Count > 0 && !floorGenData.validFloorEntranceTypes.Contains(prevFloorExitType.Value))
+          continue;
+
+        list.Add(floorGenData);
+      }
 
       return list;
     }
