@@ -17,19 +17,19 @@ namespace PlayerState
     {
       player.userStateChangeData.resetReserveWin();
       animator.SetBool("win", false);
-
-      // Dying State 진입 시점은 Dying State를 나타내는 SubStateMachine 최초 진입 시에만 기록
-      if (player.prevPlayerState != player.playerState)
-      {
-        stateEnterTime = Time.time;
-        startAnimationDuration = stateInfo.length;
-      }
     }
 
     override protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       base.OnPlayerStateEnter(animator, stateInfo, layerIndex);
       RefreshPlayerState(animator, stateInfo, layerIndex);
+    }
+
+    override protected void OnPlayerSubStateMachineEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+      base.OnPlayerSubStateMachineEnter(animator, stateInfo, layerIndex);
+      stateEnterTime = Time.time;
+      startAnimationDuration = stateInfo.length;
     }
 
     protected override PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

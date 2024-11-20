@@ -26,7 +26,15 @@ namespace PlayerState
       OnPlayerStateEnter(animator, stateInfo, layerIndex);
     }
 
-    virtual protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
+    virtual protected void OnPlayerStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+      if (player.prevPlayerState != player.playerState)
+      {
+        OnPlayerSubStateMachineEnter(animator, stateInfo, layerIndex);
+      }
+    }
+
+    virtual protected void OnPlayerSubStateMachineEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
