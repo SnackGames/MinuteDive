@@ -34,19 +34,31 @@ namespace Data
       foreach (FloorGenData floorGenData in floorGenData)
         maxFloorNumber = Mathf.Max(maxFloorNumber, floorGenData.validFloorRange.y);
 
+      HashSet<FloorExitType?> prevFloorExitTypes = new HashSet<FloorExitType?>();
+      prevFloorExitTypes.Add(null);
+      
       for (int i = 1; i < maxFloorNumber; i++)
       {
-        List<FloorGenData> viableFloorList = GetViableFloorGenList(i);
+        HashSet<FloorExitType?> currFloorExitTypes = new HashSet<FloorExitType?>();
 
-        // 빠진 층이 있는지 검수
-        if (viableFloorList.Count <= 0)
+        foreach (FloorExitType? exitType in prevFloorExitTypes)
         {
-          StopPlaying($"Missing floor gen data on floor {i}.");
-          return;
+          List<FloorGenData> viableFloorList = GetViableFloorGenList(i, exitType);
+
+          // 빠진 층이 있는지 검수
+          if (viableFloorList.Count <= 0)
+          {
+            StopPlaying($"Missing floor gen data on floor {i}. FloorExitType: {exitType}");
+            return;
+          }
+
+          foreach (FloorGenData viableFloor in viableFloorList)
+          {
+            currFloorExitTypes.Add(viableFloor.floorExitType);
+          }
         }
 
-        // 이전 층의 출구에서, 현재 층의 입구로 쓸 수 없는 경우가 있는지 검수
-        // #TODO
+        prevFloorExitTypes = currFloorExitTypes;
       }
     }
 
