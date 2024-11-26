@@ -445,5 +445,15 @@ namespace Unit
         transform.position = ModeManager.UserInitialPosition;
       }
     }
+
+    public void OnSetGameMode(GameModeType Type)
+    {
+      switch (Type)
+      {
+        case GameModeType.Lobby:
+          if (playerState == PlayerStateType.Dying) userStateChangeData.reserveMove(true);
+          break;
+      }
+    }
   }
 }

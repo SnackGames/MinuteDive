@@ -9,7 +9,6 @@ namespace PlayerState
   public class PlayerStateDying : PlayerStateBase
   {
     private float stateEnterTime = 0f;
-    private float stateDuration = 3f;
     private float startAnimationDuration = 0f;
 
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Dying;
@@ -39,12 +38,6 @@ namespace PlayerState
     protected override PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       if (player.userStateChangeData.isMoveReserved())
-      {
-        return PlayerStateType.Move;
-      }
-
-      float elapsedTime = Time.time - stateEnterTime;
-      if (elapsedTime > stateDuration)
       {
         return PlayerStateType.Move;
       }
