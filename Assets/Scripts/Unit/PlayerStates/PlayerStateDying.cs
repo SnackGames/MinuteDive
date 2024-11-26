@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using Unit;
 using UnityEngine;
 
@@ -30,6 +31,9 @@ namespace PlayerState
       base.OnPlayerSubStateMachineEnter(animator, stateInfo, layerIndex);
       stateEnterTime = Time.time;
       startAnimationDuration = stateInfo.length;
+
+      // 게임오버 UI 출력
+      AssetReferenceManager.GetAssetReferences().gameOver.ShowGameOver(true);
     }
 
     protected override PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

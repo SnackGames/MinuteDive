@@ -18,6 +18,7 @@ namespace UI
     public TextMeshProUGUI moneyText;
     public GameObject itemGrid;
     public UI_RemainTime remainTime;
+    public UI_GameOver gameOver;
 
     private void Awake()
     {

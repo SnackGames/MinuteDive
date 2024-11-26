@@ -435,7 +435,6 @@ namespace Unit
     public void OnRemainTimeExpired()
     {
       userStateChangeData.reserveDying(true);
-      ReturnToLobby();
     }
 
     public void ReturnToLobby()
