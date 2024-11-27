@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public enum FloorExitType
@@ -15,5 +16,16 @@ public class Floor : Region
   {
     Vector3 boundSize = GetComponent<BoxCollider2D>()?.size ?? Vector3.zero;
     return new Vector2(boundSize.x, boundSize.y);
+  }
+
+  public void Start()
+  {
+    if (OnRegionEnter == null) OnRegionEnter = new RegionEvent();
+    OnRegionEnter.AddListener(OnFloorEnter);
+  }
+
+  public void OnFloorEnter(string regionName)
+  {
+    FloorManager.GetFloorManager().IncrementCurrentFloor();
   }
 }

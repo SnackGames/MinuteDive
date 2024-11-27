@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class FloorManager : MonoBehaviour
 {
+  static private FloorManager floorManagerSingleton;
+  static public FloorManager GetFloorManager() { return floorManagerSingleton; }
+
+  static private int currentFloor = 0;
+
+  [Header("FloorManager")]
+  [ReadOnly] public int currentFloorReadOnly = 0;
   public Vector2 spawnStart;
   public DungeonData dungeonData;
   public int dungeonSeed = 0;
 
   private List<Floor> floorList = new List<Floor>();
+
+  #region Public Methods
+  static public int GetCurrentFloor() => currentFloor;
+  public void IncrementCurrentFloor() { currentFloor++; currentFloorReadOnly++; }
+  public void ResetCurrentFloor() { currentFloor = 0; currentFloorReadOnly = 0; }
 
   public void GenerateFloors()
   {
@@ -54,4 +66,12 @@ public class FloorManager : MonoBehaviour
 
     Debug.Log($"Generated dungeon floors with the seed {dungeonSeed}.");
   }
+  #endregion
+
+  #region Private Methods
+  private void Awake()
+  {
+    floorManagerSingleton = this;
+  }
+  #endregion
 }
