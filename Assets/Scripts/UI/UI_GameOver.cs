@@ -18,7 +18,7 @@ public class UI_GameOver : MonoBehaviour
     switch (Type)
     {
       case GameModeType.Lobby:
-        ShowGameOver(false);
+        if (gameOverUI.activeSelf) ShowGameOver(false);
         break;
     }
   }
