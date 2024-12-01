@@ -321,7 +321,6 @@ namespace Unit
 
     protected override void ProcessMovement()
     {
-      const float epsilon = 0.1f;
       const int maxMovementIteration = 5;
 
       Vector2 move = velocity * Time.deltaTime;
@@ -329,7 +328,7 @@ namespace Unit
       {
         if (move.magnitude <= 0.0f || Time.deltaTime <= 0.0f) break;
 
-        RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * epsilon);
+        RaycastHit2D? hit = CheckMoveCollision(body.position, move + move.normalized * collisionEpsilon);
         if (hit == null)
         {
           body.position += move;
@@ -369,7 +368,11 @@ namespace Unit
                       break;
                     case PlayerStateType.Move:
                       {
-                        ReserveImpulse(monsterToUser * velocity.magnitude * 0.7f);
+                        // 몬스터 머리 위에 낙하공격 없이 떨어지는 경우 몬스터 머리 위에 서 있을 수 없도록 임펄스 가함
+                        if (hit.Value.normal.y > 0)
+                        {
+                          ReserveImpulse(monsterToUser * velocity.magnitude * 0.7f);
+                        }
                       }
                       break;
                   }
@@ -381,10 +384,13 @@ namespace Unit
           }
         }
 
-        float newDistance = hit.Value.distance - epsilon;
+        float newDistance = hit.Value.distance - collisionEpsilon;
 
         // 충돌하기 직전만큼 이동
-        body.position += move.normalized * newDistance;
+        body.position += move.normalized * hit.Value.distance;
+
+        // 충돌한 면에서 살짝 띄우기
+        body.position += hit.Value.normal * collisionEpsilon;
 
         // velocity 갱신
         Vector3 surfaceTangent = Vector2.Perpendicular(hit.Value.normal);

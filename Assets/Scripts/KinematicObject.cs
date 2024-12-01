@@ -14,7 +14,7 @@ public class KinematicObject : MonoBehaviour
   protected Rigidbody2D body;
   protected ContactFilter2D contactFilter;
 
-  private const float collisionEpsilon = 0.1f;
+  protected const float collisionEpsilon = 0.1f;
   protected virtual void Awake()
   {
     body = GetComponent<Rigidbody2D>();
