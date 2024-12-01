@@ -54,6 +54,7 @@ namespace Unit
     public float dashSpeed = 12.0f;
     public float moveAcceleration = 50.0f;
     public float fallAttackThreshold = 1.0f;
+    public float fallAttackImpulseMultiplier = 0.2f;
     [ReadOnly] public bool canFallAttack = false;
     [ReadOnly] public bool receivedImpulseDuringFallAttack = false;
 
@@ -360,8 +361,8 @@ namespace Unit
                         {
                           // 몬스터와 비교해 무거울수록 덜 움직임
                           float massRatio = Mathf.Clamp(collidingMonster.mass / mass, 0.01f, 100);
-                          ReserveImpulse(monsterToUser * velocity.magnitude * massRatio);
-                          collidingMonster.ReserveImpulse(userToMonster * velocity.magnitude / massRatio);
+                          ReserveImpulse(monsterToUser * velocity.magnitude * massRatio * fallAttackImpulseMultiplier);
+                          collidingMonster.ReserveImpulse(userToMonster * (velocity.magnitude / massRatio) * fallAttackImpulseMultiplier);
                           receivedImpulseDuringFallAttack = true;
                         }
                       }
