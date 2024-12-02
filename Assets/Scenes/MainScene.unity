@@ -1670,18 +1670,6 @@ MonoBehaviour:
           m_StringArgument: Lobby
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1405958202}
-        m_TargetAssemblyTypeName: FloorManager, Assembly-CSharp
-        m_MethodName: ResetCurrentFloor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 8
-          m_StringArgument: Lobby
-          m_BoolArgument: 0
-        m_CallState: 2
   OnRegionExit:
     m_PersistentCalls:
       m_Calls:
@@ -4387,6 +4375,7 @@ MonoBehaviour:
   dashSpeed: 40
   moveAcceleration: 79.7
   fallAttackThreshold: 2
+  fallAttackImpulseMultiplier: 0.2
   canFallAttack: 0
   receivedImpulseDuringFallAttack: 0
   isAttacking: 0
@@ -5421,6 +5410,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1405958202}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: OnRemaintimeExpired
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTimeScaleChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5437,6 +5438,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentFloorReadOnly: 0
+  floorDataReadOnly:
+    maxFloor: 0
   spawnStart: {x: 0, y: -0.5}
   dungeonData: {fileID: 11400000, guid: 84f85c28e6648e049803b5d490371a1c, type: 2}
   dungeonSeed: 0

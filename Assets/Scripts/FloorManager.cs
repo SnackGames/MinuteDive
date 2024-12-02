@@ -1,6 +1,48 @@
 using Data;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+
+[System.Serializable]
+public class FloorData
+{
+  public int maxFloor;
+}
+
+public static class SaveLoadFloorSubsystem
+{
+  private static string floorSavePath = Application.persistentDataPath + "/floor.sav";
+
+  public static void SaveFloor(FloorData floorData)
+  {
+    BinaryFormatter formatter = new BinaryFormatter();
+
+    FileStream stream = new FileStream(floorSavePath, FileMode.OpenOrCreate);
+    formatter.Serialize(stream, floorData);
+    stream.Close();
+  }
+
+  public static FloorData LoadFloor()
+  {
+    FloorData floorData = null;
+
+    if (File.Exists(floorSavePath))
+    {
+      BinaryFormatter formatter = new BinaryFormatter();
+
+      FileStream stream = new FileStream(floorSavePath, FileMode.Open);
+      floorData = formatter.Deserialize(stream) as FloorData;
+      stream.Close();
+    }
+    else
+    {
+      floorData = new FloorData();
+    }
+
+    return floorData;
+  }
+}
 
 public class FloorManager : MonoBehaviour
 {
@@ -8,9 +50,11 @@ public class FloorManager : MonoBehaviour
   static public FloorManager GetFloorManager() { return floorManagerSingleton; }
 
   static private int currentFloor = 0;
+  static private FloorData floorData;
 
   [Header("FloorManager")]
   [ReadOnly] public int currentFloorReadOnly = 0;
+  [ReadOnly] public FloorData floorDataReadOnly;
   public Vector2 spawnStart;
   public DungeonData dungeonData;
   public int dungeonSeed = 0;
@@ -66,12 +110,42 @@ public class FloorManager : MonoBehaviour
 
     Debug.Log($"Generated dungeon floors with the seed {dungeonSeed}.");
   }
+
+  public void OnRemaintimeExpired()
+  {
+    if(GetMaxFloor() < GetCurrentFloor())
+    {
+      SetMaxFloor(GetCurrentFloor());
+      SaveFloor();
+    }
+  }
+
+  public void SaveFloor()
+  {
+    SaveLoadFloorSubsystem.SaveFloor(floorData);
+  }
+
+  public int GetMaxFloor()
+  {
+    return floorData.maxFloor;
+  }
+
+  public void SetMaxFloor(int newmaxFloor)
+  {
+    if (floorData.maxFloor >= newmaxFloor)
+      return;
+    
+    floorData.maxFloor = newmaxFloor;
+    floorDataReadOnly.maxFloor = newmaxFloor;
+  }
   #endregion
 
   #region Private Methods
   private void Awake()
   {
     floorManagerSingleton = this;
+    floorData = SaveLoadFloorSubsystem.LoadFloor();
+    floorDataReadOnly = floorData;
   }
   #endregion
 }
