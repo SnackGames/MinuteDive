@@ -63,6 +63,7 @@ public class FloorManager : MonoBehaviour
 
   #region Public Methods
   static public int GetCurrentFloor() => currentFloor;
+  static public int GetMaxFloor() => floorData.maxFloor;
   public void IncrementCurrentFloor() { currentFloor++; currentFloorReadOnly++; }
   public void ResetCurrentFloor() { currentFloor = 0; currentFloorReadOnly = 0; }
 
@@ -123,11 +124,6 @@ public class FloorManager : MonoBehaviour
   public void SaveFloor()
   {
     SaveLoadFloorSubsystem.SaveFloor(floorData);
-  }
-
-  public int GetMaxFloor()
-  {
-    return floorData.maxFloor;
   }
 
   public void SetMaxFloor(int newmaxFloor)
