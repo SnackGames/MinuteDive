@@ -1,12 +1,19 @@
-using UnityEditor;
 using UnityEngine;
 
 public enum FloorExitType
 {
-  LeftMost,
-  Center,
-  RightMost,
-  LeftAndRightMost
+  LeftMost         = 0,
+  Center           = 1,
+  RightMost        = 2,
+  LeftAndRightMost = 3
+}
+
+public enum FloorContentType
+{
+  Empty       = 0,
+  Monster_1   = 100,
+  Monster_2   = 101,
+  Boss        = 999
 }
 
 [RequireComponent(typeof(BoxCollider2D))]

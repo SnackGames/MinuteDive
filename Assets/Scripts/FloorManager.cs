@@ -76,7 +76,8 @@ public class FloorManager : MonoBehaviour
     }
 
     // #TODO 추후에 게임 킬때만 실행하도록 개선
-    dungeonData.VerifyDungeonFloorGen();
+    if (!dungeonData.VerifyDungeonFloorGen())
+      return;
 
     // 층 배열 초기화
     foreach (Floor floor in floorList)
