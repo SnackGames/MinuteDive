@@ -91,15 +91,22 @@ public class FloorManager : MonoBehaviour
     int floorNumber = 1;
     Vector3 floorPosition = new Vector3(spawnStart.x, spawnStart.y, 0.0f);
     List<FloorGenData> viableFloorList;
+    FloorContentData viableFloorContentData = new FloorContentData();
+    int viableFloorContentIndex = 0;
     FloorExitType? prevFloorExitType = FloorExitType.Center;
     while (true)
     {
-      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++, prevFloorExitType);
+      if (floorNumber > viableFloorContentData.targetFloorRange.y)
+        viableFloorContentData = dungeonData.floorContentData[viableFloorContentIndex++];
+
+      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++, viableFloorContentData.requiredFloorContentCount, prevFloorExitType);
       if (viableFloorList.Count <= 0)
         break;
 
       FloorGenData pickedFloorGenData = viableFloorList[random.Next(0, viableFloorList.Count)];
       float? pickedFloorHeight = pickedFloorGenData.floorPrefab.GetComponent<Floor>()?.GetFloorSize().y;
+
+      viableFloorContentData.requiredFloorContentCount[pickedFloorGenData.floorContentType]--;
 
       GameObject spawnedFloor = Instantiate(pickedFloorGenData.floorPrefab, floorPosition - new Vector3(0.0f, pickedFloorHeight * 0.5f ?? 0.0f, 0.0f), Quaternion.identity);
       Floor floorComponent = spawnedFloor.GetComponent<Floor>();

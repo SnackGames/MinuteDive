@@ -11,6 +11,7 @@ public struct FloorGenData
   public Vector2Int validFloorRange;
   public List<FloorExitType> validFloorEntranceTypes;
   public FloorExitType floorExitType;
+  public FloorContentType floorContentType;
   public GameObject floorPrefab;
 }
 
@@ -58,13 +59,18 @@ namespace Data
       }
 
       HashSet<FloorExitType?> prevFloorExitTypes = new HashSet<FloorExitType?>();
+      FloorContentData viableFloorContentData = new FloorContentData();
+      int viableFloorContentIndex = 0;
       for (int i = 1; i < maxFloorNumber; i++)
       {
+        if (i > viableFloorContentData.targetFloorRange.y)
+          viableFloorContentData = floorContentData[viableFloorContentIndex++];
+
         HashSet<FloorExitType?> currFloorExitTypes = new HashSet<FloorExitType?>();
 
         foreach (FloorExitType? exitType in prevFloorExitTypes)
         {
-          List<FloorGenData> viableFloorList = GetViableFloorGenList(i, exitType);
+          List<FloorGenData> viableFloorList = GetViableFloorGenList(i, viableFloorContentData.requiredFloorContentCount, exitType);
 
           // 빠진 층이 있는지 검수
           if (viableFloorList.Count <= 0)
@@ -84,7 +90,7 @@ namespace Data
       return true;
     }
 
-    public List<FloorGenData> GetViableFloorGenList(int floorNumber, FloorExitType? prevFloorExitType = null)
+    public List<FloorGenData> GetViableFloorGenList(int floorNumber, Dictionary<FloorContentType, int> leftFloorContentCount, FloorExitType? prevFloorExitType = null)
     {
       List<FloorGenData> list = new List<FloorGenData>();
 
@@ -94,6 +100,10 @@ namespace Data
           continue;
 
         if (prevFloorExitType != null && floorGenData.validFloorEntranceTypes.Count > 0 && !floorGenData.validFloorEntranceTypes.Contains(prevFloorExitType.Value))
+          continue;
+
+        int count;
+        if (!leftFloorContentCount.TryGetValue(floorGenData.floorContentType, out count) || count <= 0)
           continue;
 
         list.Add(floorGenData);
