@@ -96,17 +96,24 @@ public class FloorManager : MonoBehaviour
     FloorExitType? prevFloorExitType = FloorExitType.Center;
     while (true)
     {
-      if (floorNumber > viableFloorContentData.targetFloorRange.y)
+      if (floorNumber > viableFloorContentData.targetFloorRange.y && viableFloorContentIndex + 1 < dungeonData.floorContentData.Count)
         viableFloorContentData = dungeonData.floorContentData[viableFloorContentIndex++];
 
-      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++, viableFloorContentData.requiredFloorContentCount, prevFloorExitType);
+      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++, viableFloorContentData, prevFloorExitType);
       if (viableFloorList.Count <= 0)
         break;
 
       FloorGenData pickedFloorGenData = viableFloorList[random.Next(0, viableFloorList.Count)];
       float? pickedFloorHeight = pickedFloorGenData.floorPrefab.GetComponent<Floor>()?.GetFloorSize().y;
 
-      viableFloorContentData.requiredFloorContentCount[pickedFloorGenData.floorContentType]--;
+      for (int i = 0; i < viableFloorContentData.requiredFloorContentCount.Count; ++i)
+        if (viableFloorContentData.requiredFloorContentCount[i].contentType == pickedFloorGenData.floorContentType)
+        {
+          FloorContentCountData tempFloorContentCountData = viableFloorContentData.requiredFloorContentCount[i];
+          tempFloorContentCountData.count--;
+          viableFloorContentData.requiredFloorContentCount[i] = tempFloorContentCountData;
+          break;
+        }
 
       GameObject spawnedFloor = Instantiate(pickedFloorGenData.floorPrefab, floorPosition - new Vector3(0.0f, pickedFloorHeight * 0.5f ?? 0.0f, 0.0f), Quaternion.identity);
       Floor floorComponent = spawnedFloor.GetComponent<Floor>();
