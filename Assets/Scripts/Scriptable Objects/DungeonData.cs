@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -28,6 +30,17 @@ public struct FloorContentData
 {
   public Vector2Int targetFloorRange;
   public List<FloorContentCountData> requiredFloorContentCount;
+
+  public readonly FloorContentData GetClone()
+  {
+    FloorContentData floorContentData = new FloorContentData();
+    floorContentData.targetFloorRange = targetFloorRange;
+    floorContentData.requiredFloorContentCount = new List<FloorContentCountData>();
+    foreach (FloorContentCountData item in requiredFloorContentCount)
+      floorContentData.requiredFloorContentCount.Add(item);
+
+    return floorContentData;
+  }
 
   public readonly int GetContentCount(FloorContentType contentType)
   {

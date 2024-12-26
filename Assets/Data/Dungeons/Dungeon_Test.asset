@@ -14,22 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonName: 
   floorContentData:
-  - targetFloorRange: {x: 1, y: 20}
+  - targetFloorRange: {x: 1, y: 10}
     requiredFloorContentCount:
     - contentType: 100
-      count: 20
+      count: 8
+    - contentType: 0
+      count: 2
   floorGenData:
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 10}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 9653d8e6faa6d7042a492733bed25011, type: 3}
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 10}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 2c68435655885ec4eac960da50f5b19e, type: 3}
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 10}
     validFloorEntranceTypes: 000000000200000003000000
     floorExitType: 1
     floorContentType: 0

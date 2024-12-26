@@ -84,6 +84,10 @@ public class FloorManager : MonoBehaviour
       Destroy(floor.gameObject);
     floorList.Clear();
 
+    // #TODO 조건 설명 추가할 것
+    if (dungeonSeed < 1)
+      dungeonSeed = Random.Range(0, 10000);
+
     System.Random random = new System.Random(dungeonSeed);
 
     // 매 층마다 소환 가능한 층들을 선발해서 무작위로 생성
@@ -96,8 +100,8 @@ public class FloorManager : MonoBehaviour
     FloorExitType? prevFloorExitType = FloorExitType.Center;
     while (true)
     {
-      if (floorNumber > viableFloorContentData.targetFloorRange.y && viableFloorContentIndex + 1 < dungeonData.floorContentData.Count)
-        viableFloorContentData = dungeonData.floorContentData[viableFloorContentIndex++];
+      if (floorNumber > viableFloorContentData.targetFloorRange.y && viableFloorContentIndex < dungeonData.floorContentData.Count)
+        viableFloorContentData = dungeonData.floorContentData[viableFloorContentIndex++].GetClone();
 
       viableFloorList = dungeonData.GetViableFloorGenList(floorNumber++, viableFloorContentData, prevFloorExitType);
       if (viableFloorList.Count <= 0)
