@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4208330790189373736}
   - component: {fileID: 378763587363262142}
   m_Layer: 0
-  m_Name: Floor_Grass_1
+  m_Name: Floor_Grass_Monster_1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 8119510334101349631}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -1.5, z: 0}
+  m_LocalPosition: {x: 1.5, y: -1.5, z: 0}
   m_LocalScale: {x: 8, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -295,11 +295,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 182783106852135876, guid: 1b5d37f9621c7144e8e87dae69f3d54a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1952991836507199776, guid: 1b5d37f9621c7144e8e87dae69f3d54a, type: 3}
       propertyPath: isLookingRight
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2248674364589053392, guid: 1b5d37f9621c7144e8e87dae69f3d54a, type: 3}
       propertyPath: m_Name
@@ -307,7 +307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5274100962771957324, guid: 1b5d37f9621c7144e8e87dae69f3d54a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 5274100962771957324, guid: 1b5d37f9621c7144e8e87dae69f3d54a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -347,7 +347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6078355656400996763, guid: 1b5d37f9621c7144e8e87dae69f3d54a, type: 3}
       propertyPath: m_FlipX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

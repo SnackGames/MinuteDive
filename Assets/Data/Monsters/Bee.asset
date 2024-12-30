@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Bee
   m_EditorClassIdentifier: 
   monsterName: Bee
-  monsterHP: 5
+  monsterHP: 3
+  monsterDamage: 5
   monsterMoveSpeed: 20
+  monsterMoveAcceleration: 10
+  monsterWaitTime: 1
