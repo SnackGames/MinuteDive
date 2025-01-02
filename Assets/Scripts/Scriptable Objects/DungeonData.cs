@@ -81,13 +81,12 @@ namespace Data
       if (floorGenData.Count <= 0 || floorContentData.Count <= 0)
         return StopPlaying("There is no floor to generate.");
 
-      int prevContentFloorNumber = 0, maxContentFloorNumber = 0;
+      int maxContentFloorNumber = 0;
       foreach (FloorContentData floorContentData in floorContentData)
       {
-        if (floorContentData.targetFloorRange.x != prevContentFloorNumber + 1 || floorContentData.targetFloorRange.y < floorContentData.targetFloorRange.x)
+        if (floorContentData.targetFloorRange.x != maxContentFloorNumber + 1 || floorContentData.targetFloorRange.y < floorContentData.targetFloorRange.x)
           return StopPlaying($"\'Target floor range\' of \'Floor content data\' should be ascending consecutive, and fill all the integer numbers inbetween. Attempted floor range x: {floorContentData.targetFloorRange.x}");
 
-        prevContentFloorNumber = floorContentData.targetFloorRange.x;
         maxContentFloorNumber = floorContentData.targetFloorRange.y;
 
         if (floorContentData.targetFloorRange.y - floorContentData.targetFloorRange.x + 1 != floorContentData.GetTotalContentCount())

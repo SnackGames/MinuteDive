@@ -20,6 +20,10 @@ MonoBehaviour:
       count: 15
     - contentType: 0
       count: 5
+  - targetFloorRange: {x: 21, y: 21}
+    requiredFloorContentCount:
+    - contentType: 999
+      count: 1
   floorGenData:
   - validFloorRange: {x: 1, y: 20}
     validFloorEntranceTypes: 0000000001000000
@@ -46,3 +50,8 @@ MonoBehaviour:
     floorExitType: 0
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 353003ec292b62d40bb8fd0c74b997ce, type: 3}
+  - validFloorRange: {x: 21, y: 21}
+    validFloorEntranceTypes: 00000000010000000200000003000000
+    floorExitType: 1
+    floorContentType: 999
+    floorPrefab: {fileID: 6886268010505610876, guid: 5aead54fc3e4b3e449f9fa317bbb4ed5, type: 3}
