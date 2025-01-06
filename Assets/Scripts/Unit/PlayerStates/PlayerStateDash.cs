@@ -27,6 +27,9 @@ namespace PlayerState
 
     override protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+      if (TimeManager.GetRemainTime() <= 0f)
+        return null;
+
       while (player.HasPressedInput())
       {
         ButtonInputType pressedInput = player.PeekPressedInput();
