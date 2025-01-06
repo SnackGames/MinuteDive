@@ -58,6 +58,8 @@ public class InventoryManager : MonoBehaviour
 
   private void Start()
   {
+    RefreshItemCache();
+
     inventoryData = SaveLoadInventorySystem.LoadInventory();
 
     // 임시로 아이템 표시
@@ -67,6 +69,11 @@ public class InventoryManager : MonoBehaviour
 
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
     AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
+  }
+
+  private void RefreshItemCache()
+  {
+    // #TODO validation 추가해서, ItemID 겹치면 게임 꺼지게 하기
   }
 
   public void SaveInventory()
