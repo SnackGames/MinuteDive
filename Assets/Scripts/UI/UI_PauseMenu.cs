@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unit;
 
 namespace UI
 {
@@ -22,12 +23,12 @@ namespace UI
 
     private void OnApplicationFocus(bool hasFocus)
     {
-      if (!hasFocus) PauseGame(true);
+      if (!hasFocus && Player.Get.playerState != PlayerStateType.Dying) PauseGame(true);
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
-      if (pauseStatus) PauseGame(true);
+      if (pauseStatus && Player.Get.playerState != PlayerStateType.Dying) PauseGame(true);
     }
   }
 }

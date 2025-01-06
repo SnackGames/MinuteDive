@@ -124,7 +124,7 @@ namespace Unit
       behaviourType = MonsterBehaviourType.Idle;
 
       Player player = Player.Get;
-      if (!player) return;
+      if (!player || player.playerState == PlayerStateType.Dying) return;
 
       if (isInAttackState)
       {
