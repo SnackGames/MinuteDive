@@ -5,6 +5,7 @@ Shader "Hidden/Shader_UI_GameOver"
         _ColorTop ("Top Color", Color) = (1, 0, 0, 1)
         _ColorMiddle ("Middle Color", Color) = (0, 1, 0, 1)
         _ColorBottom ("Bottom Color", Color) = (0, 0, 1, 1)
+        _Transparency ("Transparency", float) = 1.0
     }
     SubShader
     {
@@ -38,6 +39,7 @@ Shader "Hidden/Shader_UI_GameOver"
             fixed4 _ColorTop;
             fixed4 _ColorMiddle;
             fixed4 _ColorBottom;
+            float _Transparency;
 
             v2f vert (appdata v)
             {
@@ -64,6 +66,8 @@ Shader "Hidden/Shader_UI_GameOver"
                     float t = (gradientFactor - 0.5) * 2.0;
                     color = lerp(_ColorMiddle, _ColorTop, t);
                 }
+
+                color.w *= _Transparency;
 
                 return color;
             }

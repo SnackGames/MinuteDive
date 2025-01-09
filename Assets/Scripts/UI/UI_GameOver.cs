@@ -1,13 +1,16 @@
 using GameMode;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
+
+[Serializable]
+public class GameOverEvent : UnityEvent {}
 
 public class UI_GameOver : MonoBehaviour
 {
   public GameObject gameOverUI;
+  public GameOverEvent OnGameOver;
 
   public void SetFloorText(int currentFloor, int maxFloor)
   {
