@@ -2,6 +2,9 @@ using UnityEngine;
 using UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor;
+using System.Collections.Generic;
+using Data;
 
 [System.Serializable]
 public class InventoryData
@@ -73,7 +76,42 @@ public class InventoryManager : MonoBehaviour
 
   private void RefreshItemCache()
   {
-    // #TODO validation 추가해서, ItemID 겹치면 게임 꺼지게 하기
+    ValidateItemData();
+  }
+
+  private void ValidateItemData()
+  {
+    string folderPath = "Assets/Data/Items";
+    string[] assetGuids = AssetDatabase.FindAssets("t:ItemData", new[] { folderPath });
+    List<ItemData> itemDataList = new List<ItemData>();
+
+    foreach (string guid in assetGuids)
+    {
+      string path = AssetDatabase.GUIDToAssetPath(guid);
+      ItemData itemData = AssetDatabase.LoadAssetAtPath<ItemData>(path);
+      if (itemData != null)
+      {
+        itemDataList.Add(itemData);
+      }
+    }
+
+    Dictionary<int, string> itemDictionary = new Dictionary<int, string>();
+    foreach (ItemData itemData in itemDataList)
+    {
+      // 중복 ID 발생
+      if(itemDictionary.ContainsKey(itemData.itemID))
+      {
+        Debug.LogError($"ValidateItemData: ItemData Validation Failed! [{itemDictionary[itemData.itemID]}] and [{itemData.itemName}] has Duplicated ItemID {itemData.itemID}!");
+        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        return;
+      }
+      itemDictionary.Add(itemData.itemID, itemData.itemName);
+    }
+
+    Debug.Log("ValidateItemData: ItemData Validation Success!");
   }
 
   public void SaveInventory()
