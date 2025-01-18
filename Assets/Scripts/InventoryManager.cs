@@ -5,6 +5,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using System.Collections.Generic;
 using Data;
+using System;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class InventoryData
@@ -52,7 +54,10 @@ public class InventoryManager : MonoBehaviour
   static private InventoryManager inventorySingleton;
   static public InventoryManager GetInventory() { return inventorySingleton; }
 
+  public GameObject UIItemPrefab;
   [ReadOnly] public InventoryData inventoryData;
+  [ReadOnly] public List<ItemData> itemDataList;
+  [ReadOnly] public List<GameObject> droppedItemList;
 
   private void Awake()
   {
@@ -83,7 +88,7 @@ public class InventoryManager : MonoBehaviour
   {
     string folderPath = "Assets/Data/Items";
     string[] assetGuids = AssetDatabase.FindAssets("t:ItemData", new[] { folderPath });
-    List<ItemData> itemDataList = new List<ItemData>();
+    itemDataList = new List<ItemData>();
 
     foreach (string guid in assetGuids)
     {
@@ -123,5 +128,43 @@ public class InventoryManager : MonoBehaviour
   {
     inventoryData.money += amount;
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
+  }
+
+  public ItemData GetItemData(int itemID)
+  {
+    foreach (ItemData itemData in itemDataList)
+    {
+      if (itemData.itemID == itemID)
+      {
+        return itemData;
+      }
+    }
+    Debug.LogError("GetItemData: Failed to Get ItemData for ItemID: " + itemID);
+    return null;
+  }
+
+  public GameObject CreateItem(int itemID)
+  {
+    ItemData createItemData = GetItemData(itemID);
+
+    GameObject itemUIObject = Instantiate(UIItemPrefab);
+    UI_Item itemUIScript = itemUIObject.GetComponent<UI_Item>();
+    if(itemUIScript == null)
+    {
+      Debug.LogError("CreateItem: Cannot Find UI_Item Script!");
+      return null;
+    }
+    itemUIScript.SetItemData(createItemData);
+    droppedItemList.Add(itemUIObject);
+    return itemUIObject;
+  }
+
+  public void ClearDroppedItems()
+  {
+    foreach(GameObject droppedItem in droppedItemList)
+    {
+      Destroy(droppedItem);
+    }
+    droppedItemList.Clear();
   }
 }

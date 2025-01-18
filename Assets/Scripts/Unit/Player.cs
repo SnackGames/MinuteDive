@@ -442,6 +442,8 @@ namespace Unit
     public void OnRemainTimeExpired()
     {
       userStateChangeData.reserveDying(true);
+      InventoryManager.GetInventory()?.SaveInventory();
+      InventoryManager.GetInventory()?.ClearDroppedItems();
     }
 
     public void ReturnToLobby()

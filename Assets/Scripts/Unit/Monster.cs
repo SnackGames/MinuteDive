@@ -234,7 +234,28 @@ namespace Unit
       }
 
       if (hp <= 0)
+      {
+        DropItem(-1);
         Destroy(gameObject);
+      }
+    }
+
+    public void DropItem(int itemID)
+    {
+      GameObject itemUIObject = InventoryManager.GetInventory().CreateItem(itemID);
+      if (itemUIObject == null)
+      {
+        Debug.LogError("Failed to Create Drop Item! itemId: " + itemID);
+        return;
+      }
+
+      Vector3 monsterScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
+      Canvas canvas = itemUIObject.GetComponent<Canvas>();
+      if (canvas != null)
+      {
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+        canvasRect.position = transform.position;
+      }
     }
   }
 }
