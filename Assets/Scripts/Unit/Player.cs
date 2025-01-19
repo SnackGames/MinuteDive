@@ -464,5 +464,10 @@ namespace Unit
           break;
       }
     }
+
+    public void PickupItem(GameObject pickupItem)
+    {
+      Debug.Log("Pick up Item!");
+    }
   }
 }

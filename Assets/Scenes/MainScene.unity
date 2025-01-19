@@ -5340,11 +5340,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd0f4314911f304886d840bd49b6519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIItemPrefab: {fileID: 4849318371929061675, guid: ceea471cc257055419958dc74f6816e5, type: 3}
+  droppedItemPrefab: {fileID: 1546807284595003136, guid: 1ab91c553c9bbb046b7bf29688e1e97d, type: 3}
   inventoryData:
     money: 0
     items: 
   itemDataList: []
+  droppedItemList: []
 --- !u!114 &1405958201
 MonoBehaviour:
   m_ObjectHideFlags: 0

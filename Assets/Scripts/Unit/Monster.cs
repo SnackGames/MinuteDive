@@ -242,20 +242,14 @@ namespace Unit
 
     public void DropItem(int itemID)
     {
-      GameObject itemUIObject = InventoryManager.GetInventory().CreateItem(itemID);
+      GameObject itemUIObject = InventoryManager.GetInventory().CreateDropItem(itemID);
       if (itemUIObject == null)
       {
         Debug.LogError("Failed to Create Drop Item! itemId: " + itemID);
         return;
       }
 
-      Vector3 monsterScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
-      Canvas canvas = itemUIObject.GetComponent<Canvas>();
-      if (canvas != null)
-      {
-        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-        canvasRect.position = transform.position;
-      }
+      itemUIObject.transform.position = transform.position;
     }
   }
 }

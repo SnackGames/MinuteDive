@@ -54,7 +54,7 @@ public class InventoryManager : MonoBehaviour
   static private InventoryManager inventorySingleton;
   static public InventoryManager GetInventory() { return inventorySingleton; }
 
-  public GameObject UIItemPrefab;
+  public GameObject droppedItemPrefab;
   [ReadOnly] public InventoryData inventoryData;
   [ReadOnly] public List<ItemData> itemDataList;
   [ReadOnly] public List<GameObject> droppedItemList;
@@ -143,18 +143,18 @@ public class InventoryManager : MonoBehaviour
     return null;
   }
 
-  public GameObject CreateItem(int itemID)
+  public GameObject CreateDropItem(int itemID)
   {
-    ItemData createItemData = GetItemData(itemID);
+    ItemData dropItemData = GetItemData(itemID);
 
-    GameObject itemUIObject = Instantiate(UIItemPrefab);
-    UI_Item itemUIScript = itemUIObject.GetComponent<UI_Item>();
+    GameObject itemUIObject = Instantiate(droppedItemPrefab);
+    UI_Item itemUIScript = itemUIObject.GetComponentInChildren<UI_Item>();
     if(itemUIScript == null)
     {
-      Debug.LogError("CreateItem: Cannot Find UI_Item Script!");
+      Debug.LogError("CreateDropItem: Cannot Find UI_Item Script!");
       return null;
     }
-    itemUIScript.SetItemData(createItemData);
+    itemUIScript.SetItemData(dropItemData);
     droppedItemList.Add(itemUIObject);
     return itemUIObject;
   }
