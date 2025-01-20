@@ -62,7 +62,7 @@ Shader "Hidden/Shader_CenterGradient"
                 float distanceFromCenter = length(i.uv - center);
 
                 // Blend between the center color and border color based on distance
-                fixed4 color = lerp(_ColorCenter, _ColorBorder, saturate(distanceFromCenter * 2.0));
+                fixed4 color = lerp(_ColorCenter, _ColorBorder, distanceFromCenter * 2.0);
 
                 // Apply transparency
                 color.a *= _Transparency;

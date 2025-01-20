@@ -5,7 +5,6 @@ using UnityEngine;
 using GameMode;
 
 using AYellowpaper.SerializedCollections;
-using Unity.VisualScripting;
 using Data;
 
 namespace Unit
@@ -72,6 +71,7 @@ namespace Unit
     public Rigidbody2D attackRigidbody;
     public Rigidbody2D fallAttackRigidbody;
     public ParticleSystem dashEffect;
+    public SpriteRenderer glowSprite;
 
     protected Animator anim;
     protected SpriteRenderer sprite;
@@ -441,6 +441,8 @@ namespace Unit
 
     public void OnRemainTimeExpired()
     {
+      glowSprite.enabled = true;
+
       userStateChangeData.reserveDying(true);
       InventoryManager.GetInventory()?.SaveInventory();
       InventoryManager.GetInventory()?.ClearDroppedItems();
@@ -448,7 +450,9 @@ namespace Unit
 
     public void ReturnToLobby()
     {
-      GameModeManager ModeManager = GameObject.FindObjectOfType<GameModeManager>();
+      glowSprite.enabled = false;
+
+      GameModeManager ModeManager = FindObjectOfType<GameModeManager>();
       if(ModeManager != null && ModeManager.CurrentMode == GameModeType.Dungeon)
       {
         transform.position = ModeManager.UserInitialPosition;
