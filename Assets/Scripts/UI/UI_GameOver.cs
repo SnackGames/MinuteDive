@@ -10,7 +10,8 @@ public class GameOverEvent : UnityEvent {}
 public class UI_GameOver : MonoBehaviour
 {
   public GameObject gameOverUI;
-  public GameOverEvent OnGameOver;
+  public GameOverEvent OnOpenGameOver;
+  public GameOverEvent OnCloseGameOver;
 
   public void SetFloorText(int currentFloor, int maxFloor)
   {
@@ -26,6 +27,11 @@ public class UI_GameOver : MonoBehaviour
 
   public void ShowGameOver(bool show)
   {
+    if (show)
+      OnOpenGameOver.Invoke();
+    else
+      OnCloseGameOver.Invoke();
+
     gameOverUI.SetActive(show);
     SetFloorText(FloorManager.GetCurrentFloor(), FloorManager.GetMaxFloor());
   }
