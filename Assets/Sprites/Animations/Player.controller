@@ -165,7 +165,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player_Hit_start
-  m_Speed: 2
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -7728822966964670872}
@@ -322,6 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e331f4428702014798b52f5aa465896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateDuration: 0.4
 --- !u!1109 &-4794383471734331691
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -572,7 +573,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1284,9 +1285,6 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -7069636881547319860}
-    second:
-    - {fileID: -506558267188941677}
   - first: {fileID: 6826558923414988574}
     second:
     - {fileID: 3662681100206843036}
@@ -1309,6 +1307,9 @@ AnimatorStateMachine:
   - first: {fileID: -5698366354491050116}
     second:
     - {fileID: 804575252302006799}
+  - first: {fileID: -7069636881547319860}
+    second:
+    - {fileID: -506558267188941677}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 100, y: -300, z: 0}
   m_EntryPosition: {x: 410, y: -140, z: 0}

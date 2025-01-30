@@ -1,15 +1,13 @@
 using Unit;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace PlayerState
 {
   public class PlayerStateHit : PlayerStateBase
   {
+    public float stateDuration = 1f;
+
     private float stateEnterTime = 0f;
-    private float stateDuration = 1f;
-    private float startAnimationDuration = 0f;
     private float endAnimationDuration = 0f;
 
     public override PlayerStateType GetPlayerStateType() => PlayerStateType.Hit;
@@ -33,7 +31,6 @@ namespace PlayerState
     {
       base.OnPlayerSubStateMachineEnter(animator, stateInfo, layerIndex);
       stateEnterTime = Time.time;
-      startAnimationDuration = stateInfo.length;
     }
 
     protected override PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

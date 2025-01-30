@@ -4432,6 +4432,8 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: 2f84c94b34665e24bb4f7cf3925473d7, type: 3}
     - Key: fallAttack
       Value: {fileID: 8300000, guid: 505175ef0df22db48a159a5466bc172a, type: 3}
+    - Key: damage
+      Value: {fileID: 8300000, guid: d2cf33100925a5c4cbb41fa25a5672df, type: 3}
   playerCamera: {fileID: 519420033}
   attackRigidbody: {fileID: 264269638}
   fallAttackRigidbody: {fileID: 1815054033}
@@ -5400,7 +5402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   remainTimeReadOnly: 0
   currentTimeScaleReadOnly: 0
-  initialRemainTime: 5
+  initialRemainTime: 60
   initialTimeScale: 1
   OnRemainTimeExpired:
     m_PersistentCalls:
