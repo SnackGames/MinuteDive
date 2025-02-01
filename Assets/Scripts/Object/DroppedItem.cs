@@ -9,6 +9,7 @@ using Unit;
 [RequireComponent(typeof(Collider2D))]
 public class DroppedItem : MonoBehaviour
 {
+  public float CollisionActivationDelay = 1.0f;
   protected Rigidbody2D body;
   protected Collider2D col;
 
@@ -20,6 +21,20 @@ public class DroppedItem : MonoBehaviour
     col.isTrigger = true;
 
     gameObject.layer = LayerMask.NameToLayer("DroppedItem");
+
+    // 최초 스폰 시 충돌 비활성화, 일정 시간 후 충돌 활성화
+    col.enabled = false;
+    StartCoroutine(ActivateCollider());
+  }
+
+  private IEnumerator ActivateCollider()
+  {
+    yield return new WaitForSeconds(CollisionActivationDelay);
+
+    if (col != null)
+    {
+      col.enabled = true;
+    }
   }
 
   private void OnTriggerEnter2D(Collider2D collision)
