@@ -59,6 +59,8 @@ public class InventoryManager : MonoBehaviour
   [ReadOnly] public List<ItemData> itemDataList;
   [ReadOnly] public List<GameObject> droppedItemList;
 
+  private int droppedItemUID = 0;
+
   private void Awake()
   {
     inventorySingleton = this;
@@ -77,6 +79,8 @@ public class InventoryManager : MonoBehaviour
 
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
     AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
+
+    droppedItemUID = 0;
   }
 
   private void RefreshItemCache()
@@ -147,16 +151,27 @@ public class InventoryManager : MonoBehaviour
   {
     ItemData dropItemData = GetItemData(itemID);
 
-    GameObject itemUIObject = Instantiate(droppedItemPrefab);
-    UI_Item itemUIScript = itemUIObject.GetComponentInChildren<UI_Item>();
+    GameObject droppedItemObject = Instantiate(droppedItemPrefab);
+    UI_Item itemUIScript = droppedItemObject.GetComponentInChildren<UI_Item>();
     if(itemUIScript == null)
     {
       Debug.LogError("CreateDropItem: Cannot Find UI_Item Script!");
       return null;
     }
+
+    DroppedItem droppedItemScript = droppedItemObject.GetComponent<DroppedItem>();
+    if(droppedItemScript == null)
+    {
+      Debug.LogError("CreateDropItem: Cannot Find DroppedItem Script!");
+      return null;
+    }
+
+    ++droppedItemUID;
+    droppedItemObject.name = $"{dropItemData.itemName}_{droppedItemUID}";
     itemUIScript.SetItemData(dropItemData);
-    droppedItemList.Add(itemUIObject);
-    return itemUIObject;
+    droppedItemScript.droppedItemUID = droppedItemUID;
+    droppedItemList.Add(droppedItemObject);
+    return droppedItemObject;
   }
 
   public void ClearDroppedItems()
@@ -166,5 +181,15 @@ public class InventoryManager : MonoBehaviour
       Destroy(droppedItem);
     }
     droppedItemList.Clear();
+  }
+
+  public void ClearDroppedItem(int targetItemUID)
+  {
+    int targetIndex = droppedItemList.FindIndex(x => x.GetComponent<DroppedItem>()?.droppedItemUID == targetItemUID);
+    if (targetIndex != -1)
+    {
+      Destroy(droppedItemList[targetIndex]);
+      droppedItemList.RemoveAt(targetIndex);
+    }
   }
 }

@@ -469,9 +469,10 @@ namespace Unit
       }
     }
 
-    public void PickupItem(GameObject pickupItem)
+    public void PickupItem(DroppedItem pickupItem)
     {
-      Debug.Log("Pick up Item!");
+      Debug.Log($"Pick up Item with ItemUID {pickupItem.droppedItemUID}!");
+      InventoryManager.GetInventory().ClearDroppedItem(pickupItem.droppedItemUID);
     }
   }
 }

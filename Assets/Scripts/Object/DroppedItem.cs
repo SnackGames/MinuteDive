@@ -10,8 +10,9 @@ using Unit;
 public class DroppedItem : MonoBehaviour
 {
   public float CollisionActivationDelay = 1.0f;
-  protected Rigidbody2D body;
-  protected Collider2D col;
+  [ReadOnly] public int droppedItemUID = -1;
+  [ReadOnly] protected Rigidbody2D body;
+  [ReadOnly] protected Collider2D col;
 
   private void Awake()
   {
@@ -41,8 +42,7 @@ public class DroppedItem : MonoBehaviour
   {
     if (collision.GetComponent<Player>() != null)
     {
-      Player.Get.PickupItem(gameObject);
-      Destroy(gameObject);
+      Player.Get.PickupItem(this);
     }
   }
 
