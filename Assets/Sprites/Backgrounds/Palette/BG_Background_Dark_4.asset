@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: BG_Background_Dark
+  m_Name: BG_Background_Dark_4
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 834910660, guid: 7ba02a857f1dfb1488a62aefe24f75d6, type: 3}
+  m_Sprite: {fileID: 139461864, guid: 7ba02a857f1dfb1488a62aefe24f75d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
