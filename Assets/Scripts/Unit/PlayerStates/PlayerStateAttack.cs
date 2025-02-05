@@ -27,8 +27,12 @@ namespace PlayerState
 
     override protected PlayerStateType? ProcessStateChange(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      if (TimeManager.GetRemainTime() <= 0f)
-        return null;
+      if (player.userStateChangeData.isHitReserved())
+        return PlayerStateType.Hit;
+      else if (player.userStateChangeData.isDyingReserved())
+        return PlayerStateType.Dying;
+      else if (player.userStateChangeData.isWinReserved())
+        return PlayerStateType.Win;
 
       while (player.HasPressedInput())
       {
