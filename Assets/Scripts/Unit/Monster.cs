@@ -242,7 +242,7 @@ namespace Unit
 
     public void DropItem(int itemID)
     {
-      GameObject itemUIObject = InventoryManager.GetInventory().CreateDropItem(itemID);
+      GameObject itemUIObject = InventoryManager.GetInventory().CreateDropItem(itemID, transform.position, transform.position);
       if (itemUIObject == null)
       {
         Debug.LogError("Failed to Create Drop Item! itemId: " + itemID);

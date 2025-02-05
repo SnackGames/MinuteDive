@@ -147,7 +147,7 @@ public class InventoryManager : MonoBehaviour
     return null;
   }
 
-  public GameObject CreateDropItem(int itemID)
+  public GameObject CreateDropItem(int itemID, Vector2 spawnPosition, Vector2 dropTargetPosition)
   {
     ItemData dropItemData = GetItemData(itemID);
 
@@ -170,6 +170,8 @@ public class InventoryManager : MonoBehaviour
     droppedItemObject.name = $"{dropItemData.itemName}_{droppedItemUID}";
     itemUIScript.SetItemData(dropItemData);
     droppedItemScript.droppedItemUID = droppedItemUID;
+    droppedItemScript.spawnedPosition = spawnPosition;
+    droppedItemScript.dropTargetPosition = dropTargetPosition;
     droppedItemList.Add(droppedItemObject);
     return droppedItemObject;
   }

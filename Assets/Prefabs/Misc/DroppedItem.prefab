@@ -43,7 +43,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546807284595003136}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -105,7 +105,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &-6258826692682714470
 MonoBehaviour:
@@ -119,6 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159c8ced64493d545ab21435db32d982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollisionActivationDelay: 1
+  launchForce: 300
+  launchTorque: 10
+  droppedItemUID: -1
+  droppedOnGround: 0
 --- !u!1001 &5859081391775504575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -153,11 +158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996100900401456801, guid: ceea471cc257055419958dc74f6816e5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996100900401456801, guid: ceea471cc257055419958dc74f6816e5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3996100900401456801, guid: ceea471cc257055419958dc74f6816e5, type: 3}
       propertyPath: m_LocalPosition.x
