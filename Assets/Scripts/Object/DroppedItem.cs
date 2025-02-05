@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using Unit;
+using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting;
+using System.Security.Cryptography;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 public class DroppedItem : MonoBehaviour
 {
-  public float CollisionActivationDelay = 1.0f;
-  public float launchForce = 300.0f;
-  public float launchTorque = 10.0f;
+  public float CollisionActivationDelay = 0.5f;
+  public float launchSpeed = 5.0f;
+  public float launchRevolutions = 2.0f;
   public Vector2 spawnedPosition = Vector2.zero;
   public Vector2 dropTargetPosition = Vector2.zero;
   [ReadOnly] public int droppedItemUID = -1;
@@ -19,6 +22,9 @@ public class DroppedItem : MonoBehaviour
   [ReadOnly] protected Rigidbody2D body;
   [ReadOnly] protected Collider2D col;
   private bool reservedPickupItem = false;
+  private float estimatedTimeToDst = 0f;
+
+  private float elapsedTimeAfterLaunch = 0f;
 
   private void Awake()
   {
@@ -27,18 +33,20 @@ public class DroppedItem : MonoBehaviour
     col.isTrigger = true;
 
     gameObject.layer = LayerMask.NameToLayer("DroppedItem");
+  }
 
+  private void Start()
+  {
     // 최초 스폰 시 충돌 비활성화, 일정 시간 후 충돌 활성화
     col.enabled = false;
     StartCoroutine(ActivateCollider());
 
-    // TODO: dropTargetPosition 위치에 도달할 수 있도록 발사
+    // dropTargetPosition 위치에 도달할 수 있도록 발사
     body.gravityScale = 1.0f;
-    Vector2 launchDirection = new Vector2(0, 1).normalized;
-    body.AddForce(launchDirection * launchForce);
+    body.velocity = CalculateLaunchVelocity(spawnedPosition, dropTargetPosition, launchSpeed);
 
-    // TODO: dropTargetPosition 위치에 도달했을 때 기준으로 0도가 될 수 있도록 계산
-    body.AddTorque(launchTorque, ForceMode2D.Impulse);
+    // dropTargetPosition 위치에 도달했을 때 기준으로 0도가 될 수 있도록 계산
+    body.angularVelocity = CalculateLaunchAngularVelocity();
   }
 
   private IEnumerator ActivateCollider()
@@ -48,6 +56,28 @@ public class DroppedItem : MonoBehaviour
     if (col != null)
     {
       col.enabled = true;
+    }
+  }
+
+  private void FixedUpdate()
+  {
+    elapsedTimeAfterLaunch += Time.deltaTime;
+
+    // 목표 지점 도착 예상 시간 도달: 아이템 멈춤
+    if (!droppedOnGround && elapsedTimeAfterLaunch > estimatedTimeToDst)
+    {
+      droppedOnGround = true;
+      transform.position = dropTargetPosition;
+      transform.rotation = Quaternion.identity;
+      body.velocity = Vector2.zero;
+      body.angularVelocity = 0;
+      body.bodyType = RigidbodyType2D.Kinematic;
+      // 습득 예약된 경우 바로 습득
+      if (reservedPickupItem)
+      {
+        Player.Get.PickupItem(this);
+      }
+      return;
     }
   }
 
@@ -67,21 +97,6 @@ public class DroppedItem : MonoBehaviour
       }
       return;
     }
-
-    // 바닥: 아이템 멈춤
-    if(LayerMask.LayerToName(collision.gameObject.layer) == "Wall" && collision.gameObject.transform.position.y < spawnedPosition.y)
-    {
-      body.velocity = Vector2.zero;
-      body.angularVelocity = 0;
-      body.bodyType = RigidbodyType2D.Kinematic;
-      droppedOnGround = true;
-      // 습득 예약된 경우 바로 습득
-      if(reservedPickupItem)
-      {
-        Player.Get.PickupItem(this);
-      }
-      return;
-    }
   }
 
   private void OnTriggerExit2D(Collider2D collision)
@@ -95,5 +110,28 @@ public class DroppedItem : MonoBehaviour
   private void ReservePickupItem(bool reserved)
   {
     reservedPickupItem = reserved;
+  }
+
+  private Vector2 CalculateLaunchVelocity(Vector2 src, Vector2 dst, float launchSpeed)
+  {
+    if (src.y != dst.y)
+      return Vector2.up * launchSpeed;
+
+    float g = Mathf.Abs(Physics2D.gravity.y);
+    float dx = dst.x - src.x;
+    float dy = dst.y - src.y;
+
+    estimatedTimeToDst = 2 * launchSpeed / g;
+    float vy = launchSpeed;
+    float vx = dx / estimatedTimeToDst;
+
+    Vector2 result = new Vector2(vx, vy);
+    return result;
+  }
+
+  private float CalculateLaunchAngularVelocity()
+  {
+    // launchRevolutions 바퀴 회전
+    return (launchRevolutions * 360f) / estimatedTimeToDst;
   }
 }

@@ -6,6 +6,7 @@ using GameMode;
 
 using AYellowpaper.SerializedCollections;
 using Data;
+using UI;
 
 namespace Unit
 {
@@ -471,8 +472,9 @@ namespace Unit
 
     public void PickupItem(DroppedItem pickupItem)
     {
-      Debug.Log($"Pick up Item with ItemUID {pickupItem.droppedItemUID}!");
+      Debug.Log($"Pick up Item with ItemID {pickupItem.gameObject.GetComponentInChildren<UI_Item>()?.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
       InventoryManager.GetInventory().ClearDroppedItem(pickupItem.droppedItemUID);
+      // #TODO_DROPITEM 인벤토리에 아이템을 실제로 넣어주는 기능 구현
     }
   }
 }

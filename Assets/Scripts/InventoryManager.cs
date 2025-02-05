@@ -167,7 +167,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     ++droppedItemUID;
-    droppedItemObject.name = $"{dropItemData.itemName}_{droppedItemUID}";
+    droppedItemObject.name = $"DroppedItem: {dropItemData.itemName}_{droppedItemUID}";
     itemUIScript.SetItemData(dropItemData);
     droppedItemScript.droppedItemUID = droppedItemUID;
     droppedItemScript.spawnedPosition = spawnPosition;
