@@ -85,11 +85,14 @@ public class InventoryManager : MonoBehaviour
 
   private void RefreshItemCache()
   {
+#if UNITY_EDITOR
     ValidateItemData();
+#endif
   }
 
   private void ValidateItemData()
   {
+#if UNITY_EDITOR
     string folderPath = "Assets/Data/Items";
     string[] assetGuids = AssetDatabase.FindAssets("t:ItemData", new[] { folderPath });
     itemDataList = new List<ItemData>();
@@ -111,16 +114,14 @@ public class InventoryManager : MonoBehaviour
       if(itemDictionary.ContainsKey(itemData.itemID))
       {
         Debug.LogError($"ValidateItemData: ItemData Validation Failed! [{itemDictionary[itemData.itemID]}] and [{itemData.itemName}] has Duplicated ItemID {itemData.itemID}!");
-        Application.Quit();
-#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-#endif
         return;
       }
       itemDictionary.Add(itemData.itemID, itemData.itemName);
     }
 
     Debug.Log("ValidateItemData: ItemData Validation Success!");
+#endif
   }
 
   public void SaveInventory()
