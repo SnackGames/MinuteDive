@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public enum FloorExitType
@@ -19,6 +20,8 @@ public enum FloorContentType
 [RequireComponent(typeof(BoxCollider2D))]
 public class Floor : Region
 {
+  public TextMeshPro floorText;
+
   public Vector2 GetFloorSize()
   {
     Vector3 boundSize = GetComponent<BoxCollider2D>()?.size ?? Vector3.zero;
@@ -29,10 +32,23 @@ public class Floor : Region
   {
     if (OnRegionEnter == null) OnRegionEnter = new RegionEvent();
     OnRegionEnter.AddListener(OnFloorEnter);
+    if (OnRegionExit == null) OnRegionExit = new RegionEvent();
+    OnRegionExit.AddListener(OnFloorExit);
+    if (floorText) floorText.enabled = false;
   }
 
   public void OnFloorEnter(string regionName)
   {
     FloorManager.GetFloorManager().IncrementCurrentFloor();
+    if (floorText)
+    {
+      floorText.text = FloorManager.GetFloorManager().currentFloorReadOnly.ToString();
+      floorText.enabled = true;
+    }
+  }
+
+  public void OnFloorExit(string regionName)
+  {
+    if (floorText) floorText.enabled = false;
   }
 }
