@@ -151,6 +151,8 @@ public class InventoryManager : MonoBehaviour
   public GameObject CreateDropItem(int itemID, Vector2 spawnPosition, Vector2 dropTargetPosition)
   {
     ItemData dropItemData = GetItemData(itemID);
+    if (dropItemData == null)
+      return null;
 
     GameObject droppedItemObject = Instantiate(droppedItemPrefab);
     UI_Item itemUIScript = droppedItemObject.GetComponentInChildren<UI_Item>();
