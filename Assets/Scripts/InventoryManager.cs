@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -7,6 +9,8 @@ using System.Collections.Generic;
 using Data;
 using System;
 using Unity.VisualScripting;
+using System.Linq;
+using System.Collections;
 
 [System.Serializable]
 public class InventoryData
@@ -60,6 +64,7 @@ public class InventoryManager : MonoBehaviour
   [ReadOnly] public List<GameObject> droppedItemList;
 
   private int droppedItemUID = 0;
+  private AsyncOperationHandle<IList<ItemData>> loadHandle;
 
   private void Awake()
   {
@@ -85,43 +90,46 @@ public class InventoryManager : MonoBehaviour
 
   private void RefreshItemCache()
   {
-#if UNITY_EDITOR
-    ValidateItemData();
-#endif
+    StartCoroutine(ValidateItemData());
   }
 
-  private void ValidateItemData()
+  private IEnumerator ValidateItemData()
   {
+    // "Items" 라벨이 붙은 모든 ItemData 로드
+    loadHandle = Addressables.LoadAssetsAsync<ItemData>("Items", null);
+    yield return loadHandle;
+
+    if (loadHandle.Status == AsyncOperationStatus.Succeeded)
+    {
+      itemDataList = loadHandle.Result.ToList();
+      Dictionary<int, string> itemDictionary = new Dictionary<int, string>();
+      foreach (ItemData itemData in itemDataList)
+      {
+        // 중복 ID 발생
+        if (itemDictionary.ContainsKey(itemData.itemID))
+        {
+          Debug.LogError($"ValidateItemData: ItemData Validation Failed! [{itemDictionary[itemData.itemID]}] and [{itemData.itemName}] has Duplicated ItemID {itemData.itemID}!");
 #if UNITY_EDITOR
-    string folderPath = "Assets/Data/Items";
-    string[] assetGuids = AssetDatabase.FindAssets("t:ItemData", new[] { folderPath });
-    itemDataList = new List<ItemData>();
-
-    foreach (string guid in assetGuids)
-    {
-      string path = AssetDatabase.GUIDToAssetPath(guid);
-      ItemData itemData = AssetDatabase.LoadAssetAtPath<ItemData>(path);
-      if (itemData != null)
-      {
-        itemDataList.Add(itemData);
-      }
-    }
-
-    Dictionary<int, string> itemDictionary = new Dictionary<int, string>();
-    foreach (ItemData itemData in itemDataList)
-    {
-      // 중복 ID 발생
-      if(itemDictionary.ContainsKey(itemData.itemID))
-      {
-        Debug.LogError($"ValidateItemData: ItemData Validation Failed! [{itemDictionary[itemData.itemID]}] and [{itemData.itemName}] has Duplicated ItemID {itemData.itemID}!");
-        UnityEditor.EditorApplication.isPlaying = false;
-        return;
-      }
-      itemDictionary.Add(itemData.itemID, itemData.itemName);
-    }
-
-    Debug.Log("ValidateItemData: ItemData Validation Success!");
+          UnityEditor.EditorApplication.isPlaying = false;
+#else
+          Application.Quit();
 #endif
+          yield break;
+        }
+        itemDictionary.Add(itemData.itemID, itemData.itemName);
+      }
+      Debug.Log($"ValidateItemData: ItemData Validation Success! itemDataList Size: {itemDataList.Count}");
+    }
+    else
+    {
+      Debug.LogError($"ValidateItemData: Failed to Load ItemData Assets from Addressables. {loadHandle.Status}");
+#if UNITY_EDITOR
+      UnityEditor.EditorApplication.isPlaying = false;
+#else
+      Application.Quit();
+#endif
+      yield break;
+    }
   }
 
   public void SaveInventory()
@@ -152,7 +160,10 @@ public class InventoryManager : MonoBehaviour
   {
     ItemData dropItemData = GetItemData(itemID);
     if (dropItemData == null)
+    {
+      Debug.LogError("CreateDropItem: Failed to get ItemData!");
       return null;
+    }
 
     GameObject droppedItemObject = Instantiate(droppedItemPrefab);
     UI_Item itemUIScript = droppedItemObject.GetComponentInChildren<UI_Item>();
