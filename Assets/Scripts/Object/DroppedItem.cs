@@ -75,7 +75,7 @@ public class DroppedItem : MonoBehaviour
       // 습득 예약된 경우 바로 습득
       if (reservedPickupItem)
       {
-        Player.Get.PickupItem(this);
+        InventoryManager.GetInventory().PickupDropItem(this);
       }
       return;
     }
@@ -88,7 +88,7 @@ public class DroppedItem : MonoBehaviour
       // 이미 바닥에 떨어진 아이템은 즉시 습득
       if (droppedOnGround)
       {
-        Player.Get.PickupItem(this);
+        InventoryManager.GetInventory().PickupDropItem(this);
       }
       // 아직 바닥에 안 떨어진 아이템은 충돌 유지한 채로 바닥에 떨어지면 습득할 수 있도록 예약
       else

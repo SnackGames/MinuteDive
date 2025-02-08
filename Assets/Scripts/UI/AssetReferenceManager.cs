@@ -36,7 +36,7 @@ namespace UI
       for (int i = 0; i < count; ++i)
       {
         Image image = itemGrid.transform.GetChild(i).GetComponent<Image>();
-        image.color = items[i] > 0 ? Color.red : Color.white;
+        image.color = items[i] != 0 ? Color.red : Color.white;
       }
     }
   }

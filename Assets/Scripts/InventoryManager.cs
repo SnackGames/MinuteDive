@@ -77,11 +77,8 @@ public class InventoryManager : MonoBehaviour
 
     inventoryData = SaveLoadInventorySystem.LoadInventory();
 
-    // 임시로 아이템 표시
+    // 임시로, 게임을 재실행할 때마다 아이템 초기화
     inventoryData.items = new int[16];
-    inventoryData.items[0] = 1;
-    inventoryData.items[2] = 1;
-
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
     AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
 
@@ -188,6 +185,32 @@ public class InventoryManager : MonoBehaviour
     droppedItemScript.dropTargetPosition = dropTargetPosition;
     droppedItemList.Add(droppedItemObject);
     return droppedItemObject;
+  }
+
+  public void PickupDropItem(DroppedItem pickupItem)
+  {
+    // #TODO_DROPITEM 플레이어에게 날아오게 하는 기능 구현
+
+    UI_Item pickupItemUIScript = pickupItem.gameObject.GetComponentInChildren<UI_Item>();
+    if (pickupItemUIScript == null)
+    {
+      Debug.LogError($"PickupDropItem: failed to get Item UI Script from pickupItem!");
+      ClearDroppedItem(pickupItem.droppedItemUID);
+      return;
+    }
+
+    for (int i = 0; i < inventoryData.items.Length; ++i)
+    {
+      if (inventoryData.items[i] == 0)
+      {
+        Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
+        inventoryData.items[i] = pickupItemUIScript.itemData.itemID;
+        AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
+        break;
+      }
+    }
+
+    ClearDroppedItem(pickupItem.droppedItemUID);
   }
 
   public void ClearDroppedItems()
