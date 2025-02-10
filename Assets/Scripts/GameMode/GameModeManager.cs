@@ -12,7 +12,7 @@ public class GameModeEvent : UnityEvent<GameModeType> { }
 
 public class GameModeManager : MonoBehaviour
 {
-  [Header("GameModeMangaer")]
+  [Header("GameModeManager")]
   [ReadOnly] public GameModeType CurrentMode = GameModeType.None;
   public GameModeBase GameMode = null;
   public GameModeEvent OnSetGameMode;

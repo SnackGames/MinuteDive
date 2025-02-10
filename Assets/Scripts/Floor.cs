@@ -21,6 +21,9 @@ public enum FloorContentType
 public class Floor : Region
 {
   public TextMeshPro floorText;
+  public int floorNumber = 0;
+
+  private Color originalTextColor;
 
   public Vector2 GetFloorSize()
   {
@@ -34,21 +37,49 @@ public class Floor : Region
     OnRegionEnter.AddListener(OnFloorEnter);
     if (OnRegionExit == null) OnRegionExit = new RegionEvent();
     OnRegionExit.AddListener(OnFloorExit);
-    if (floorText) floorText.enabled = false;
+  }
+
+  public void InitFloor(int floor)
+  {
+    floorNumber = floor;
+
+    if (floorText)
+      originalTextColor = floorText.color;
+
+    UpdateText();
   }
 
   public void OnFloorEnter(string regionName)
   {
     FloorManager.GetFloorManager().IncrementCurrentFloor();
-    if (floorText)
-    {
-      floorText.text = FloorManager.GetFloorManager().currentFloorReadOnly.ToString();
-      floorText.enabled = true;
-    }
+    UpdateText();
   }
 
   public void OnFloorExit(string regionName)
   {
-    if (floorText) floorText.enabled = false;
+    UpdateText();
+  }
+
+  private void UpdateText()
+  {
+    if (!floorText)
+      return;
+
+    floorText.text = floorNumber.ToString();
+    if (floorNumber == FloorManager.GetMaxFloor())
+    {
+      floorText.color = new Color(0.88f, 0.61f, 0.1f, 0.18f);
+      floorText.enabled = true;
+    }
+    else if (floorNumber == FloorManager.GetFloorManager().currentFloorReadOnly)
+    {
+      floorText.color = originalTextColor;
+      floorText.enabled = true;
+    }
+    else
+    {
+      floorText.color = originalTextColor;
+      floorText.enabled = false;
+    }
   }
 }

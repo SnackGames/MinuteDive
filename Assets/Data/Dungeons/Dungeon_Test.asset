@@ -14,43 +14,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonName: 
   floorContentData:
-  - targetFloorRange: {x: 1, y: 20}
+  - targetFloorRange: {x: 1, y: 60}
     requiredFloorContentCount:
     - contentType: 100
-      count: 15
+      count: 45
     - contentType: 0
-      count: 5
-  - targetFloorRange: {x: 21, y: 21}
+      count: 15
+  - targetFloorRange: {x: 61, y: 61}
     requiredFloorContentCount:
     - contentType: 999
       count: 1
   floorGenData:
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 60}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 9653d8e6faa6d7042a492733bed25011, type: 3}
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 60}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 2c68435655885ec4eac960da50f5b19e, type: 3}
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 60}
     validFloorEntranceTypes: 000000000200000003000000
     floorExitType: 1
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 918dacd02e799a84a9ba290be2f3104d, type: 3}
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 60}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 5d22493e55557fc45a833131a799c923, type: 3}
-  - validFloorRange: {x: 1, y: 20}
+  - validFloorRange: {x: 1, y: 60}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 353003ec292b62d40bb8fd0c74b997ce, type: 3}
-  - validFloorRange: {x: 21, y: 21}
+  - validFloorRange: {x: 61, y: 61}
     validFloorEntranceTypes: 00000000010000000200000003000000
     floorExitType: 1
     floorContentType: 999
