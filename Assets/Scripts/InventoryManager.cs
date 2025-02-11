@@ -51,6 +51,12 @@ public static class SaveLoadInventorySystem
 
     return invntoryData;
   }
+
+  public static void ResetInventory()
+  {
+    SaveInventory(new InventoryData());
+    LoadInventory();
+  }
 }
 
 public class InventoryManager : MonoBehaviour
@@ -132,6 +138,11 @@ public class InventoryManager : MonoBehaviour
   public void SaveInventory()
   {
     SaveLoadInventorySystem.SaveInventory(inventoryData);
+  }
+
+  public void ResetInventory()
+  {
+    SaveLoadInventorySystem.ResetInventory();
   }
 
   public void AddMoney(int amount)

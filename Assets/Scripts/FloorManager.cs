@@ -14,7 +14,7 @@ public static class SaveLoadFloorSubsystem
 {
   private static string floorSavePath = Application.persistentDataPath + "/floor.sav";
 
-  public static void SaveFloor(FloorData floorData)
+  public static void SaveFloorData(FloorData floorData)
   {
     BinaryFormatter formatter = new BinaryFormatter();
 
@@ -23,7 +23,7 @@ public static class SaveLoadFloorSubsystem
     stream.Close();
   }
 
-  public static FloorData LoadFloor()
+  public static FloorData LoadFloorData()
   {
     FloorData floorData = null;
 
@@ -41,6 +41,11 @@ public static class SaveLoadFloorSubsystem
     }
 
     return floorData;
+  }
+
+  public static void ResetFloorData()
+  {
+    SaveFloorData(new FloorData());
   }
 }
 
@@ -140,13 +145,19 @@ public class FloorManager : MonoBehaviour
     if(GetMaxFloor() < GetCurrentFloor())
     {
       SetMaxFloor(GetCurrentFloor());
-      SaveFloor();
+      SaveFloorData();
     }
   }
 
-  public void SaveFloor()
+  public void SaveFloorData()
   {
-    SaveLoadFloorSubsystem.SaveFloor(floorData);
+    SaveLoadFloorSubsystem.SaveFloorData(floorData);
+  }
+
+  public void ResetFloorData()
+  {
+    SaveLoadFloorSubsystem.ResetFloorData();
+    SaveLoadFloorSubsystem.LoadFloorData();
   }
 
   public void SetMaxFloor(int newmaxFloor)
@@ -163,7 +174,7 @@ public class FloorManager : MonoBehaviour
   private void Awake()
   {
     floorManagerSingleton = this;
-    floorData = SaveLoadFloorSubsystem.LoadFloor();
+    floorData = SaveLoadFloorSubsystem.LoadFloorData();
     floorDataReadOnly = floorData;
   }
   #endregion
