@@ -12,19 +12,21 @@ using System.Security.Cryptography;
 [RequireComponent(typeof(Collider2D))]
 public class DroppedItem : MonoBehaviour
 {
-  public float CollisionActivationDelay = 0.5f;
+  public float collisionActivationDelay = 0.5f;
   public float launchSpeed = 5.0f;
   public float launchRevolutions = 2.0f;
-  public Vector2 spawnedPosition = Vector2.zero;
-  public Vector2 dropTargetPosition = Vector2.zero;
+  public float moveToPlayerDelay = 5.0f;
+  [ReadOnly] public Vector2 spawnedPosition = Vector2.zero;
+  [ReadOnly] public Vector2 dropTargetPosition = Vector2.zero;
   [ReadOnly] public int droppedItemUID = -1;
   [ReadOnly] public bool droppedOnGround = false;
-  [ReadOnly] protected Rigidbody2D body;
-  [ReadOnly] protected Collider2D col;
+  [ReadOnly] public bool moveToPlayer = false;
+  protected Rigidbody2D body;
+  protected Collider2D col;
   private bool reservedPickupItem = false;
   private float estimatedTimeToDst = 0f;
-
   private float elapsedTimeAfterLaunch = 0f;
+  private float elapsedTimeAfterLand = 0f;
 
   private void Awake()
   {
@@ -51,7 +53,7 @@ public class DroppedItem : MonoBehaviour
 
   private IEnumerator ActivateCollider()
   {
-    yield return new WaitForSeconds(CollisionActivationDelay);
+    yield return new WaitForSeconds(collisionActivationDelay);
 
     if (col != null)
     {
@@ -61,23 +63,44 @@ public class DroppedItem : MonoBehaviour
 
   private void FixedUpdate()
   {
-    elapsedTimeAfterLaunch += Time.deltaTime;
-
-    // 목표 지점 도착 예상 시간 도달: 아이템 멈춤
-    if (!droppedOnGround && elapsedTimeAfterLaunch > estimatedTimeToDst)
+    if (!droppedOnGround)
     {
-      droppedOnGround = true;
-      transform.position = dropTargetPosition;
-      transform.rotation = Quaternion.identity;
-      body.velocity = Vector2.zero;
-      body.angularVelocity = 0;
-      body.bodyType = RigidbodyType2D.Kinematic;
-      // 습득 예약된 경우 바로 습득
-      if (reservedPickupItem)
+      elapsedTimeAfterLaunch += Time.deltaTime;
+
+      // 목표 지점 도착 예상 시간 도달: 아이템 멈춤
+      if (elapsedTimeAfterLaunch > estimatedTimeToDst)
       {
-        InventoryManager.GetInventory().PickupDropItem(this);
+        droppedOnGround = true;
+        transform.position = dropTargetPosition;
+        transform.rotation = Quaternion.identity;
+        body.velocity = Vector2.zero;
+        body.angularVelocity = 0;
+        body.bodyType = RigidbodyType2D.Kinematic;
+        // 습득 예약된 경우 바로 습득
+        if (reservedPickupItem)
+        {
+          InventoryManager.GetInventory().PickupDropItem(this);
+        }
+        return;
       }
-      return;
+    }
+    else
+    {
+      elapsedTimeAfterLand += Time.deltaTime;
+      if(elapsedTimeAfterLand > moveToPlayerDelay)
+      {
+        MoveToPlayer();
+      }
+    }
+
+    if (moveToPlayer)
+    {
+      float minSpeed = 1.5f;
+      float maxSpeed = 30.0f;
+      float distanceToPlayer = Vector2.Distance(transform.position, Player.Get.transform.position);
+      Debug.Log(distanceToPlayer);
+      float speed = Mathf.Lerp(minSpeed, maxSpeed, distanceToPlayer / 10.0f);
+      transform.position = Vector2.MoveTowards(transform.position, Player.Get.transform.position, speed * Time.deltaTime);
     }
   }
 
@@ -133,5 +156,10 @@ public class DroppedItem : MonoBehaviour
   {
     // launchRevolutions 바퀴 회전
     return (launchRevolutions * 360f) / estimatedTimeToDst;
+  }
+
+  public void MoveToPlayer()
+  {
+    moveToPlayer = true;
   }
 }

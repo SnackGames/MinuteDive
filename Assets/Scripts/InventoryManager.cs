@@ -200,8 +200,6 @@ public class InventoryManager : MonoBehaviour
 
   public void PickupDropItem(DroppedItem pickupItem)
   {
-    // #TODO_DROPITEM 플레이어에게 날아오게 하는 기능 구현
-
     UI_Item pickupItemUIScript = pickupItem.gameObject.GetComponentInChildren<UI_Item>();
     if (pickupItemUIScript == null)
     {
