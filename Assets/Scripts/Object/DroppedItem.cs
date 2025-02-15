@@ -84,12 +84,12 @@ public class DroppedItem : MonoBehaviour
         return;
       }
     }
-    else
+    else if (!moveToPlayer)
     {
       elapsedTimeAfterLand += Time.deltaTime;
       if(elapsedTimeAfterLand > moveToPlayerDelay)
       {
-        MoveToPlayer();
+        moveToPlayer = true;
       }
     }
 
@@ -98,7 +98,6 @@ public class DroppedItem : MonoBehaviour
       float minSpeed = 1.5f;
       float maxSpeed = 30.0f;
       float distanceToPlayer = Vector2.Distance(transform.position, Player.Get.transform.position);
-      Debug.Log(distanceToPlayer);
       float speed = Mathf.Lerp(minSpeed, maxSpeed, distanceToPlayer / 10.0f);
       transform.position = Vector2.MoveTowards(transform.position, Player.Get.transform.position, speed * Time.deltaTime);
     }
@@ -156,10 +155,5 @@ public class DroppedItem : MonoBehaviour
   {
     // launchRevolutions 바퀴 회전
     return (launchRevolutions * 360f) / estimatedTimeToDst;
-  }
-
-  public void MoveToPlayer()
-  {
-    moveToPlayer = true;
   }
 }
