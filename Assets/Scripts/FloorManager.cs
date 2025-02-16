@@ -1,8 +1,10 @@
 using Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class FloorData
@@ -49,6 +51,9 @@ public static class SaveLoadFloorSubsystem
   }
 }
 
+[Serializable]
+public class RegionChangeEvent : UnityEvent<string> { }
+
 public class FloorManager : MonoBehaviour
 {
   static private FloorManager floorManagerSingleton;
@@ -64,13 +69,34 @@ public class FloorManager : MonoBehaviour
   public DungeonData dungeonData;
   public int dungeonSeed = 0;
 
+  public RegionChangeEvent regionChangeEvent;
+
   private List<Floor> floorList = new List<Floor>();
 
   #region Public Methods
   static public int GetCurrentFloor() => currentFloor;
   static public int GetMaxFloor() => floorData.maxFloor;
-  public void IncrementCurrentFloor() { currentFloor++; currentFloorReadOnly++; }
   public void ResetCurrentFloor() { currentFloor = 0; currentFloorReadOnly = 0; }
+  public void IncrementCurrentFloor()
+  {
+    currentFloor++;
+    currentFloorReadOnly++;
+
+    if (dungeonData == null)
+    {
+      Debug.LogWarning("Dungeon Data is null.");
+      return;
+    }
+
+    foreach (FloorContentData floorContentData in dungeonData.floorContentData)
+    {
+      if (currentFloor == floorContentData.targetFloorRange.x)
+        regionChangeEvent.Invoke(floorContentData.regionName);
+
+      if (currentFloor < floorContentData.targetFloorRange.x)
+        break;
+    }
+  }
 
   public void GenerateFloors()
   {
@@ -91,7 +117,7 @@ public class FloorManager : MonoBehaviour
 
     // #TODO 조건 설명 추가할 것
     if (dungeonSeed < 1)
-      dungeonSeed = Random.Range(0, 10000);
+      dungeonSeed = UnityEngine.Random.Range(0, 10000);
 
     System.Random random = new System.Random(dungeonSeed);
 

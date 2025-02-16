@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using Unity.VisualScripting;
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -28,6 +26,7 @@ public struct FloorContentCountData
 [Serializable]
 public struct FloorContentData
 {
+  public string regionName;
   public Vector2Int targetFloorRange;
   public List<FloorContentCountData> requiredFloorContentCount;
 
