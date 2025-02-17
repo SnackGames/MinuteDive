@@ -15,51 +15,59 @@ MonoBehaviour:
   dungeonName: 
   floorContentData:
   - regionName: "\uCD08\uC6D0"
-    targetFloorRange: {x: 1, y: 3}
+    targetFloorRange: {x: 1, y: 20}
     requiredFloorContentCount:
     - contentType: 100
-      count: 2
+      count: 15
     - contentType: 0
-      count: 1
-  - regionName: "\uCD08\uC6D0 2"
-    targetFloorRange: {x: 4, y: 30}
+      count: 5
+  - regionName: "\uC0AC\uBC14\uB098"
+    targetFloorRange: {x: 21, y: 40}
     requiredFloorContentCount:
-    - contentType: 100
-      count: 24
     - contentType: 0
-      count: 3
+      count: 20
   - regionName: "\uBCF4\uC2A4"
-    targetFloorRange: {x: 31, y: 31}
+    targetFloorRange: {x: 41, y: 41}
     requiredFloorContentCount:
     - contentType: 999
       count: 1
   floorGenData:
-  - validFloorRange: {x: 1, y: 30}
+  - validFloorRange: {x: 1, y: 20}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 9653d8e6faa6d7042a492733bed25011, type: 3}
-  - validFloorRange: {x: 1, y: 30}
+  - validFloorRange: {x: 1, y: 20}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 2c68435655885ec4eac960da50f5b19e, type: 3}
-  - validFloorRange: {x: 1, y: 30}
+  - validFloorRange: {x: 1, y: 20}
     validFloorEntranceTypes: 000000000200000003000000
     floorExitType: 1
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 918dacd02e799a84a9ba290be2f3104d, type: 3}
-  - validFloorRange: {x: 1, y: 30}
+  - validFloorRange: {x: 1, y: 20}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 5d22493e55557fc45a833131a799c923, type: 3}
-  - validFloorRange: {x: 1, y: 30}
+  - validFloorRange: {x: 1, y: 20}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 353003ec292b62d40bb8fd0c74b997ce, type: 3}
-  - validFloorRange: {x: 31, y: 31}
+  - validFloorRange: {x: 21, y: 40}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 223f07842e676dd44a828f604f349a51, type: 3}
+  - validFloorRange: {x: 21, y: 40}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 7d8b7359dc0e2ee45a233ce8fa52db06, type: 3}
+  - validFloorRange: {x: 41, y: 41}
     validFloorEntranceTypes: 00000000010000000200000003000000
     floorExitType: 1
     floorContentType: 999
