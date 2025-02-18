@@ -14,6 +14,8 @@ namespace UI
     public void SetItemData(ItemData newItemData)
     {
       itemData = newItemData;
+
+      // #TODO_ITEM newItemData에 따라 아이템 이미지 적용
     }
   }
 }
