@@ -7,6 +7,9 @@ using GameMode;
 using AYellowpaper.SerializedCollections;
 using Data;
 using UI;
+using System.Collections;
+using System.Net.NetworkInformation;
+using Unity.Burst.CompilerServices;
 
 namespace Unit
 {
@@ -441,6 +444,19 @@ namespace Unit
           }
         }
       }
+    }
+
+    public bool CanBeHit()
+    {
+      switch (playerState)
+      {
+        case PlayerStateType.Move:
+        case PlayerStateType.Attack:
+        case PlayerStateType.FallAttack:
+          return true;
+      }
+
+      return false;
     }
 
     public void OnRemainTimeExpired()

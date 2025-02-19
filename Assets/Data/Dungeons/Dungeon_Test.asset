@@ -67,6 +67,11 @@ MonoBehaviour:
     floorExitType: 0
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 7d8b7359dc0e2ee45a233ce8fa52db06, type: 3}
+  - validFloorRange: {x: 21, y: 40}
+    validFloorEntranceTypes: 000000000200000003000000
+    floorExitType: 1
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 2fe8c4586d7d7e34cbeb9f14f5f9a46e, type: 3}
   - validFloorRange: {x: 41, y: 41}
     validFloorEntranceTypes: 00000000010000000200000003000000
     floorExitType: 1

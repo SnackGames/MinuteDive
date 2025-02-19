@@ -2110,8 +2110,8 @@ Tilemap:
   - first: {x: -7, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2120,8 +2120,8 @@ Tilemap:
   - first: {x: -6, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2130,8 +2130,8 @@ Tilemap:
   - first: {x: -5, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2140,8 +2140,8 @@ Tilemap:
   - first: {x: -4, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2170,8 +2170,8 @@ Tilemap:
   - first: {x: 2, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2180,8 +2180,8 @@ Tilemap:
   - first: {x: 3, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2190,8 +2190,8 @@ Tilemap:
   - first: {x: 4, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2200,8 +2200,8 @@ Tilemap:
   - first: {x: 5, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2209,19 +2209,23 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 34272e569ebc63b42bd1f094d0a153d0, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 9149a3714ced48e47911eee956d8a196, type: 2}
   - m_RefCount: 8
-    m_Data: {fileID: 11400000, guid: c13ca1537446e9149888cd1b0cbf0a8f, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 963f4413b2177d542b4ee21bf5550fe6, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 774498a13ed32b945af3f518736ef8b2, type: 2}
+    m_Data: {fileID: 11400000, guid: f8c68403dc689744ca3b5115fa4772ad, type: 2}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1602809512, guid: 021d0d25a6bb4f7449d93316cf894349, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 607378349, guid: 021d0d25a6bb4f7449d93316cf894349, type: 3}
   - m_RefCount: 8
-    m_Data: {fileID: -278996264, guid: 021d0d25a6bb4f7449d93316cf894349, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -1240830461, guid: 021d0d25a6bb4f7449d93316cf894349, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -1993787284, guid: 021d0d25a6bb4f7449d93316cf894349, type: 3}
+    m_Data: {fileID: -1512083089, guid: 021d0d25a6bb4f7449d93316cf894349, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 10
     m_Data:
@@ -2501,7 +2505,7 @@ GameObject:
   - component: {fileID: 4208330790189373736}
   - component: {fileID: 378763587363262142}
   m_Layer: 0
-  m_Name: Floor_Grass_3
+  m_Name: Floor_Savana_Empty_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
