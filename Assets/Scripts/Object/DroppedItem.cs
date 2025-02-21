@@ -44,7 +44,6 @@ public class DroppedItem : MonoBehaviour
     StartCoroutine(ActivateCollider());
 
     // dropTargetPosition 위치에 도달할 수 있도록 발사
-    body.gravityScale = 1.0f;
     body.velocity = CalculateLaunchVelocity(spawnedPosition, dropTargetPosition, launchSpeed);
 
     // dropTargetPosition 위치에 도달했을 때 기준으로 0도가 될 수 있도록 계산
@@ -86,6 +85,7 @@ public class DroppedItem : MonoBehaviour
     }
     else if (!moveToPlayer)
     {
+      // 드랍된 지 일정 시간이 지나면 플레이어에게 자동으로 날아감.
       elapsedTimeAfterLand += Time.deltaTime;
       if(elapsedTimeAfterLand > moveToPlayerDelay)
       {
@@ -139,7 +139,7 @@ public class DroppedItem : MonoBehaviour
     if (src.y != dst.y)
       return Vector2.up * launchSpeed;
 
-    float g = Mathf.Abs(Physics2D.gravity.y);
+    float g = Mathf.Abs(Physics2D.gravity.y) * body.gravityScale;
     float dx = dst.x - src.x;
     float dy = dst.y - src.y;
 
