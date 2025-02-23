@@ -62,6 +62,7 @@ MonoBehaviour:
   isMonsterActive: 0
   behaviourType: 0
   attackRigidbody: {fileID: 1210655502287976677}
+  sprite: {fileID: 6078355656400996763}
 --- !u!114 &9053960069349167447
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ namespace Unit
 
   [RequireComponent(typeof(Health))]
   [RequireComponent(typeof(Animator))]
-  [RequireComponent(typeof(SpriteRenderer))]
   public class Monster : KinematicObject
   {
     public MonsterData monsterData;
@@ -34,17 +33,16 @@ namespace Unit
 
     [Header("Component Links")]
     public Rigidbody2D attackRigidbody;
+    public SpriteRenderer sprite;
 
     protected Health health;
     protected Animator anim;
-    protected SpriteRenderer sprite;
 
     private ContactFilter2D attackFilter;
     private Collider2D[] hitColliders = new Collider2D[1];
 
     protected virtual void OnValidate()
     {
-      sprite = GetComponent<SpriteRenderer>();
       SetLookingDirection(isLookingRight, true);
     }
 
@@ -55,7 +53,6 @@ namespace Unit
       health = GetComponent<Health>();
       anim = GetComponent<Animator>();
       health.SetHP(monsterData.monsterHP);
-      sprite = GetComponent<SpriteRenderer>();
 
       if (attackRigidbody)
       {

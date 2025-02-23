@@ -50,7 +50,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 7
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -119,13 +119,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159c8ced64493d545ab21435db32d982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionActivationDelay: 0.5
-  launchSpeed: 5
-  launchRevolutions: 2
+  collisionActivationDelay: 0.3
+  launchSpeed: 15
+  launchRevolutions: 0.5
+  moveToPlayerDelay: 2
   spawnedPosition: {x: 0, y: 0}
   dropTargetPosition: {x: 0, y: 0}
   droppedItemUID: -1
   droppedOnGround: 0
+  moveToPlayer: 0
 --- !u!1001 &5859081391775504575
 PrefabInstance:
   m_ObjectHideFlags: 0
