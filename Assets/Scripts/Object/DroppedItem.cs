@@ -1,12 +1,6 @@
-using Data;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using Unit;
-using static UnityEngine.GraphicsBuffer;
-using Unity.VisualScripting;
-using System.Security.Cryptography;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]

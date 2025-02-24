@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Progress;
 
 [RequireComponent(typeof(Health))]
 public class FragileObject : MonoBehaviour
@@ -12,7 +13,7 @@ public class FragileObject : MonoBehaviour
   { 
     if (health <= 0)
     {
-      InventoryManager.GetInventory()?.AddMoney(1);
+      GameObject itemUIObject = InventoryManager.GetInventory().CreateDropMoney(1, transform.position, transform.position);
 
       Destroy(gameObject);
     }

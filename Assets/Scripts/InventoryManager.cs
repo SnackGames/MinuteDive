@@ -11,6 +11,7 @@ using System;
 using Unity.VisualScripting;
 using System.Linq;
 using System.Collections;
+using static UnityEditor.Progress;
 
 [System.Serializable]
 public class InventoryData
@@ -65,6 +66,7 @@ public class InventoryManager : MonoBehaviour
   static public InventoryManager GetInventory() { return inventorySingleton; }
 
   public GameObject droppedItemPrefab;
+  public GameObject droppedMoneyPrefab;
   [ReadOnly] public InventoryData inventoryData;
   [ReadOnly] public List<ItemData> itemDataList;
   [ReadOnly] public List<GameObject> droppedItemList;
@@ -198,6 +200,30 @@ public class InventoryManager : MonoBehaviour
     return droppedItemObject;
   }
 
+  public GameObject CreateDropMoney(int money, Vector2 spawnPosition, Vector2 dropTargetPosition)
+  {
+    GameObject droppedMoneyObject = Instantiate(droppedMoneyPrefab);
+    UI_Item itemUIScript = droppedMoneyObject.GetComponentInChildren<UI_Item>();
+    if (itemUIScript == null)
+    {
+      Debug.LogError("CreateDropMoney: Cannot Find UI_Item Script!");
+      return null;
+    }
+
+    DroppedItem droppedItemScript = droppedMoneyObject.GetComponent<DroppedItem>();
+    if (droppedItemScript == null)
+    {
+      Debug.LogError("CreateDropMoney: Cannot Find DroppedItem Script!");
+      return null;
+    }
+
+    itemUIScript.SetMoneyData(money);
+    droppedItemScript.spawnedPosition = spawnPosition;
+    droppedItemScript.dropTargetPosition = dropTargetPosition;
+    droppedItemList.Add(droppedMoneyObject);
+    return droppedMoneyObject;
+  }
+
   public void PickupDropItem(DroppedItem pickupItem)
   {
     UI_Item pickupItemUIScript = pickupItem.gameObject.GetComponentInChildren<UI_Item>();
@@ -208,14 +234,21 @@ public class InventoryManager : MonoBehaviour
       return;
     }
 
-    for (int i = 0; i < inventoryData.items.Length; ++i)
+    if (pickupItemUIScript.isMoney)
     {
-      if (inventoryData.items[i] == 0)
+      AddMoney(pickupItemUIScript.money);
+    }
+    else
+    {
+      for (int i = 0; i < inventoryData.items.Length; ++i)
       {
-        Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
-        inventoryData.items[i] = pickupItemUIScript.itemData.itemID;
-        AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
-        break;
+        if (inventoryData.items[i] == 0)
+        {
+          Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
+          inventoryData.items[i] = pickupItemUIScript.itemData.itemID;
+          AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
+          break;
+        }
       }
     }
 

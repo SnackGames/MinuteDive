@@ -5427,6 +5427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droppedItemPrefab: {fileID: 1546807284595003136, guid: 1ab91c553c9bbb046b7bf29688e1e97d, type: 3}
+  droppedMoneyPrefab: {fileID: 1546807284595003136, guid: aaa4f1f192de7d24b85133a1e3c12e08, type: 3}
   inventoryData:
     money: 0
     items: 
