@@ -71,6 +71,7 @@ public class InventoryManager : MonoBehaviour
   [ReadOnly] public InventoryData inventoryData;
   [ReadOnly] public List<ItemData> itemDataList;
   [ReadOnly] public List<GameObject> droppedItemList;
+  [ReadOnly] public int gainedMoneyThisRun = 0;
 
   private int droppedItemUID = 0;
   private AsyncOperationHandle<IList<ItemData>> loadHandle;
@@ -148,8 +149,14 @@ public class InventoryManager : MonoBehaviour
     SaveLoadInventorySystem.ResetInventory();
   }
 
+  public void ResetThisRunData()
+  {
+    gainedMoneyThisRun = 0;
+  }
+
   public void AddMoney(int amount)
   {
+    gainedMoneyThisRun += amount;
     inventoryData.money += amount;
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
   }
