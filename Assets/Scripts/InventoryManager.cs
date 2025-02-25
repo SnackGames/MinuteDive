@@ -198,6 +198,7 @@ public class InventoryManager : MonoBehaviour
     droppedItemScript.spawnedPosition = spawnPosition;
     droppedItemScript.dropTargetPosition = dropTargetPosition;
     droppedItemList.Add(droppedItemObject);
+    droppedItemObject.transform.position = spawnPosition;
     return droppedItemObject;
   }
 
@@ -222,6 +223,7 @@ public class InventoryManager : MonoBehaviour
     droppedItemScript.spawnedPosition = spawnPosition;
     droppedItemScript.dropTargetPosition = dropTargetPosition;
     droppedItemList.Add(droppedMoneyObject);
+    droppedMoneyObject.transform.position = spawnPosition;
     return droppedMoneyObject;
   }
 

@@ -245,8 +245,6 @@ namespace Unit
         Debug.LogError("Failed to Create Drop Item! itemId: " + itemID);
         return;
       }
-
-      itemUIObject.transform.position = transform.position;
     }
   }
 }
