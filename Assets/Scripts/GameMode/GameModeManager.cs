@@ -34,7 +34,8 @@ public class GameModeManager : MonoBehaviour
     if (RegionName == "Lobby")
     {
       SetGameMode(GameModeType.Lobby);
-      FloorManager.GetFloorManager().ResetCurrentFloor();
+      FloorManager.GetFloorManager()?.ResetCurrentFloor();
+      InventoryManager.GetInventory()?.ResetThisRunData();
     }
     else if(RegionName == "Clear")
     {

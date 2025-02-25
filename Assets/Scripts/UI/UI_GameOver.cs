@@ -10,6 +10,7 @@ public class GameOverEvent : UnityEvent {}
 public class UI_GameOver : MonoBehaviour
 {
   public GameObject gameOverUI;
+  public TextMeshProUGUI collectedMoneyText;
   public GameOverEvent OnOpenGameOver;
   public GameOverEvent OnCloseGameOver;
 
@@ -34,6 +35,9 @@ public class UI_GameOver : MonoBehaviour
 
     gameOverUI.SetActive(show);
     SetFloorText(FloorManager.GetCurrentFloor(), FloorManager.GetMaxFloor());
+
+    if (show)
+      collectedMoneyText.SetText(InventoryManager.GetInventory()?.gainedMoneyThisRun.ToString());
   }
 
   public void OnSetGameMode(GameModeType Type)
