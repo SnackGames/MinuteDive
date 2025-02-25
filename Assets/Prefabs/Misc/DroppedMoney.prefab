@@ -123,6 +123,7 @@ MonoBehaviour:
   launchSpeed: 15
   launchRevolutions: 0.5
   moveToPlayerDelay: 2
+  lootSound: coin
   spawnedPosition: {x: 0, y: 0}
   dropTargetPosition: {x: 0, y: 0}
   droppedItemUID: -1

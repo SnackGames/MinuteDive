@@ -4477,6 +4477,10 @@ MonoBehaviour:
       Value: {fileID: 8300000, guid: 505175ef0df22db48a159a5466bc172a, type: 3}
     - Key: damage
       Value: {fileID: 8300000, guid: d2cf33100925a5c4cbb41fa25a5672df, type: 3}
+    - Key: coin
+      Value: {fileID: 8300000, guid: 4c20a78d4592cb34f8b78532e767324b, type: 3}
+    - Key: item
+      Value: {fileID: 8300000, guid: 91107ca050f0903428bbbe562203ab6b, type: 3}
   playerCamera: {fileID: 519420033}
   attackRigidbody: {fileID: 264269638}
   fallAttackRigidbody: {fileID: 1815054033}

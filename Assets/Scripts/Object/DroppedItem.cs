@@ -10,6 +10,8 @@ public class DroppedItem : MonoBehaviour
   public float launchSpeed = 5.0f;
   public float launchRevolutions = 2.0f;
   public float moveToPlayerDelay = 5.0f;
+  public string lootSound = "";
+  
   [ReadOnly] public Vector2 spawnedPosition = Vector2.zero;
   [ReadOnly] public Vector2 dropTargetPosition = Vector2.zero;
   [ReadOnly] public int droppedItemUID = -1;

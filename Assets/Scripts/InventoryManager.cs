@@ -12,6 +12,7 @@ using Unity.VisualScripting;
 using System.Linq;
 using System.Collections;
 using static UnityEditor.Progress;
+using Unit;
 
 [System.Serializable]
 public class InventoryData
@@ -250,6 +251,11 @@ public class InventoryManager : MonoBehaviour
           break;
         }
       }
+    }
+
+    if (pickupItem.lootSound != string.Empty)
+    {
+      Player.Get?.AnimTrigger_PlaySound(pickupItem.lootSound);
     }
 
     ClearDroppedItem(pickupItem.droppedItemUID);
