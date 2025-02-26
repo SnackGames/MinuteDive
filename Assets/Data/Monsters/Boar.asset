@@ -15,6 +15,6 @@ MonoBehaviour:
   monsterName: Boar
   monsterHP: 7
   monsterDamage: 10
-  monsterMoveSpeed: 30
+  monsterMoveSpeed: 15
   monsterMoveAcceleration: 10
   monsterWaitTime: 1
