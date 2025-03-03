@@ -243,13 +243,15 @@ namespace Unit
 
       if (hp <= 0)
       {
-        DropItem(-1);
+        DropItem(InventoryManager.DrawDropItem(monsterData.monsterDropData));
         Destroy(gameObject);
       }
     }
 
     public void DropItem(int itemID)
     {
+      if (itemID == 0) return;
+
       GameObject itemUIObject = InventoryManager.GetInventory().CreateDropItem(itemID, transform.position, transform.position);
       if (itemUIObject == null)
       {

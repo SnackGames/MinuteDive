@@ -18,3 +18,8 @@ MonoBehaviour:
   monsterMoveSpeed: 20
   monsterMoveAcceleration: 10
   monsterWaitTime: 1
+  monsterDropData:
+  - itemID: 0
+    drawingLotCount: 2
+  - itemID: 1
+    drawingLotCount: 1

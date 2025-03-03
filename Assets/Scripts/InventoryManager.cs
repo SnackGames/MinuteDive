@@ -4,14 +4,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
 using System.Collections.Generic;
 using Data;
-using System;
-using Unity.VisualScripting;
 using System.Linq;
 using System.Collections;
-using static UnityEditor.Progress;
 using Unit;
 
 [System.Serializable]
@@ -163,6 +159,8 @@ public class InventoryManager : MonoBehaviour
 
   public ItemData GetItemData(int itemID)
   {
+    if (itemID == 0) return null;
+
     foreach (ItemData itemData in itemDataList)
     {
       if (itemData.itemID == itemID)
@@ -176,6 +174,8 @@ public class InventoryManager : MonoBehaviour
 
   public GameObject CreateDropItem(int itemID, Vector2 spawnPosition, Vector2 dropTargetPosition)
   {
+    if (itemID == 0) return null;
+
     ItemData dropItemData = GetItemData(itemID);
     if (dropItemData == null)
     {
@@ -232,6 +232,22 @@ public class InventoryManager : MonoBehaviour
     droppedItemList.Add(droppedMoneyObject);
     droppedMoneyObject.transform.position = spawnPosition;
     return droppedMoneyObject;
+  }
+
+  static public int DrawDropItem(List<DropData> dropDataList)
+  {
+    int totalLotCount = 0;
+    foreach (DropData dropData in dropDataList)
+      totalLotCount += dropData.drawingLotCount;
+
+    int drawnLot = Random.Range(0, totalLotCount);
+    foreach (DropData dropData in dropDataList)
+    {
+      drawnLot -= dropData.drawingLotCount;
+      if (drawnLot < 0) return dropData.itemID;
+    }
+
+    return 0;
   }
 
   public void PickupDropItem(DroppedItem pickupItem)

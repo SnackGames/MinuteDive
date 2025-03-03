@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Data
 {
@@ -11,5 +12,6 @@ namespace Data
     public float monsterMoveSpeed = 10.0f;
     public float monsterMoveAcceleration = 10.0f;
     public float monsterWaitTime = 1.0f;
+    public List<DropData> monsterDropData;
   }
 }

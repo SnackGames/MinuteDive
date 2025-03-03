@@ -23,12 +23,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Items
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5833796d0e95ce448bc6dcfad1d7cdf8
-    m_Address: Assets/Data/Items/TestItem_1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Items
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 37f4f0828224758489b4827aadcaf1e7, type: 2}
   m_SchemaSet:
