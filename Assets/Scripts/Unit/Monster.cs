@@ -66,7 +66,19 @@ namespace Unit
 
     protected override void FixedUpdate()
     {
+      MonsterBehaviourType prevBehaviourType = behaviourType;
       ProcessBehaviour();
+      if (prevBehaviourType != behaviourType)
+      {
+        switch (behaviourType)
+        {
+          case MonsterBehaviourType.Idle:
+          case MonsterBehaviourType.Wait: anim?.SetTrigger("Idle"); break;
+          case MonsterBehaviourType.Pursue: anim?.SetTrigger("Pursue"); break;
+          case MonsterBehaviourType.Attack: anim?.SetTrigger("Attack"); break;
+        }
+      }
+
       ProcessAnimation();
       base.FixedUpdate();
     }
@@ -160,7 +172,6 @@ namespace Unit
       }
 
       isInAttackState = true;
-      anim?.SetTrigger("Attack");
       behaviourType = MonsterBehaviourType.Attack;
       velocity = new Vector2(0.0f, velocity.y); // 공격 시 몬스터 강제 멈춤
     }

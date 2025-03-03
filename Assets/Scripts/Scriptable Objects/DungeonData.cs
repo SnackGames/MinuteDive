@@ -9,6 +9,7 @@ using UnityEditor;
 [Serializable]
 public struct FloorGenData
 {
+  public string floorGenComment;
   public Vector2Int validFloorRange;
   public List<FloorExitType> validFloorEntranceTypes;
   public FloorExitType floorExitType;
