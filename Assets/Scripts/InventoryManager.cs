@@ -159,7 +159,7 @@ public class InventoryManager : MonoBehaviour
 
   public ItemData GetItemData(int itemID)
   {
-    if (itemID == 0) return null;
+    if (itemID == 0) return ScriptableObject.CreateInstance<ItemData>();
 
     foreach (ItemData itemData in itemDataList)
     {
@@ -169,7 +169,7 @@ public class InventoryManager : MonoBehaviour
       }
     }
     Debug.LogError("GetItemData: Failed to Get ItemData for ItemID: " + itemID);
-    return null;
+    return ScriptableObject.CreateInstance<ItemData>();
   }
 
   public GameObject CreateDropItem(int itemID, Vector2 spawnPosition, Vector2 dropTargetPosition)

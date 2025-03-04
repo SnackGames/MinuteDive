@@ -35,11 +35,13 @@ namespace UI
       int count = items.Length;
       for (int i = 0; i < count; ++i)
       {
-        // #TODO_ITEM 인벤토리 아이템용 프리팹 추가
-        // #TODO_ITEM 인벤토리 아이템에 아이템 정보 적용
         // #TODO_ITEM 인벤토리 아이템 클릭 시 아이템 장착/해제
-        Image image = itemGrid.transform.GetChild(i).GetComponent<Image>();
-        image.color = items[i] != 0 ? Color.red : Color.white;
+        UI_InventoryItem inventoryItem = itemGrid.transform.GetChild(i).GetComponent<UI_InventoryItem>();
+        if(inventoryItem != null)
+        {
+          UI_Item itemUI = inventoryItem.GetComponentInChildren<UI_Item>();
+          itemUI.SetItemData(InventoryManager.GetInventory().GetItemData(items[i]));
+        }
       }
     }
   }

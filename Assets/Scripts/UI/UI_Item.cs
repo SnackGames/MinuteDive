@@ -1,5 +1,6 @@
 using Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -16,7 +17,12 @@ namespace UI
       isMoney = false;
       itemData = newItemData;
 
-      // #TODO_ITEM newItemData에 따라 아이템 이미지 적용
+      // newItemData에 따라 아이템 이미지 적용
+      if (newItemData.itemSprite != null)
+      {
+        Image image = gameObject.GetComponent<Image>();
+        image.sprite = newItemData.itemSprite;
+      }
     }
 
     public void SetMoneyData(int newMoney)
