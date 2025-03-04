@@ -67,7 +67,8 @@ public class InventoryManager : MonoBehaviour
   [ReadOnly] public InventoryData inventoryData;
   [ReadOnly] public List<ItemData> itemDataList;
   [ReadOnly] public List<GameObject> droppedItemList;
-  [ReadOnly] public int gainedMoneyThisRun = 0;
+  [ReadOnly] public int lootedMoneyThisRun = 0;
+  [ReadOnly] public List<ItemData> lootedItemsThisRun;
 
   private int droppedItemUID = 0;
   private AsyncOperationHandle<IList<ItemData>> loadHandle;
@@ -147,12 +148,13 @@ public class InventoryManager : MonoBehaviour
 
   public void ResetThisRunData()
   {
-    gainedMoneyThisRun = 0;
+    lootedMoneyThisRun = 0;
+    lootedItemsThisRun = new List<ItemData>();
   }
 
   public void AddMoney(int amount)
   {
-    gainedMoneyThisRun += amount;
+    lootedMoneyThisRun += amount;
     inventoryData.money += amount;
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
   }
@@ -273,6 +275,7 @@ public class InventoryManager : MonoBehaviour
           Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
           inventoryData.items[i] = pickupItemUIScript.itemData.itemID;
           AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
+          lootedItemsThisRun.Add(pickupItemUIScript.itemData);
           break;
         }
       }

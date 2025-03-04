@@ -17,7 +17,7 @@ MonoBehaviour:
   monsterDamage: 5
   monsterMoveSpeed: 20
   monsterMoveAcceleration: 10
-  monsterWaitTime: 1
+  monsterWaitTime: 0.7
   monsterDropData:
   - itemID: 0
     drawingLotCount: 2

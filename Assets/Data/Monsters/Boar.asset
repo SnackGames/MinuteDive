@@ -17,4 +17,5 @@ MonoBehaviour:
   monsterDamage: 10
   monsterMoveSpeed: 10
   monsterMoveAcceleration: 15
-  monsterWaitTime: 1
+  monsterWaitTime: 0.7
+  monsterDropData: []

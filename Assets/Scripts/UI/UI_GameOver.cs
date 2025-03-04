@@ -10,7 +10,11 @@ public class GameOverEvent : UnityEvent {}
 public class UI_GameOver : MonoBehaviour
 {
   public GameObject gameOverUI;
-  public TextMeshProUGUI collectedMoneyText;
+  public TextMeshProUGUI lootedMoneyText;
+  public Transform lootedItemPanel;
+
+  public GameObject itemUIPrefab; 
+
   public GameOverEvent OnOpenGameOver;
   public GameOverEvent OnCloseGameOver;
 
@@ -37,7 +41,14 @@ public class UI_GameOver : MonoBehaviour
     SetFloorText(FloorManager.GetCurrentFloor(), FloorManager.GetMaxFloor());
 
     if (show)
-      collectedMoneyText.SetText(InventoryManager.GetInventory()?.gainedMoneyThisRun.ToString());
+    {
+      lootedMoneyText?.SetText(InventoryManager.GetInventory()?.lootedMoneyThisRun.ToString());
+
+      // #TODO UI 코드 생성 테스트
+      GameObject lootedItem = Instantiate(itemUIPrefab, lootedItemPanel);
+      lootedItem = Instantiate(itemUIPrefab, lootedItemPanel);
+      lootedItem = Instantiate(itemUIPrefab, lootedItemPanel);
+    }
   }
 
   public void OnSetGameMode(GameModeType Type)
