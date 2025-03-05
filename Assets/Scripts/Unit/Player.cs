@@ -36,6 +36,7 @@ namespace Unit
   [RequireComponent(typeof(Animator))]
   [RequireComponent(typeof(SpriteRenderer))]
   [RequireComponent(typeof(AudioSource))]
+  [RequireComponent(typeof(PlayerStat))]
   public class Player : KinematicObject
   {
     [Header("Input")]
@@ -77,12 +78,14 @@ namespace Unit
     public ParticleSystem dashEffect;
     public SpriteRenderer glowSprite;
 
+    [Header("Stat")]
+    protected PlayerStat playerStat;
+
     protected Animator anim;
     protected SpriteRenderer sprite;
     protected AudioSource sound;
 
     // #TODO_ITEM 장착중인 아이템 정보 추가
-    // #TODO_ITEM 스탯 개념 추가(공격력, 방어력)
 
     static private Player player;
     static public Player Get
@@ -95,6 +98,8 @@ namespace Unit
       base.Awake();
 
       player = this;
+
+      playerStat = GetComponent<PlayerStat>();
 
       anim = GetComponent<Animator>();
       sprite = GetComponent<SpriteRenderer>();
