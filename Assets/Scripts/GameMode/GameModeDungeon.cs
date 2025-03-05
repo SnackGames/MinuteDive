@@ -28,8 +28,9 @@ public class GameModeDungeon : GameModeBase
       return;
     }
 
-    TimeManager.GetTimeManager().ReduceTime(damage);
-    AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(-damage);
+    float finalDamage = damage - player.playerStat.GetStatValue(StatType.Defense);
+    TimeManager.GetTimeManager().ReduceTime(finalDamage);
+    AssetReferenceManager.GetAssetReferences().remainTime.OnTimeChanged(-finalDamage);
 
     if (TimeManager.GetRemainTime() > 0)
     {

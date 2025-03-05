@@ -429,7 +429,8 @@ namespace Unit
           Health health = hitColliders[i].gameObject.GetComponent<Health>();
           if (health != null && !hitObjects.Contains(health.gameObject))
           {
-            health.OnHit(1);
+            int finalDamage = Mathf.FloorToInt(playerStat.GetStatValue(StatType.Attack));
+            health.OnHit(finalDamage);
             hitObjects.Add(health.gameObject);
           }
         }
@@ -444,7 +445,8 @@ namespace Unit
           Health health = hitColliders[i].gameObject.GetComponent<Health>();
           if (health != null && !hitObjects.Contains(health.gameObject))
           {
-            health.OnHit(1);
+            int finalDamage = Mathf.FloorToInt(playerStat.GetStatValue(StatType.Attack));
+            health.OnHit(finalDamage);
             hitObjects.Add(health.gameObject);
           }
         }

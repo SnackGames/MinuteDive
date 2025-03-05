@@ -5454,6 +5454,7 @@ MonoBehaviour:
   fallAttackRigidbody: {fileID: 1815054033}
   dashEffect: {fileID: 1014393110}
   glowSprite: {fileID: 441041542}
+  playerStat: {fileID: 0}
   isReservedDashDirectionRight: 0
 --- !u!212 &1268439482
 SpriteRenderer:
@@ -6230,7 +6231,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   remainTimeReadOnly: 0
   currentTimeScaleReadOnly: 0
-  initialRemainTime: 10
   initialTimeScale: 1
   OnRemainTimeExpired:
     m_PersistentCalls:
