@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 public class UI_InventoryItem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  public void SetItemData(Data.ItemData itemData)
+  {
+    GetComponentInChildren<UI_Item>()?.SetItemData(itemData);
+  }
 }

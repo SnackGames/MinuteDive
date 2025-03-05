@@ -1095,7 +1095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverUI: {fileID: 1810105426}
-  lootedMoneyText: {fileID: 1715543282}
+  lootedMoneyText: {fileID: 952301029}
   lootedItemPanel: {fileID: 303977638}
   itemUIPrefab: {fileID: 2797900222789840403, guid: fcca4649429421748b894d2af262278d, type: 3}
   OnOpenGameOver:

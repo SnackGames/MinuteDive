@@ -1,6 +1,7 @@
 using GameMode;
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -44,10 +45,11 @@ public class UI_GameOver : MonoBehaviour
     {
       lootedMoneyText?.SetText(InventoryManager.GetInventory()?.lootedMoneyThisRun.ToString());
 
-      // #TODO UI 코드 생성 테스트
-      GameObject lootedItem = Instantiate(itemUIPrefab, lootedItemPanel);
-      lootedItem = Instantiate(itemUIPrefab, lootedItemPanel);
-      lootedItem = Instantiate(itemUIPrefab, lootedItemPanel);
+      foreach (Transform child in lootedItemPanel)
+        Destroy(child.gameObject);
+
+      foreach (Data.ItemData itemData in InventoryManager.GetInventory()?.lootedItemsThisRun)
+        Instantiate(itemUIPrefab, lootedItemPanel)?.GetComponent<UI_InventoryItem>()?.SetItemData(itemData);
     }
   }
 
