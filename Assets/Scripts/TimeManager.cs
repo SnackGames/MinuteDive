@@ -12,7 +12,6 @@ public class TimeManager : MonoBehaviour
   [Header("TimeManager")]
   [ReadOnly] public float remainTimeReadOnly = 0.0f;
   [ReadOnly] public float currentTimeScaleReadOnly = 0.0f;
-  public float initialRemainTime = 30.0f;
   public float initialTimeScale = 1.0f;
   public UnityEvent OnRemainTimeExpired;
   public UnityEvent OnTimeScaleChanged;

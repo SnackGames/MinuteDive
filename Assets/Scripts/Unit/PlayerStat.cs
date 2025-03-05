@@ -15,7 +15,7 @@ public enum StatType
   // 피해 입을 시 줄어드는 시간 감소
   Defense,
 
-  // #TODO_STAT 게임 시작 시 주어지는 시간 이전하기
+  // 게임 시작 시 주어지는 시간
   InitialRemainTime,
 }
 

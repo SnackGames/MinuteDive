@@ -10,7 +10,9 @@ public class GameModeDungeon : GameModeBase
   public override void StartGameMode()
   {
     base.StartGameMode();
-    TimeManager.GetTimeManager().StartTimer(TimeManager.GetTimeManager().initialRemainTime);
+
+    Player player = Player.Get;
+    TimeManager.GetTimeManager().StartTimer(player.playerStat.GetStatValue(StatType.InitialRemainTime));
   }
   public override void FinishGameMode()
   {

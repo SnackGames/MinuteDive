@@ -79,7 +79,7 @@ namespace Unit
     public SpriteRenderer glowSprite;
 
     [Header("Stat")]
-    protected PlayerStat playerStat;
+    public PlayerStat playerStat;
 
     protected Animator anim;
     protected SpriteRenderer sprite;
