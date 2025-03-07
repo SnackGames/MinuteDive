@@ -10,6 +10,7 @@ using UI;
 using System.Collections;
 using System.Net.NetworkInformation;
 using Unity.Burst.CompilerServices;
+using System.Linq;
 
 namespace Unit
 {
@@ -81,11 +82,12 @@ namespace Unit
     [Header("Stat")]
     public PlayerStat playerStat;
 
+    [Header("Equipped Items")]
+    public HashSet<int> equippedItems = new HashSet<int>();
+
     protected Animator anim;
     protected SpriteRenderer sprite;
     protected AudioSource sound;
-
-    // #TODO_ITEM 장착중인 아이템 정보 추가
 
     static private Player player;
     static public Player Get
@@ -494,6 +496,16 @@ namespace Unit
           if (playerState == PlayerStateType.Dying) userStateChangeData.reserveMove(true);
           break;
       }
+    }
+
+    public void EquipItems(HashSet<int> equipItems)
+    {
+      equippedItems.UnionWith(equipItems);
+    }
+
+    public void UnequipItems(HashSet<int> removeItems)
+    {
+      equippedItems.ExceptWith(removeItems);
     }
   }
 }

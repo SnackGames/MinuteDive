@@ -84,7 +84,7 @@ public class InventoryManager : MonoBehaviour
 
     inventoryData = SaveLoadInventorySystem.LoadInventory();
 
-    // 임시로, 게임을 재실행할 때마다 아이템 초기화
+    // #TODO_ITEM 게임을 재실행해도 아이템 유지
     inventoryData.items = new int[16];
     AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
     AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
@@ -306,5 +306,16 @@ public class InventoryManager : MonoBehaviour
       Destroy(droppedItemList[targetIndex]);
       droppedItemList.RemoveAt(targetIndex);
     }
+  }
+
+  public void EquipItems(HashSet<int> equipItems)
+  {
+    Player.Get.EquipItems(equipItems);
+
+    // #TODO_ITEM 선택되지 않은 아이템을 장착 목록에서 제거
+  }
+  public void UnequipItems(HashSet<int> removeItems)
+  {
+    Player.Get.UnequipItems(removeItems);
   }
 }
