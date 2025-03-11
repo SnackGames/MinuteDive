@@ -35,35 +35,41 @@ MonoBehaviour:
       count: 1
   floorGenData:
   - floorGenComment: "\uCD08\uC6D0 \uBAB9 1"
-    validFloorRange: {x: 1, y: 20}
+    validFloorRange: {x: 2, y: 20}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 9653d8e6faa6d7042a492733bed25011, type: 3}
   - floorGenComment: "\uCD08\uC6D0 \uBAB9 2"
-    validFloorRange: {x: 1, y: 20}
+    validFloorRange: {x: 2, y: 20}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 2c68435655885ec4eac960da50f5b19e, type: 3}
   - floorGenComment: "\uCD08\uC6D0 \uACF5\uD130 1"
-    validFloorRange: {x: 1, y: 20}
+    validFloorRange: {x: 2, y: 20}
     validFloorEntranceTypes: 000000000200000003000000
     floorExitType: 1
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 918dacd02e799a84a9ba290be2f3104d, type: 3}
   - floorGenComment: "\uCD08\uC6D0 \uACF5\uD130 2"
-    validFloorRange: {x: 1, y: 20}
+    validFloorRange: {x: 2, y: 20}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 5d22493e55557fc45a833131a799c923, type: 3}
   - floorGenComment: "\uCD08\uC6D0 \uACF5\uD130 3"
-    validFloorRange: {x: 1, y: 20}
+    validFloorRange: {x: 2, y: 20}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 353003ec292b62d40bb8fd0c74b997ce, type: 3}
+  - floorGenComment: "\uCD08\uC6D0 \uD29C\uD1A0\uB9AC\uC5BC"
+    validFloorRange: {x: 1, y: 1}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 2e23a72fb6fe97e4eaab08cc077d14f4, type: 3}
   - floorGenComment: "\uC0AC\uBC14\uB098 \uBAB9 1"
     validFloorRange: {x: 21, y: 40}
     validFloorEntranceTypes: 0100000002000000
