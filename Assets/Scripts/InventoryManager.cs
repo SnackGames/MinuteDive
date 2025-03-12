@@ -72,6 +72,7 @@ public class InventoryManager : MonoBehaviour
 
   private int droppedItemUID = 0;
   private AsyncOperationHandle<IList<ItemData>> loadHandle;
+  private HashSet<int> selectedInventoryItemIndex = new HashSet<int>();
 
   private void Awake()
   {
@@ -311,11 +312,24 @@ public class InventoryManager : MonoBehaviour
   public void EquipItems(HashSet<int> equipItems)
   {
     Player.Get.EquipItems(equipItems);
-
-    // #TODO_ITEM 선택되지 않은 아이템을 장착 목록에서 제거
   }
   public void UnequipItems(HashSet<int> removeItems)
   {
     Player.Get.UnequipItems(removeItems);
+  }
+
+  public HashSet<int> GetSelectedInventoryItemIndex()
+  {
+    return selectedInventoryItemIndex;
+  }
+
+  public void SetSelectedInventoryItemIndex(HashSet<int> newSelectedInventoryItemIndex)
+  {
+    selectedInventoryItemIndex = newSelectedInventoryItemIndex;
+  }
+
+  public void ClearSelectedInventoryItemIndex()
+  {
+    selectedInventoryItemIndex.Clear();
   }
 }

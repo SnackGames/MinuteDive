@@ -501,6 +501,7 @@ namespace Unit
     public void EquipItems(HashSet<int> equipItems)
     {
       equippedItems.UnionWith(equipItems);
+      Debug.Log("Player Equipped Items: " + string.Join(", ", equippedItems));
     }
 
     public void UnequipItems(HashSet<int> removeItems)
