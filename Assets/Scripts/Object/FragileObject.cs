@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Progress;
 
 [RequireComponent(typeof(Health))]
 public class FragileObject : MonoBehaviour
