@@ -1,4 +1,5 @@
 using Data;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,13 +31,17 @@ namespace UI
       if (moneyText) moneyText.text = $"{money}";
     }
 
-    public void SetItems(int[] items)
+    public void SetItems(List<int> items)
     {
-      int count = items.Length;
+      int count = items.Count;
       for (int i = 0; i < count; ++i)
       {
-        // #TODO_ITEM 인벤토리 아이템 클릭 시 아이템 장착/해제
-        itemGrid.transform.GetChild(i).GetComponent<UI_InventoryItem>()?.SetItemData(InventoryManager.GetInventory().GetItemData(items[i]));
+        UI_InventoryItem inventoryItem = itemGrid.transform.GetChild(i).GetComponent<UI_InventoryItem>();
+        if (inventoryItem != null)
+        {
+          inventoryItem.SetItemData(InventoryManager.GetInventory().GetItemData(items[i]));
+          inventoryItem.SetSelected(InventoryManager.GetInventory().GetSelectedInventoryItemIndex().Contains(i));
+        }
       }
     }
   }

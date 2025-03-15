@@ -11,6 +11,7 @@ namespace UI
     public ItemData itemData;
     public int money;
     public bool isMoney { get; private set; }
+    public Sprite defaultSprite = null;
 
     public void SetItemData(ItemData newItemData)
     {
@@ -18,10 +19,14 @@ namespace UI
       itemData = newItemData;
 
       // newItemData에 따라 아이템 이미지 적용
+      Image image = gameObject.GetComponent<Image>();
       if (newItemData.itemSprite != null)
       {
-        Image image = gameObject.GetComponent<Image>();
         image.sprite = newItemData.itemSprite;
+      }
+      else
+      {
+        image.sprite = defaultSprite;
       }
     }
 

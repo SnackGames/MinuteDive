@@ -14,7 +14,7 @@ using Unit;
 public class InventoryData
 {
   public int money;
-  public int[] items;
+  public List<int> items = new List<int>(Enumerable.Repeat(0, 16));
 }
 
 public static class SaveLoadInventorySystem
@@ -270,8 +270,9 @@ public class InventoryManager : MonoBehaviour
     }
     else
     {
-      for (int i = 0; i < inventoryData.items.Length; ++i)
+      for (int i = 0; i < inventoryData.items.Count; ++i)
       {
+        // #TODO_ITEM 인벤토리 가득찬 경우에 대한 구현
         if (inventoryData.items[i] == 0)
         {
           Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
@@ -317,6 +318,18 @@ public class InventoryManager : MonoBehaviour
   public void UnequipItems(HashSet<int> unequipItems)
   {
     Player.Get.UnequipItems(unequipItems);
+  }
+  public void ConsumeItems(HashSet<int> consumeItems)
+  {
+    foreach(int consumeItemID in consumeItems)
+    { 
+      if (!inventoryData.items.Contains(consumeItemID))
+        continue;
+
+      inventoryData.items.RemoveAt(inventoryData.items.IndexOf(consumeItemID));
+      inventoryData.items.Add(0);
+    }
+    AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
   }
 
   public HashSet<int> GetSelectedInventoryItemIndex()
