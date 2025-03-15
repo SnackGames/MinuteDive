@@ -473,6 +473,7 @@ namespace Unit
       glowSprite.enabled = true;
 
       userStateChangeData.reserveDying(true);
+      ConsumeEquippedItems();
       InventoryManager.GetInventory()?.SaveInventory();
       InventoryManager.GetInventory()?.ClearDroppedItems();
     }
@@ -518,6 +519,13 @@ namespace Unit
       }
 
       equippedItems.ExceptWith(unequipItems);
+    }
+
+    public void ConsumeEquippedItems()
+    {
+      InventoryManager.GetInventory().ClearSelectedInventoryItemIndex();
+      InventoryManager.GetInventory().ConsumeItems(equippedItems);
+      UnequipItems(equippedItems);
     }
   }
 }
