@@ -52,16 +52,19 @@ public class PlayerStat : MonoBehaviour
     }
   }
 
-  public void ModifyStatValue(StatModifier modifier)
+  public void ModifyStatValue(StatModifier modifier, bool Adding)
   {
-    currentStat[modifier.type] += modifier.value;
+    if (Adding)
+      currentStat[modifier.type] += modifier.value;
+    else
+      currentStat[modifier.type] -= modifier.value;
   }
 
-  public void ModifyStatValues(List<StatModifier> modifiers)
+  public void ModifyStatValues(List<StatModifier> modifiers, bool Adding)
   {
     foreach (StatModifier modifier in modifiers)
     {
-      currentStat[modifier.type] += modifier.value;
+      ModifyStatValue(modifier, Adding);
     }
   }
 

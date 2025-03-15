@@ -83,13 +83,6 @@ public class InventoryManager : MonoBehaviour
   {
     RefreshItemCache();
 
-    inventoryData = SaveLoadInventorySystem.LoadInventory();
-
-    // #TODO_ITEM 게임을 재실행해도 아이템 유지
-    inventoryData.items = new int[16];
-    AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
-    AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
-
     droppedItemUID = 0;
   }
 
@@ -124,6 +117,7 @@ public class InventoryManager : MonoBehaviour
         itemDictionary.Add(itemData.itemID, itemData.itemName);
       }
       Debug.Log($"ValidateItemData: ItemData Validation Success! itemDataList Size: {itemDataList.Count}");
+      LoadInventory();
     }
     else
     {
@@ -140,6 +134,13 @@ public class InventoryManager : MonoBehaviour
   public void SaveInventory()
   {
     SaveLoadInventorySystem.SaveInventory(inventoryData);
+  }
+
+  private void LoadInventory()
+  {
+    inventoryData = SaveLoadInventorySystem.LoadInventory();
+    AssetReferenceManager.GetAssetReferences().SetMoney(inventoryData.money);
+    AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
   }
 
   public void ResetInventory()
@@ -313,9 +314,9 @@ public class InventoryManager : MonoBehaviour
   {
     Player.Get.EquipItems(equipItems);
   }
-  public void UnequipItems(HashSet<int> removeItems)
+  public void UnequipItems(HashSet<int> unequipItems)
   {
-    Player.Get.UnequipItems(removeItems);
+    Player.Get.UnequipItems(unequipItems);
   }
 
   public HashSet<int> GetSelectedInventoryItemIndex()

@@ -500,13 +500,24 @@ namespace Unit
 
     public void EquipItems(HashSet<int> equipItems)
     {
+      foreach (int equipItemID in equipItems)
+      {
+        ItemData equipItemData = InventoryManager.GetInventory().GetItemData(equipItemID);
+        playerStat.ModifyStatValues(equipItemData.statModifiers, true);
+      }
+
       equippedItems.UnionWith(equipItems);
-      Debug.Log("Player Equipped Items: " + string.Join(", ", equippedItems));
     }
 
-    public void UnequipItems(HashSet<int> removeItems)
+    public void UnequipItems(HashSet<int> unequipItems)
     {
-      equippedItems.ExceptWith(removeItems);
+      foreach (int unequipItemID in unequipItems)
+      {
+        ItemData unequipItemData = InventoryManager.GetInventory().GetItemData(unequipItemID);
+        playerStat.ModifyStatValues(unequipItemData.statModifiers, false);
+      }
+
+      equippedItems.ExceptWith(unequipItems);
     }
   }
 }
