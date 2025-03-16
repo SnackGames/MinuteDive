@@ -3,8 +3,9 @@ using Unit;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
-public class UI_InventoryItem : MonoBehaviour
+public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
 {
   public GameObject outlineObject;
   private Button button;
@@ -25,11 +26,14 @@ public class UI_InventoryItem : MonoBehaviour
 
   private void OnButtonClick()
   {
-    int itemID = -1;
+    int itemID = 0;
     if (GetComponentInChildren<UI_Item>() != null)
     {
       itemID = GetComponentInChildren<UI_Item>().itemData.itemID;
     }
+
+    // 툴팁 출력
+    TooltipManager.Get.ShowTooltip(itemID, transform.position);
 
     int clickedInventoryItemIndex = transform.GetSiblingIndex();
 
@@ -87,5 +91,10 @@ public class UI_InventoryItem : MonoBehaviour
     {
       outlineObject.SetActive(selected);
     }
+  }
+
+  public void OnPointerExit(PointerEventData eventData)
+  {
+    TooltipManager.Get.HideTooltip();
   }
 }
