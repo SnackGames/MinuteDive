@@ -24,6 +24,17 @@ public class StatModifier
 {
   public StatType type = StatType.None;
   public float value = 0;
+  private static Dictionary<StatType, string> statTypeToString = new Dictionary<StatType, string>()
+  {
+    {StatType.Attack,             "공격력"},
+    {StatType.Defense,            "방어력"},
+    {StatType.InitialRemainTime,  "제한 시간"},
+  };
+
+  public string GetModifierString()
+  {
+    return statTypeToString[type] + ": " + value;
+  }
 }
 
 public class PlayerStat : MonoBehaviour
