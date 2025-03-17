@@ -6323,7 +6323,7 @@ MonoBehaviour:
   floorDataReadOnly:
     maxFloor: 0
   spawnStart: {x: 0, y: -0.5}
-  dungeonData: {fileID: 11400000, guid: 84f85c28e6648e049803b5d490371a1c, type: 2}
+  dungeonData: {fileID: 11400000, guid: cd00d1ca88aff08499cc10063d86e5e1, type: 2}
   dungeonSeed: 0
   regionChangeEvent:
     m_PersistentCalls:

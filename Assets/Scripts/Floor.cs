@@ -12,6 +12,7 @@ public enum FloorExitType
 public enum FloorContentType
 {
   Empty       = 0,
+  Tutorial    = 1,
   Monster_1   = 100,
   Monster_2   = 101,
   Boss        = 999

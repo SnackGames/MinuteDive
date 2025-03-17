@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9866e34cd78ecdd408d837c803688d1c, type: 3}
+  m_Name: Dungeon_Prototype
+  m_EditorClassIdentifier: 
+  dungeonName: "\uD504\uB85C\uD1A0\uD0C0\uC785 \uB358\uC804"
+  floorContentData:
+  - regionName: "\uCD08\uC6D0"
+    targetFloorRange: {x: 1, y: 1}
+    requiredFloorContentCount:
+    - contentType: 1
+      count: 1
+  floorGenData:
+  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 1(\uC67C)"
+    validFloorRange: {x: 1, y: 1}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 1
+    floorPrefab: {fileID: 6886268010505610876, guid: 2e23a72fb6fe97e4eaab08cc077d14f4, type: 3}
+  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 1(\uC624)"
+    validFloorRange: {x: 1, y: 1}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 1
+    floorPrefab: {fileID: 6886268010505610876, guid: 004276195d554ca45a644cfbd2c0bacf, type: 3}
