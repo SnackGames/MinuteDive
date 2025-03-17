@@ -15,7 +15,7 @@ public class UI_ItemTooltip : MonoBehaviour
   public void setTooltipData(int itemID)
   {
     ItemData itemData = InventoryManager.GetInventory().GetItemData(itemID);
-    if (itemData == null)
+    if (itemData == null || itemData.itemID == 0)
       return;
 
     title.SetText(itemData.itemName);

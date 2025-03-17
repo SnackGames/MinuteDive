@@ -20,7 +20,7 @@ namespace UI
 
       // newItemData에 따라 아이템 이미지 적용
       Image image = gameObject.GetComponent<Image>();
-      if (newItemData.itemSprite != null)
+      if (newItemData != null && newItemData.itemSprite != null)
       {
         image.sprite = newItemData.itemSprite;
       }

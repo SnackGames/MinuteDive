@@ -34,7 +34,7 @@ public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
     }
 
     // 툴팁 출력
-    TooltipManager.Get.ShowTooltip(itemID, transform.position);
+    TooltipManager.Get.ShowTooltip(itemID, GetComponent<RectTransform>());
 
     if (!isEquippable)
       return;

@@ -173,7 +173,7 @@ public class InventoryManager : MonoBehaviour
       }
     }
     Debug.LogError("GetItemData: Failed to Get ItemData for ItemID: " + itemID);
-    return ScriptableObject.CreateInstance<ItemData>();
+    return null;
   }
 
   public GameObject CreateDropItem(int itemID, Vector2 spawnPosition, Vector2 dropTargetPosition)
