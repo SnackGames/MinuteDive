@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
 {
   public GameObject outlineObject;
+  public bool isEquippable = false;
   private Button button;
 
   public void SetItemData(Data.ItemData itemData)
@@ -34,6 +35,9 @@ public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
 
     // 툴팁 출력
     TooltipManager.Get.ShowTooltip(itemID, transform.position);
+
+    if (!isEquippable)
+      return;
 
     int clickedInventoryItemIndex = transform.GetSiblingIndex();
 
