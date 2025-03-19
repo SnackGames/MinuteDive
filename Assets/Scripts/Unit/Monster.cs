@@ -146,7 +146,8 @@ namespace Unit
       // 추후에 같은 층 (또는 윗층)에 있을 때 발동하게 할 것
       const float epsilon = 1.0f;
       if (player.transform.position.y >= transform.position.y + epsilon
-        || player.transform.position.y <= transform.position.y - epsilon)
+        || player.transform.position.y <= transform.position.y - epsilon
+        || Math.Abs(player.transform.position.x - transform.position.x) > monsterData.monsterPursueDistance)
       {
         currentWaitingTime = 0.0f;
         return;
