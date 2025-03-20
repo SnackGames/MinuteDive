@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Snail
   m_EditorClassIdentifier: 
   monsterName: Snail
-  monsterHP: 7
+  monsterHP: 5
   monsterDamage: 5
   monsterMoveSpeed: 2
   monsterMoveAcceleration: 10
