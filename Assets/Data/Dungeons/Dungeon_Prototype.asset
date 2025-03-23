@@ -27,37 +27,37 @@ MonoBehaviour:
       count: 5
   floorGenData:
   - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 1(\uC67C)"
-    validFloorRange: {x: 1, y: 3}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 1
     floorPrefab: {fileID: 6886268010505610876, guid: 2e23a72fb6fe97e4eaab08cc077d14f4, type: 3}
   - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 1(\uC624)"
-    validFloorRange: {x: 1, y: 3}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 1
     floorPrefab: {fileID: 6886268010505610876, guid: 004276195d554ca45a644cfbd2c0bacf, type: 3}
   - floorGenComment: "\uACF5\uD130 (\uC67C)"
-    validFloorRange: {x: 4, y: 30}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 5d22493e55557fc45a833131a799c923, type: 3}
   - floorGenComment: "\uACF5\uD130 (\uC624)"
-    validFloorRange: {x: 4, y: 30}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 353003ec292b62d40bb8fd0c74b997ce, type: 3}
   - floorGenComment: "\uACF5\uD130 (\uC911)"
-    validFloorRange: {x: 4, y: 30}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 01000000
     floorExitType: 3
     floorContentType: 0
     floorPrefab: {fileID: 6886268010505610876, guid: 85e4fcc486710114c9fb098242bde3b3, type: 3}
   - floorGenComment: "\uACF5\uD130 (\uC591)"
-    validFloorRange: {x: 4, y: 30}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 000000000200000003000000
     floorExitType: 1
     floorContentType: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
     validFloorEntranceTypes: 02000000
     floorExitType: 0
     floorContentType: 101
-    floorPrefab: {fileID: 6886268010505610876, guid: f4c55ff8b754cbf4ea45796807bc4e71, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: cbccc7a1c98ea0e42932bf77722a43b8, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC911)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 01000000
