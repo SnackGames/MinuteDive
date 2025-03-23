@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
+public class UI_InventoryItem : MonoBehaviour
 {
   public GameObject outlineObject;
   public bool isEquippable = false;
@@ -34,7 +34,7 @@ public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
     }
 
     // 툴팁 출력
-    TooltipManager.Get.ShowTooltip(itemID, GetComponent<RectTransform>());
+    TooltipManager.Get.ShowItemTooltip(gameObject, itemID, GetComponent<RectTransform>());
 
     if (!isEquippable)
       return;
@@ -95,10 +95,5 @@ public class UI_InventoryItem : MonoBehaviour, IPointerExitHandler
     {
       outlineObject.SetActive(selected);
     }
-  }
-
-  public void OnPointerExit(PointerEventData eventData)
-  {
-    TooltipManager.Get.HideTooltip();
   }
 }
