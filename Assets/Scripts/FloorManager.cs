@@ -88,12 +88,15 @@ public class FloorManager : MonoBehaviour
       return;
     }
 
-    foreach (FloorContentData floorContentData in dungeonData.floorContentData)
+    int totalDungonBiomeFloor = 0;
+    foreach (DungeonBiomeData dungeonBiomeData in dungeonData.dungeonBiomeData)
     {
-      if (currentFloor == floorContentData.targetFloorRange.x)
-        regionChangeEvent.Invoke(floorContentData.regionName);
+      if (currentFloor == totalDungonBiomeFloor + 1)
+        regionChangeEvent.Invoke(dungeonBiomeData.biomeName);
 
-      if (currentFloor < floorContentData.targetFloorRange.x)
+      totalDungonBiomeFloor += dungeonBiomeData.GetFloorContentTotalCount();
+
+      if (currentFloor < totalDungonBiomeFloor)
         break;
     }
   }
@@ -124,29 +127,35 @@ public class FloorManager : MonoBehaviour
     // 매 층마다 소환 가능한 층들을 선발해서 무작위로 생성
     // sliding window 기법으로 추후에 더 최적화 가능.
     int floorNumber = 1;
+    int biomeNumber = 0;
+    int floorContentTotalCount = 0;
     Vector3 floorPosition = new Vector3(spawnStart.x, spawnStart.y, 0.0f);
     List<FloorGenData> viableFloorList;
-    FloorContentData viableFloorContentData = new FloorContentData();
-    int viableFloorContentIndex = 0;
+    DungeonBiomeData viableDungeonBiomeData = ScriptableObject.CreateInstance<DungeonBiomeData>();
+    int viableDungeonBiomeIndex = 0;
     FloorExitType? prevFloorExitType = FloorExitType.Center;
     while (true)
     {
-      if (floorNumber > viableFloorContentData.targetFloorRange.y && viableFloorContentIndex < dungeonData.floorContentData.Count)
-        viableFloorContentData = dungeonData.floorContentData[viableFloorContentIndex++].GetClone();
+      if (floorNumber > floorContentTotalCount && viableDungeonBiomeIndex < dungeonData.dungeonBiomeData.Count)
+      {
+        biomeNumber += floorContentTotalCount;
+        viableDungeonBiomeData = dungeonData.dungeonBiomeData[viableDungeonBiomeIndex++].GetClone();
+        floorContentTotalCount = viableDungeonBiomeData.GetFloorContentTotalCount();
+      }
 
-      viableFloorList = dungeonData.GetViableFloorGenList(floorNumber, viableFloorContentData, prevFloorExitType);
+      viableFloorList = viableDungeonBiomeData.GetViableFloorGenList(floorNumber - biomeNumber, prevFloorExitType);
       if (viableFloorList.Count <= 0)
         break;
 
       FloorGenData pickedFloorGenData = viableFloorList[random.Next(0, viableFloorList.Count)];
       float? pickedFloorHeight = pickedFloorGenData.floorPrefab.GetComponent<Floor>()?.GetFloorSize().y;
 
-      for (int i = 0; i < viableFloorContentData.requiredFloorContentCount.Count; ++i)
-        if (viableFloorContentData.requiredFloorContentCount[i].contentType == pickedFloorGenData.floorContentType)
+      for (int i = 0; i < viableDungeonBiomeData.requiredFloorContentCount.Count; ++i)
+        if (viableDungeonBiomeData.requiredFloorContentCount[i].contentType == pickedFloorGenData.floorContentType)
         {
-          FloorContentCountData tempFloorContentCountData = viableFloorContentData.requiredFloorContentCount[i];
+          FloorContentCountData tempFloorContentCountData = viableDungeonBiomeData.requiredFloorContentCount[i];
           tempFloorContentCountData.count--;
-          viableFloorContentData.requiredFloorContentCount[i] = tempFloorContentCountData;
+          viableDungeonBiomeData.requiredFloorContentCount[i] = tempFloorContentCountData;
           break;
         }
 
