@@ -23,18 +23,18 @@ MonoBehaviour:
   - contentType: 0
     count: 5
   floorGenData:
-  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 1(\uC67C)"
+  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 2(\uC67C)"
     validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 1
-    floorPrefab: {fileID: 6886268010505610876, guid: 2e23a72fb6fe97e4eaab08cc077d14f4, type: 3}
-  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 1(\uC624)"
+    floorPrefab: {fileID: 6886268010505610876, guid: f41d91393cb4d4e48a67d9abec4e4c07, type: 3}
+  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 2(\uC624)"
     validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 1
-    floorPrefab: {fileID: 6886268010505610876, guid: 004276195d554ca45a644cfbd2c0bacf, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: 46a43ec73d898b54ebad6090e859d3f5, type: 3}
   - floorGenComment: "\uACF5\uD130 (\uC67C)"
     validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 0000000001000000
