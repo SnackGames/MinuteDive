@@ -7515,13 +7515,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tiles_450
+      name: Sprout
       rect:
         serializedVersion: 2
         x: 320
-        y: 32
-        width: 16
-        height: 16
+        y: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -7531,27 +7531,6 @@ TextureImporter:
       bones: []
       spriteID: 0f157660bc315f74eace4d39ab22f5ad
       internalID: 313857383
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tiles_451
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2b752fdab2900514fad0c5f57ef275de
-      internalID: 794131069
       vertices: []
       indices: 
       edges: []
@@ -7657,48 +7636,6 @@ TextureImporter:
       bones: []
       spriteID: 058c63646a2e44d4fbd7e7e07e13a01b
       internalID: -661116694
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tiles_457
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c396d8ca05b9f9b44907bcde27ce3214
-      internalID: -2098830934
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tiles_458
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3af433dcc47b7984a89ba71b4af0caa9
-      internalID: 1253677669
       vertices: []
       indices: 
       edges: []
@@ -7822,6 +7759,7 @@ TextureImporter:
       Bush_Back_2: 1090261309
       Bush_Back_3: -1101574239
       Spike_1: 957208873
+      Sprout: 313857383
       Tiles_0: 831679993
       Tiles_1: -1940507384
       Tiles_10: 1978791170
@@ -8209,7 +8147,6 @@ TextureImporter:
       Tiles_448: -1577917950
       Tiles_449: -1317387961
       Tiles_45: 696341400
-      Tiles_450: 313857383
       Tiles_451: 794131069
       Tiles_452: -1918578582
       Tiles_453: -1500101830
