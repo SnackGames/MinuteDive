@@ -24,6 +24,9 @@ public class TooltipManager : MonoBehaviour
     if (itemData == null || itemData.itemID == 0)
       return;
 
+    if (tooltipPanel == null)
+      return;
+
     // 툴팁 소유자 지정
     currentTooltipOwner = tooltipOwner;
 
@@ -42,6 +45,6 @@ public class TooltipManager : MonoBehaviour
     // 툴팁 소유자 지정
     currentTooltipOwner = null;
 
-    tooltipPanel.SetActive(false);
+    tooltipPanel?.SetActive(false);
   }
 }
