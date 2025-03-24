@@ -64,6 +64,7 @@ public class InventoryManager : MonoBehaviour
 
   public GameObject droppedItemPrefab;
   public GameObject droppedMoneyPrefab;
+  public GameObject inventoryItemPrefab;
   [ReadOnly] public InventoryData inventoryData;
   [ReadOnly] public List<ItemData> itemDataList;
   [ReadOnly] public List<GameObject> droppedItemList;
@@ -270,17 +271,26 @@ public class InventoryManager : MonoBehaviour
     }
     else
     {
+      Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
+
+      bool isInventoryFull = true;
       for (int i = 0; i < inventoryData.items.Count; ++i)
       {
-        // #TODO_ITEM 인벤토리 가득찬 경우에 대한 구현
         if (inventoryData.items[i] == 0)
         {
-          Debug.Log($"Pick up Item with ItemID {pickupItemUIScript.itemData.itemID}, ItemUID {pickupItem.droppedItemUID}!");
           inventoryData.items[i] = pickupItemUIScript.itemData.itemID;
           AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
           lootedItemsThisRun.Add(pickupItemUIScript.itemData);
+          isInventoryFull = false;
           break;
         }
+      }
+      // 인벤토리가 가득찬 경우, 아이템 슬롯 4개(1줄)를 추가한다.
+      if (isInventoryFull)
+      {
+        inventoryData.items.AddRange(new int[] { pickupItemUIScript.itemData.itemID, 0, 0, 0 });
+        AssetReferenceManager.GetAssetReferences().SetItems(inventoryData.items);
+        lootedItemsThisRun.Add(pickupItemUIScript.itemData);
       }
     }
 

@@ -33,12 +33,19 @@ namespace UI
 
     public void SetItems(List<int> items)
     {
+      foreach (Transform itemGridChlid in itemGrid.transform)
+      {
+        Destroy(itemGridChlid.gameObject);
+      }
+
       int count = items.Count;
       for (int i = 0; i < count; ++i)
       {
-        UI_InventoryItem inventoryItem = itemGrid.transform.GetChild(i).GetComponent<UI_InventoryItem>();
+        GameObject inventoryItemObject = Instantiate(InventoryManager.GetInventory().inventoryItemPrefab, itemGrid.transform);
+        UI_InventoryItem inventoryItem = inventoryItemObject.GetComponent<UI_InventoryItem>();
         if (inventoryItem != null)
         {
+          inventoryItem.isEquippable = true;
           inventoryItem.SetItemData(InventoryManager.GetInventory().GetItemData(items[i]));
           inventoryItem.SetSelected(InventoryManager.GetInventory().GetSelectedInventoryItemIndex().Contains(i));
         }
