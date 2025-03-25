@@ -64,13 +64,13 @@ MonoBehaviour:
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 100
-    floorPrefab: {fileID: 6886268010505610876, guid: 9653d8e6faa6d7042a492733bed25011, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: 223e7eee5de60e94e83544acbbb673b9, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC67C2)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 100
-    floorPrefab: {fileID: 6886268010505610876, guid: 9db0cf545739b3a448ad922a899a543d, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: a04e3031721750846afb2b6e91ab4bbb, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC67C3)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 00000000
@@ -82,13 +82,13 @@ MonoBehaviour:
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 100
-    floorPrefab: {fileID: 6886268010505610876, guid: 2c68435655885ec4eac960da50f5b19e, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: a6238a37aa0fa444489081ed16c7ea9b, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC6242)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 100
-    floorPrefab: {fileID: 6886268010505610876, guid: 5122c508854e87249a313a5c131ce022, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: f561e3889497e1942b9378baa162c658, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC6243)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 02000000
@@ -100,13 +100,13 @@ MonoBehaviour:
     validFloorEntranceTypes: 01000000
     floorExitType: 3
     floorContentType: 100
-    floorPrefab: {fileID: 6886268010505610876, guid: 87f6e2f85fb87aa4fbc0600fe86596a7, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: a9df9a3d7bbd0da429bac130e0128608, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC9112)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 01000000
     floorExitType: 3
     floorContentType: 100
-    floorPrefab: {fileID: 6886268010505610876, guid: b28ad48e2315d034683ec66df30199f6, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: 7bb15e2bd6402e7439c2c918864123a7, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC591)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 000000000200000003000000
@@ -118,7 +118,7 @@ MonoBehaviour:
     validFloorEntranceTypes: 0000000001000000
     floorExitType: 2
     floorContentType: 101
-    floorPrefab: {fileID: 6886268010505610876, guid: 3a7eb70d808301b4991f4f5927bc1b4c, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: bfb37e91b696ffc4288c0252027a4cc5, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC67C2)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 00000000
@@ -130,7 +130,7 @@ MonoBehaviour:
     validFloorEntranceTypes: 0200000001000000
     floorExitType: 0
     floorContentType: 101
-    floorPrefab: {fileID: 6886268010505610876, guid: 51c038671dda8a24b84fe2f781031161, type: 3}
+    floorPrefab: {fileID: 6886268010505610876, guid: 5c3584bffbd430a4fbda37b35a96f671, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC6242)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 02000000

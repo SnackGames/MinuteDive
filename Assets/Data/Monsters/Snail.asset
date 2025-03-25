@@ -12,13 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea28246a50150334095dac8547c26d78, type: 3}
   m_Name: Snail
   m_EditorClassIdentifier: 
-  monsterName: Snail
+  monsterName: "\uB2EC\uD33D\uC774"
   monsterHP: 5
   monsterDamage: 5
   monsterMoveSpeed: 2
   monsterMoveAcceleration: 10
   monsterWaitTime: 0.7
   monsterPursueDistance: 3
-  monsterDropData:
-  - itemID: 1
-    drawingLotCount: 1
+  monsterDropData: []

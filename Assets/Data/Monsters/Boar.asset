@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea28246a50150334095dac8547c26d78, type: 3}
   m_Name: Boar
   m_EditorClassIdentifier: 
-  monsterName: Boar
-  monsterHP: 7
+  monsterName: "\uBA67\uB3FC\uC9C0"
+  monsterHP: 12
   monsterDamage: 10
   monsterMoveSpeed: 10
   monsterMoveAcceleration: 15
   monsterWaitTime: 0.7
+  monsterPursueDistance: 4
   monsterDropData: []
