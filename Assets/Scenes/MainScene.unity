@@ -5748,8 +5748,8 @@ MonoBehaviour:
   aerialMoveSpeed: 5
   attackMoveSpeed: 5
   fallAttackSpeed: 45
-  dashSpeed: 42
-  moveAcceleration: 79.7
+  dashSpeed: 45
+  moveAcceleration: 80
   fallAttackThreshold: 2
   fallAttackImpulseMultiplier: 0.2
   canFallAttack: 0
@@ -6610,7 +6610,7 @@ MonoBehaviour:
     maxFloor: 0
   spawnStart: {x: 0, y: -0.5}
   dungeonData: {fileID: 11400000, guid: cd00d1ca88aff08499cc10063d86e5e1, type: 2}
-  dungeonSeed: 0
+  dungeonSeed: 5102
   regionChangeEvent:
     m_PersistentCalls:
       m_Calls:
