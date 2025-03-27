@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DungeonBiome_Snowy
+  m_EditorClassIdentifier: Assembly-CSharp:Data:DungeonBiomeData
+  biomeName: "\uC124\uC6D0"
+  requiredFloorContentCount:
+  - contentType: 1
+    count: 1
+  - contentType: 100
+    count: 17
+  - contentType: 101
+    count: 7
+  - contentType: 0
+    count: 5
+  floorGenData:
+  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 3(\uC67C)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 1
+    floorPrefab: {fileID: 6886268010505610876, guid: 1011c5386b8a1ee4ba9a22df44703822, type: 3}
+  - floorGenComment: "\uD29C\uD1A0\uB9AC\uC5BC 3(\uC624)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 1
+    floorPrefab: {fileID: 6886268010505610876, guid: 46a43ec73d898b54ebad6090e859d3f5, type: 3}
+  - floorGenComment: "\uACF5\uD130 (\uC67C)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 5444a370629e82944b65c5a3dec4e3c8, type: 3}
+  - floorGenComment: "\uACF5\uD130 (\uC624)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 9e65cbbb84f814f469aa23a70dc0ee1b, type: 3}
+  - floorGenComment: "\uACF5\uD130 (\uC911)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 01000000
+    floorExitType: 3
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 440854eafea938a46867f3b1d88ce3eb, type: 3}
+  - floorGenComment: "\uACF5\uD130 (\uC591)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 000000000200000003000000
+    floorExitType: 1
+    floorContentType: 0
+    floorPrefab: {fileID: 6886268010505610876, guid: 60fdca70659534f4ea2b961e08f77f24, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC67C)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: 223e7eee5de60e94e83544acbbb673b9, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC67C2)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: a04e3031721750846afb2b6e91ab4bbb, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC624)"
+    validFloorRange: {x: 1, y: 30}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: a6238a37aa0fa444489081ed16c7ea9b, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC6242)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: f561e3889497e1942b9378baa162c658, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC911)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 01000000
+    floorExitType: 3
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: a9df9a3d7bbd0da429bac130e0128608, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC9112)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 01000000
+    floorExitType: 3
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: 7bb15e2bd6402e7439c2c918864123a7, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC67C)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 0000000001000000
+    floorExitType: 2
+    floorContentType: 101
+    floorPrefab: {fileID: 6886268010505610876, guid: bfb37e91b696ffc4288c0252027a4cc5, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC624)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 0200000001000000
+    floorExitType: 0
+    floorContentType: 101
+    floorPrefab: {fileID: 6886268010505610876, guid: 5c3584bffbd430a4fbda37b35a96f671, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC911)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 01000000
+    floorExitType: 3
+    floorContentType: 101
+    floorPrefab: {fileID: 6886268010505610876, guid: de3f8f21f66d80347965a97bad7e5f73, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC591)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 000000000200000003000000
+    floorExitType: 1
+    floorContentType: 101
+    floorPrefab: {fileID: 6886268010505610876, guid: ec8cf80208e6e734ebd3ad872836cd67, type: 3}

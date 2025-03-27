@@ -10707,48 +10707,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GandalfHardcore Platformer Assets v2_509
-      rect:
-        serializedVersion: 2
-        x: 416
-        y: 352
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cedf5e33d95fed04190b6b943773b9a4
-      internalID: 1257523391
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GandalfHardcore Platformer Assets v2_510
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 352
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5066b9612a774de4293d621b1f2d6d13
-      internalID: -46394784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: GandalfHardcore Platformer Assets v2_511
       rect:
         serializedVersion: 2
@@ -11153,8 +11111,8 @@ TextureImporter:
         serializedVersion: 2
         x: 384
         y: 320
-        width: 32
-        height: 32
+        width: 96
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -11164,48 +11122,6 @@ TextureImporter:
       bones: []
       spriteID: 2c130d5e0ac6dc74a93deedde33795ba
       internalID: 295861942
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GandalfHardcore Platformer Assets v2_531
-      rect:
-        serializedVersion: 2
-        x: 416
-        y: 320
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de00cb12e1d250e41a2ccf7cde0a89a4
-      internalID: 1459553519
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: GandalfHardcore Platformer Assets v2_532
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 320
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61fc51160531f4449be7c612b80aa093
-      internalID: -954760696
       vertices: []
       indices: 
       edges: []
