@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 using UI;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -54,6 +55,7 @@ public static class SaveLoadInventorySystem
   {
     SaveInventory(new InventoryData());
     LoadInventory();
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 }
 
