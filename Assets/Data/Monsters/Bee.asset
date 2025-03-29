@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Bee
   m_EditorClassIdentifier: 
   monsterName: Bee
-  monsterHP: 3
-  monsterDamage: 5
+  monsterHP: 20
+  monsterDamage: 10
   monsterMoveSpeed: 20
   monsterMoveAcceleration: 10
-  monsterWaitTime: 0.7
-  monsterDropData:
-  - itemID: 0
-    drawingLotCount: 2
-  - itemID: 1
-    drawingLotCount: 1
+  monsterWaitTime: 0.5
+  monsterPursueDistance: 5
+  monsterDropData: []
