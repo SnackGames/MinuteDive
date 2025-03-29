@@ -6,14 +6,15 @@
 ![Mobile](https://img.shields.io/badge/Mobile-Game-orange.svg)
 
 ## 프로젝트 개요
-제한 시간 내에 최대한 던전을 깊이 탐사하는 것이 목적인 게임입니다. 길을 막거나 나를 위협하는 몬스터들을 처치하며 1분이라는 시간 내에 최대한 깊이 도달하세요. 던전 내에서 획득한 아이템을 장착하고 입장하여 강화된 상태로 플레이할 수 있습니다.
+제한 시간 내에 최대한 던전을 깊이 탐사하는 것이 목적인 게임입니다.
+<br>길을 막거나 나를 위협하는 몬스터들을 처치하며 1분이라는 시간 내에 최대한 깊이 도달하세요.
+<br>던전 내에서 획득한 아이템을 장착하고 입장하여 강화된 상태로 플레이할 수 있습니다.
 
-![Gameplay](Screenshots/Animation.gif.gif)
 <p align="center">
+    <img src="Screenshots/Animation.gif" width="23%">
     <img src="Screenshots/Screenshot1.png" width="23%">
     <img src="Screenshots/Screenshot2.png" width="23%">
     <img src="Screenshots/Screenshot3.png" width="23%">
-    <img src="Screenshots/Screenshot4.png" width="23%">
 </p>
 
 ## 주요 기능
