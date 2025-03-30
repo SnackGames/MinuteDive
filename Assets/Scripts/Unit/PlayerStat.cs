@@ -28,12 +28,12 @@ public class StatModifier
   {
     {StatType.Attack,             "공격력"},
     {StatType.Defense,            "방어력"},
-    {StatType.InitialRemainTime,  "제한 시간"},
+    {StatType.InitialRemainTime,  "추가 시간"},
   };
 
   public string GetModifierString()
   {
-    return statTypeToString[type] + ": " + value;
+    return statTypeToString[type] + " + " + value;
   }
 }
 
