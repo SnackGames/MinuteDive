@@ -17,8 +17,92 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 79ad31e30c17bdc4f80162ff39fdd118
   m_SerializeEntries:
+  - m_GUID: b05624e7827e9774c8ac907e5b885342
+    m_Address: Assets/Data/Items/Item_Honey.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef7ef278eda28db4ca5f8eee7850b404
+    m_Address: Assets/Data/Items/Item_BeeWax.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6b6c6bd9bedadf488474a6e21fb2a39
+    m_Address: Assets/Data/Items/Item_Berry.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37b28dc308e8c2948af42bdbb500d723
+    m_Address: Assets/Data/Items/Item_DullSword.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a26b6dfcb810ae43a0b1d3c08cf992e
+    m_Address: Assets/Data/Items/Item_Leather.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55f7c52075f1f9f47a0908818a7778fc
+    m_Address: Assets/Data/Items/Item_Meat.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2c027aaa8a3e634ab866f17d0a20736
+    m_Address: Assets/Data/Items/Item_Pumpkin.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a855499b17714b34e8c487ddc3c6aeb6
+    m_Address: Assets/Data/Items/Item_DewDrop.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d4c57fe683103a45aac511bc29a0f38
+    m_Address: Assets/Data/Items/Item_Leaf.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7876e401e1bf50143a314438d9a16581
-    m_Address: Assets/Data/Items/TestItem.asset
+    m_Address: Assets/Data/Items/Item_Carrot.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bae588f005c3b65419382e5be1c93a4f
+    m_Address: Assets/Data/Items/Item_LeafBlade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b403f3aacbab0c4f890934ce4e4e4b8
+    m_Address: Assets/Data/Items/Item_WingBlade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98618dc99bc9a5b47865ed5b8d425f29
+    m_Address: Assets/Data/Items/Item_RedNecklace.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e753d857bd681b42bfe90aa4341896a
+    m_Address: Assets/Data/Items/Item_GreenNecklace.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbe78722da8c9714bba5385eb4596870
+    m_Address: Assets/Data/Items/Item_BlueNecklace.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - Items

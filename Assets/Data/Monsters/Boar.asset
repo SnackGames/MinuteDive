@@ -19,4 +19,14 @@ MonoBehaviour:
   monsterMoveAcceleration: 15
   monsterWaitTime: 0.7
   monsterPursueDistance: 4
-  monsterDropData: []
+  monsterDropData:
+  - itemID: 0
+    drawingLotCount: 120
+  - itemID: 5
+    drawingLotCount: 6
+  - itemID: 6
+    drawingLotCount: 3
+  - itemID: 7
+    drawingLotCount: 2
+  - itemID: 8
+    drawingLotCount: 1
