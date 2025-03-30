@@ -95,6 +95,12 @@ MonoBehaviour:
     floorExitType: 3
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 072d42276da2d1f46b6fa996b2c6f2e5, type: 3}
+  - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC591)"
+    validFloorRange: {x: 4, y: 30}
+    validFloorEntranceTypes: 000000000200000003000000
+    floorExitType: 1
+    floorContentType: 100
+    floorPrefab: {fileID: 6886268010505610876, guid: bba0c349773bd8940bc4b22822cf32c9, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 2\uB9C8\uB9AC (\uC67C)"
     validFloorRange: {x: 4, y: 30}
     validFloorEntranceTypes: 0000000001000000
