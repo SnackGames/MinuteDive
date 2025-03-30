@@ -123,6 +123,7 @@ namespace Unit
       }
     }
 
+    public void AnimTrigger_Attack_Warning() { anim?.SetTrigger("AttackWarning"); }
     public void AnimTrigger_Attack(int enable) => isAttacking = enable > 0;
     public void AnimTrigger_StopAttack() => isInAttackState = false;
     #endregion
