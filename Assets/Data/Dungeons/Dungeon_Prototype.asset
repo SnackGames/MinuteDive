@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonName: "\uD504\uB85C\uD1A0\uD0C0\uC785 \uB358\uC804"
   dungeonBiomeData:
-  - {fileID: 11400000, guid: 4d0fa563ba4b84a44bb6cc655060ea6d, type: 2}
-  - {fileID: 11400000, guid: ff52f95c9f10ae04fa8111590dcfc09e, type: 2}
+  - {fileID: 11400000, guid: 294f17e8a39dd3542b9136fe42f86063, type: 2}
+  - {fileID: 11400000, guid: a52f26ce433a4c0418faa1d9ff5d7f1e, type: 2}
+  - {fileID: 11400000, guid: aed97e523ad97bc46943f9d13cf25bdc, type: 2}
+  - {fileID: 11400000, guid: 766bcb1a236b86a46b11a9f72cd023e5, type: 2}

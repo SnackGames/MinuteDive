@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 5557b6d4e6b1d9d47b004e68291d49d5, type: 3}
   m_Name: DungeonBiome_Snowy
-  m_EditorClassIdentifier: Assembly-CSharp:Data:DungeonBiomeData
+  m_EditorClassIdentifier: 
   biomeName: "\uC124\uC6D0"
   requiredFloorContentCount:
   - contentType: 1
@@ -84,7 +84,7 @@ MonoBehaviour:
     floorContentType: 100
     floorPrefab: {fileID: 6886268010505610876, guid: 7132674dcf3ded4409995e963e65e0f4, type: 3}
   - floorGenComment: "\uBAAC\uC2A4\uD130 1\uB9C8\uB9AC (\uC911)"
-    validFloorRange: {x: 4, y: 30}
+    validFloorRange: {x: 1, y: 30}
     validFloorEntranceTypes: 01000000
     floorExitType: 3
     floorContentType: 100

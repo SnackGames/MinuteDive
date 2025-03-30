@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5557b6d4e6b1d9d47b004e68291d49d5, type: 3}
+  m_Name: DungeonBiome_Boss
+  m_EditorClassIdentifier: 
+  biomeName: "\uBCF4\uC2A4"
+  requiredFloorContentCount:
+  - contentType: 999
+    count: 1
+  floorGenData:
+  - floorGenComment: "\uBCF4\uC2A4"
+    validFloorRange: {x: 1, y: 1}
+    validFloorEntranceTypes: 00000000010000000200000003000000
+    floorExitType: 1
+    floorContentType: 999
+    floorPrefab: {fileID: 6886268010505610876, guid: 74e84afec210045448089b964c9619dc, type: 3}

@@ -138,9 +138,9 @@ public class FloorManager : MonoBehaviour
     {
       if (floorNumber > floorContentTotalCount && viableDungeonBiomeIndex < dungeonData.dungeonBiomeData.Count)
       {
-        biomeNumber += floorContentTotalCount;
+        biomeNumber = floorContentTotalCount;
         viableDungeonBiomeData = dungeonData.dungeonBiomeData[viableDungeonBiomeIndex++].GetClone();
-        floorContentTotalCount = viableDungeonBiomeData.GetFloorContentTotalCount();
+        floorContentTotalCount += viableDungeonBiomeData.GetFloorContentTotalCount();
       }
 
       viableFloorList = viableDungeonBiomeData.GetViableFloorGenList(floorNumber - biomeNumber, prevFloorExitType);

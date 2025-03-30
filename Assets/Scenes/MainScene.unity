@@ -6610,7 +6610,7 @@ MonoBehaviour:
     maxFloor: 0
   spawnStart: {x: 0, y: -0.5}
   dungeonData: {fileID: 11400000, guid: cd00d1ca88aff08499cc10063d86e5e1, type: 2}
-  dungeonSeed: 5102
+  dungeonSeed: 0
   regionChangeEvent:
     m_PersistentCalls:
       m_Calls:

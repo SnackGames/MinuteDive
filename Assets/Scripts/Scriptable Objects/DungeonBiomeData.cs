@@ -7,6 +7,7 @@ namespace Data
   [CreateAssetMenu(menuName = "Data/DungeonBiome")]
   public class DungeonBiomeData : ScriptableObject
   {
+    [SerializeField]
     public string biomeName;
     public List<FloorContentCountData> requiredFloorContentCount;
     public List<FloorGenData> floorGenData;
