@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Boar
   m_EditorClassIdentifier: 
   monsterName: "\uBA67\uB3FC\uC9C0"
-  monsterHP: 12
-  monsterDamage: 10
+  monsterHP: 8
+  monsterDamage: 8
   monsterMoveSpeed: 10
   monsterMoveAcceleration: 15
   monsterWaitTime: 0.7

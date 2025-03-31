@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: King Bee
   m_EditorClassIdentifier: 
   monsterName: King Bee
-  monsterHP: 100
+  monsterHP: 50
   monsterDamage: 10
   monsterMoveSpeed: 20
   monsterMoveAcceleration: 10
