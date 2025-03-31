@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_Leather
   m_EditorClassIdentifier: 
   itemID: 7
-  itemName: "\uBA67\uB3FC\uC9C0 \uB4B7\uB2E4\uB9AC\uACE0\uAE30"
+  itemName: "\uBA67\uB3FC\uC9C0\uC758 \uAC00\uC8FD"
   itemDescription: "\uBA67\uB3FC\uC9C0\uC758 \uAC00\uC8FD. \uD2BC\uD2BC\uD558\uACE0
     \uBCF4\uC628\uC774 \uC88B\uB2E4."
   itemSprite: {fileID: 21300000, guid: 0e5e5103723a82c47bdd911bd6270168, type: 3}
