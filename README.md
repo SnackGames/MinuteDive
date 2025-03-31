@@ -2,10 +2,10 @@
 
 ![Unity](https://img.shields.io/badge/Unity-2022.3-222c37.svg?logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-239120.svg?logo=c-sharp&logoColor=white)
-![Android](https://img.shields.io/badge/Android-API_30-3ddc84.svg?logo=android&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3ddc84.svg?logo=android&logoColor=white)
 ![Mobile](https://img.shields.io/badge/Mobile-Game-orange.svg)
 
-## 프로젝트 개요
+## 게임 개요
 공격과 이동 바튼만으로 즐길 수 있는 쉽고 간편한 스타일리쉬 모바일 액션 게임입니다.
 <br>주어진 시간 내에 몬스터들을 처치하며 던전을 최대한 깊이 내려가세요.
 <br>던전을 내려가며 획득한 아이템으로 더욱 강해질 수 있습니다.
@@ -17,6 +17,7 @@
     <img src="Screenshots/Screenshot3.png" width="23%">
 </p>
 
+---
 ## 주요 기능
 
 ### 게임 기능
@@ -36,16 +37,13 @@
 | 조작키 또는 액션              | 설명                   |
 |------------------------------|-----------------------|
 | 공격 | 바라보는 방향으로 공격합니다.<br>공격 버튼을 연타하여 계속하여 공격을 시도할 수 있습니다.<br>공중에서 공격 시, 낙하 공격을 사용합니다.<br>낙하 공격은 착지 시 착지 지점 주변에 피해를 줍니다. |
-| 이동 | 캐릭터가 좌/우 방향으로 이동합니다.<br>공격 직후 사용 시 대시가 나갑니다.|
+| 이동 | 캐릭터가 좌/우 방향으로 이동합니다.<br>공격 직후 사용 시 대시가 나갑니다.<br>대시를 통해 몬스터의 공격을 회피할 수 있습니다.|
 
 ---
 
 ## 설치 및 실행 방법
 
-APK 파일 다운로드를 통해 직접 설치 및 플레이가 가능합니다.
-1. 제공된 [Google Drive 링크](링크주소입력)에서 APK 파일 다운로드
-2. 안드로이드 기기에서 `설정 > 보안 > 출처를 알 수 없는 앱 설치 허용` 활성화
-3. 다운로드한 APK 파일을 실행하여 설치
-
----
-
+APK 파일 다운로드를 통해 안드로이드 환경에서 직접 설치 및 플레이가 가능합니다.
+1. [링크](https://github.com/SnackGames/MinuteDive/tree/main/Latest%20Build) 를 클릭하거나 본 레포지토리의 `Latest Build` 폴더로 이동하여 APK 파일이 포함된 ZIP파일을 다운로드합니다.
+2. 안드로이드 기기에서 `설정 > 보안 및 개인정보 보호 > 기타 보안 설정 > 출처를 알 수 없는 앱 설치`에서 `내 파일`또는 `사용중인 브라우저`를 활성화합니다.
+3. 다운로드한 ZIP파일을 압축 해제한 후, APK 파일을 실행하여 게임을 설치합니다.
